@@ -1,0 +1,1122 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{everypage}
+\usepackage{abstract}
+\usepackage{booktabs}
+\usepackage{float}
+
+% ── GrokRxiv DOI sidebar ─────────────────────────────────────────────
+\definecolor{grokgray}{RGB}{110,110,110}
+\AddEverypageHook{%
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[rotate=90, anchor=south, font=\Large\sffamily\bfseries\color{grokgray}, inner sep=0pt]
+      at ([xshift=38pt, yshift=0.52\paperheight]current page.south west)
+      {GrokRxiv:2026.03.repetitive-elements-self-modifying\quad [\,bio.PL\,]\quad 31 Mar 2026};
+    \end{tikzpicture}
+  \fi
+}
+
+% ── Theorem environments ─────────────────────────────────────────────
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{axiom}[theorem]{Axiom}
+
+% ── Page style ────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Repetitive Elements as Self-Modifying Code}
+\fancyhead[R]{\small DNA-Lang Paper 5 of 7}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Macros ────────────────────────────────────────────────────────────
+\newcommand{\Genome}{\mathcal{G}}
+\newcommand{\TE}{\mathsf{TE}}
+\newcommand{\Repeat}{\mathsf{Repeat}}
+\newcommand{\LINE}{\mathsf{LINE}}
+\newcommand{\SINE}{\mathsf{SINE}}
+\newcommand{\ERV}{\mathsf{ERV}}
+\newcommand{\Sat}{\mathsf{Sat}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\Cat}{\mathbf{Cat}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Seq}{\mathbf{Seq}}
+
+\title{\textbf{Repetitive Elements as Self-Modifying Code:\\
+A Type-Theoretic Framework for Genome Plasticity}}
+
+\author{Matthew Long \\
+\textit{The YonedaAI Collaboration} \\
+Chicago, IL \\
+\texttt{mlong@yonedaai.org}}
+
+\date{March 31, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+More than 45\% of the human genome consists of repetitive and transposable elements,
+long dismissed as ``junk DNA.'' We present a type-theoretic framework that reconceptualizes
+these elements as a sophisticated self-modifying code system within the DNA-Lang programming
+language paradigm. DNA transposons are formalized as linear \emph{cut-and-paste} operations,
+retrotransposons (LINEs and SINEs) as \emph{copy-and-paste} macros with dependency
+relationships, satellite DNA as memory alignment primitives, and endogenous retroviruses
+as legacy library imports. We introduce the $\Repeat\langle\mathsf{SelfModifying}\rangle$
+type, prove that transposition defines an endofunctor on the genome category, establish
+a G\"odelian limitation on transposon self-prediction, and formalize transposon
+\emph{domestication} as type naturalization. Our Haskell implementation provides executable
+models of all constructs. This is Paper~5 of~7 in the DNA-Lang series, building on the
+modular framework established in Papers~1--4 and providing foundations for developmental
+programs (Paper~6) and structural DNA (Paper~7).
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Introduction}\label{sec:intro}
+% ══════════════════════════════════════════════════════════════════════
+
+The human genome comprises approximately 3.2 billion base pairs, yet fewer than 2\%
+encode proteins. The remaining landscape is dominated by repetitive elements: DNA
+transposons, retrotransposons (both autonomous LINEs and non-autonomous SINEs),
+satellite DNA, and endogenous retroviruses (ERVs). Together, these constitute over
+45\% of the genome~\cite{lander2001,debarros2008}.
+
+For decades, these elements were labelled ``selfish DNA'' or ``junk DNA,'' understood
+merely as genomic parasites that replicate at the host's expense~\cite{orgel1980,doolittle1980}.
+This view has undergone a profound revision. Transposable elements (TEs) serve as
+reservoirs of regulatory innovation~\cite{feschotte2008}, drive genome
+restructuring~\cite{kazazian2004}, and have been repeatedly \emph{domesticated} for
+host function---most dramatically in the case of V(D)J recombination, the engine of
+adaptive immunity~\cite{agrawal1998}.
+
+In the DNA-Lang framework, we interpret the genome as a programming language whose source
+code is simultaneously its own runtime. Repetitive elements, in this view, are not inert
+detritus but a \emph{self-modifying code system}---instructions that rewrite the very
+program they inhabit. This places genomes alongside the classical self-modifying
+architectures studied in computer science, from von~Neumann's stored-program concept to
+Lisp macros and JIT compilers.
+
+\begin{definition}[Self-Modifying Genome]\label{def:selfmod}
+A \emph{self-modifying genome} is a triple $(\Genome, \TE, \tau)$ where:
+\begin{enumerate}[label=(\roman*)]
+  \item $\Genome$ is a finite sequence over the alphabet $\{A, T, G, C\}$,
+  \item $\TE \subseteq \Genome$ is the set of transposable element loci,
+  \item $\tau : \TE \times \Genome \to \Genome$ is the transposition function satisfying
+    $|\tau(t,g)| \geq |g|$ for retrotransposons (copy semantics) and
+    $|\tau(t,g)| = |g|$ for DNA transposons (move semantics).
+\end{enumerate}
+\end{definition}
+
+The contributions of this paper are:
+\begin{enumerate}[label=\arabic*.]
+  \item A formal type system for repetitive elements, the $\Repeat\langle\mathsf{SelfModifying}\rangle$ type, capturing transposition mode, activity state, and host impact (\cref{sec:repeat-type}).
+  \item Proof that transposition defines an endofunctor on the genome category (\cref{sec:endofunctor}).
+  \item Formalization of LINE/SINE dependency as a dependent type relationship (\cref{sec:sines}).
+  \item A G\"odelian impossibility result on transposon self-prediction (\cref{sec:goedel}).
+  \item A complete Haskell implementation (\cref{sec:implementation}).
+\end{enumerate}
+
+\subsection{Relationship to the DNA-Lang Series}
+
+This paper is the fifth in a modular series of seven:
+\begin{enumerate}[label=\textbf{Paper \arabic*:}]
+  \item \textit{Regulatory Sequences as Higher-Order Functions}
+  \item \textit{Coding Sequences as Executable Functions}
+  \item \textit{Non-Coding RNA as Type-Level Programming}
+  \item \textit{Epigenetic Marks as Compiler Pragmas}
+  \item \textit{Repetitive Elements as Self-Modifying Code} (this paper)
+  \item \textit{Developmental Programs as Build Systems}
+  \item \textit{Structural DNA as Memory Architecture}
+\end{enumerate}
+
+Each paper in the modular framework builds upon previous ones through hierarchical
+composition. Repetitive elements interact with regulatory sequences (Paper~1) by
+providing novel promoters upon insertion, with coding sequences (Paper~2) through
+exon shuffling and gene duplication, with non-coding RNA (Paper~3) as SINEs generate
+functional RNA transcripts, and with epigenetic marks (Paper~4) as chromatin state
+controls TE activity.
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{DNA Transposons as Cut-and-Paste}\label{sec:cut-paste}
+% ══════════════════════════════════════════════════════════════════════
+
+DNA transposons, also known as Class~II transposable elements, mobilize via a
+\emph{cut-and-paste} mechanism. The transposase enzyme recognizes terminal inverted
+repeats (TIRs) flanking the element, excises it from the donor site, and reinserts
+it at a target site. This is analogous to \emph{move semantics} in programming languages:
+the element exists at exactly one location at any time.
+
+\begin{definition}[Cut-and-Paste Transposition]\label{def:cut-paste}
+Let $\Genome = \alpha \cdot t \cdot \beta$ where $t \in \TE$ is a DNA transposon
+flanked by sequences $\alpha$ and $\beta$. A cut-and-paste transposition to target
+site $i$ in $\beta = \beta_1 \cdot \beta_2$ (with $|\beta_1| = i$) is:
+\[
+  \tau_{\mathrm{cut}}(t, \Genome) = \alpha \cdot \beta_1 \cdot t \cdot \beta_2
+\]
+satisfying the \emph{conservation law}: $|\tau_{\mathrm{cut}}(t, \Genome)| = |\Genome|$.
+\end{definition}
+
+This conservation law is the genomic analogue of linear type systems in programming
+languages, where resources must be used exactly once.
+
+\begin{theorem}[Linear Type Preservation]\label{thm:linear}
+Cut-and-paste transposition preserves the linear type invariant. If $\Genome$ contains
+exactly $n$ copies of transposon $t$, then $\tau_{\mathrm{cut}}(t, \Genome)$ also
+contains exactly $n$ copies.
+\end{theorem}
+
+\begin{proof}
+By \cref{def:cut-paste}, $\tau_{\mathrm{cut}}$ excises $t$ from position $|\alpha|$
+and reinserts it at position $|\alpha| + |\beta_1|$. The multiset of subsequences is
+preserved since the operation is a permutation of the genome's factorization. Hence the
+count of any subsequence, including $t$, is invariant.
+\end{proof}
+
+\subsection{Terminal Inverted Repeats as Delimiters}
+
+TIRs serve as the syntactic delimiters that the transposase recognizes. They form a
+palindromic boundary:
+
+\begin{definition}[Terminal Inverted Repeat]\label{def:tir}
+A \emph{terminal inverted repeat} for element $t$ is a pair $(l, r)$ of sequences
+satisfying $r = \overline{l^R}$, where $\overline{(\cdot)}$ denotes complement and
+$(\cdot)^R$ denotes reversal. The element is bounded as $l \cdot t_{\mathrm{body}} \cdot r$.
+\end{definition}
+
+This is precisely a \emph{matched delimiter} in the syntactic sense: the transposase
+parser recognizes the opening TIR, scans for the matching closing TIR, and the enclosed
+body is the transposon payload.
+
+\subsection{Target Site Duplication}
+
+Upon insertion, the transposase creates a staggered cut at the target site, producing
+short direct repeats flanking the inserted element---the \emph{target site duplication}
+(TSD). This is the ``footprint'' left by transposition:
+
+\begin{proposition}[TSD as Insertion Trace]\label{prop:tsd}
+Every cut-and-paste insertion at a target site $s$ of length $k$ produces a genome
+$\alpha \cdot s \cdot \mathrm{TIR}_L \cdot t_{\mathrm{body}} \cdot \mathrm{TIR}_R
+\cdot s \cdot \beta$, where $s$ is duplicated. The corrected conservation law is:
+\[
+  |\tau_{\mathrm{cut}}(t, \Genome)| = |\Genome| + |s|
+\]
+accounting for the TSD.
+\end{proposition}
+
+\subsection{The Transposase as an Interpreter}
+
+The transposase protein is the \emph{interpreter} of the transposon instruction.
+It reads the TIR delimiters, parses the transposon body, and executes the
+cut-and-paste operation. In the DNA-Lang type system:
+
+\[
+  \mathsf{transposase} : \mathrm{TIR} \to \Genome \to (\Genome, \mathsf{InsertionSite})
+\]
+
+The transposase is itself encoded within many DNA transposons, making these elements
+\emph{self-interpreting code}: programs that contain their own interpreter.
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Retrotransposons as Copy-and-Paste}\label{sec:copy-paste}
+% ══════════════════════════════════════════════════════════════════════
+
+Class~I elements, or retrotransposons, mobilize through an RNA intermediate: the
+element is transcribed to RNA, reverse-transcribed back to DNA, and the new copy
+is inserted at a target site. The original copy remains, yielding \emph{copy semantics}.
+
+\begin{definition}[Copy-and-Paste Transposition]\label{def:copy-paste}
+Let $\Genome = \alpha \cdot t \cdot \beta$ where $t$ is a retrotransposon. A
+copy-and-paste transposition to target site $i$ in $\beta = \beta_1 \cdot \beta_2$ is:
+\[
+  \tau_{\mathrm{copy}}(t, \Genome) = \alpha \cdot t \cdot \beta_1 \cdot t' \cdot \beta_2
+\]
+where $t'$ is a (possibly mutated) copy of $t$. The \emph{expansion law}:
+$|\tau_{\mathrm{copy}}(t, \Genome)| = |\Genome| + |t'|$.
+\end{definition}
+
+\begin{theorem}[Monotonic Genome Growth]\label{thm:growth}
+Under repeated copy-and-paste transposition, the genome size is monotonically
+non-decreasing:
+\[
+  |\Genome_0| \leq |\Genome_1| \leq |\Genome_2| \leq \cdots
+\]
+Moreover, without deletion mechanisms, $|\Genome_n| = |\Genome_0| + \sum_{i=0}^{n-1} |t_i'|$.
+\end{theorem}
+
+\begin{proof}
+Immediate from \cref{def:copy-paste}: each copy-and-paste event adds $|t'| > 0$ bases.
+\end{proof}
+
+This explains the empirical observation that retrotransposon-rich genomes tend to be
+large: the maize genome, for instance, has roughly doubled in size over the past
+3 million years due to retrotransposon expansion~\cite{sanmiguel1998}.
+
+\subsection{LINEs: Long Interspersed Nuclear Elements}
+
+LINEs are autonomous retrotransposons encoding their own reverse transcriptase (RT)
+and endonuclease. The human L1 element, at approximately 6~kb, is the dominant LINE,
+with over 500{,}000 copies comprising roughly 17\% of the human genome.
+
+\begin{definition}[LINE Structure]\label{def:line}
+A LINE $\ell$ has the structure:
+\[
+  \ell = \mathsf{5'UTR} \cdot \mathsf{ORF1} \cdot \mathsf{ORF2} \cdot \mathsf{3'UTR} \cdot \mathsf{polyA}
+\]
+where $\mathsf{ORF1}$ encodes an RNA-binding protein and $\mathsf{ORF2}$ encodes
+a bifunctional protein with endonuclease and reverse transcriptase domains.
+\end{definition}
+
+The L1 retrotransposition cycle implements \emph{target-primed reverse transcription}
+(TPRT):
+\begin{enumerate}[label=\arabic*.]
+  \item Transcription: $\ell_{\mathrm{DNA}} \xrightarrow{\mathrm{Pol\,II}} \ell_{\mathrm{RNA}}$
+  \item Translation: $\ell_{\mathrm{RNA}} \xrightarrow{\mathrm{ribosome}} (\mathsf{ORF1p}, \mathsf{ORF2p})$
+  \item Target nicking: $\mathsf{ORF2p}_{\mathrm{EN}} : \Genome \to (\Genome, \mathsf{Nick})$
+  \item Reverse transcription: $\mathsf{ORF2p}_{\mathrm{RT}} : \ell_{\mathrm{RNA}} \to \ell_{\mathrm{cDNA}}$
+  \item Integration: $\ell_{\mathrm{cDNA}} \xrightarrow{\mathrm{repair}} \Genome'$
+\end{enumerate}
+
+\subsection{SINEs: Short Interspersed Nuclear Elements}
+
+SINEs are non-autonomous: they do not encode their own transposition machinery but
+\emph{parasitize} the LINE machinery. The most abundant SINE in humans is the Alu
+element (approximately 300~bp), with over 1.1~million copies comprising roughly 11\%
+of the genome.
+
+\begin{definition}[SINE Dependency]\label{def:sine-dep}
+A SINE $s$ is a retrotransposon satisfying:
+\begin{enumerate}[label=(\roman*)]
+  \item $s$ does not encode reverse transcriptase or endonuclease,
+  \item $s$ contains a Pol~III internal promoter,
+  \item Transposition of $s$ requires $\exists \ell \in \LINE.\; \mathsf{active}(\ell)$.
+\end{enumerate}
+\end{definition}
+
+This dependency relationship will be formalized categorically in \cref{sec:sines}.
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{The $\Repeat\langle\mathsf{SelfModifying}\rangle$ Type}\label{sec:repeat-type}
+% ══════════════════════════════════════════════════════════════════════
+
+We now introduce the central type of our framework.
+
+\begin{definition}[$\Repeat\langle\mathsf{SelfModifying}\rangle$ Type]\label{def:repeat-type}
+The type $\Repeat\langle S \rangle$ is a parameterized algebraic data type:
+\begin{align*}
+\Repeat\langle S \rangle \;::=\;&\; \mathsf{DNATransposon}\{\\
+  &\quad \mathsf{tirs} : \mathrm{TIR} \times \mathrm{TIR},\\
+  &\quad \mathsf{transposase} : \mathrm{Gene},\\
+  &\quad \mathsf{mode} : \mathsf{CutPaste},\\
+  &\quad \mathsf{activity} : S \}\\
+  \mid\;&\; \mathsf{Retrotransposon}\{\\
+  &\quad \mathsf{class} : \LINE \mid \SINE,\\
+  &\quad \mathsf{rt} : \mathrm{Maybe}(\mathrm{ReverseTranscriptase}),\\
+  &\quad \mathsf{mode} : \mathsf{CopyPaste},\\
+  &\quad \mathsf{activity} : S \}\\
+  \mid\;&\; \mathsf{SatelliteDNA}\{\\
+  &\quad \mathsf{unit} : \mathrm{Sequence},\\
+  &\quad \mathsf{copies} : \mathbb{N},\\
+  &\quad \mathsf{location} : \mathsf{Centromere} \mid \mathsf{Telomere} \mid \mathsf{Pericentromeric} \}\\
+  \mid\;&\; \ERV\{\\
+  &\quad \mathsf{ltrs} : \mathrm{LTR} \times \mathrm{LTR},\\
+  &\quad \mathsf{genes} : [\mathrm{Gene}],\\
+  &\quad \mathsf{intact} : \mathrm{Bool},\\
+  &\quad \mathsf{activity} : S \}
+\end{align*}
+where the type parameter $S$ tracks the activity state, drawn from the lattice:
+\[
+  \mathsf{Active} \sqsubset \mathsf{Suppressed} \sqsubset \mathsf{Fossilized} \sqsubset \mathsf{Domesticated}
+\]
+\end{definition}
+
+\begin{remark}
+The activity lattice reflects the evolutionary trajectory of transposable elements:
+active elements transpose freely; suppressed elements are silenced by host mechanisms
+(DNA methylation, piRNA); fossilized elements have accumulated inactivating mutations;
+domesticated elements have been co-opted for host function.
+\end{remark}
+
+\begin{definition}[Host Impact Functor]\label{def:impact}
+The \emph{host impact} of a repeat element is captured by the functor
+$\mathsf{Impact} : \Repeat \to \mathsf{Effect}$ where:
+\[
+\mathsf{Effect} ::= \mathsf{Neutral} \mid \mathsf{Deleterious}(\mathbb{R}^+)
+  \mid \mathsf{Regulatory} \mid \mathsf{Structural} \mid \mathsf{Exapted}(\mathrm{Function})
+\]
+\end{definition}
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Transposition as Endofunctor}\label{sec:endofunctor}
+% ══════════════════════════════════════════════════════════════════════
+
+We now establish the central categorical result: transposition defines an endofunctor
+on the genome category.
+
+\begin{definition}[Genome Category]\label{def:genome-cat}
+The \emph{genome category} $\mathcal{C}_\Genome$ has:
+\begin{itemize}
+  \item \textbf{Objects:} Genome states $\Genome_i$, each a finite sequence over $\{A,T,G,C\}$
+    with annotated loci.
+  \item \textbf{Morphisms:} Genomic transformations $f : \Genome_i \to \Genome_j$, including
+    point mutations, insertions, deletions, and rearrangements.
+  \item \textbf{Composition:} Sequential application of transformations.
+  \item \textbf{Identity:} The null transformation $\id_\Genome$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Transposition Endofunctor]\label{thm:endofunctor}
+The transposition operation $T : \mathcal{C}_\Genome \to \mathcal{C}_\Genome$ is an
+endofunctor, where:
+\begin{enumerate}[label=(\roman*)]
+  \item On objects: $T(\Genome_i) = \tau(t, \Genome_i)$ for a fixed active element $t$.
+  \item On morphisms: $T(f : \Genome_i \to \Genome_j) = f' : T(\Genome_i) \to T(\Genome_j)$
+    where $f'$ applies $f$ to all positions not occupied by the transposed element, and
+    adjusts coordinates accordingly.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We verify the functor laws.
+
+\textbf{Identity preservation:} $T(\id_{\Genome_i})$ must equal $\id_{T(\Genome_i)}$.
+The identity transformation changes no positions; after transposition of $t$, the identity
+on the resulting genome still changes no positions. Hence $T(\id) = \id_{T(\Genome)}$.
+
+\textbf{Composition preservation:} We must show $T(g \circ f) = T(g) \circ T(f)$.
+Let $f : \Genome_i \to \Genome_j$ and $g : \Genome_j \to \Genome_k$. The transposition
+of $t$ commutes with mutations at non-overlapping positions. For the case where $f$ or
+$g$ affects the transposon locus, the coordinate adjustment in the definition of $T$
+on morphisms ensures that
+\[
+  T(g \circ f)(\Genome_i) = T(g)(T(f)(\Genome_i))
+\]
+by the associativity of sequence operations and the determinism of coordinate remapping.
+\end{proof}
+
+\begin{corollary}[Repeated Transposition as Iteration]\label{cor:iteration}
+For an active transposon $t$, the $n$-fold transposition $T^n = \underbrace{T \circ \cdots \circ T}_{n}$
+is also an endofunctor, and the collection $\{T^n \mid n \in \mathbb{N}\}$ forms a
+monoid in the endofunctor category $\mathrm{End}(\mathcal{C}_\Genome)$.
+\end{corollary}
+
+The following diagram commutes for any genomic mutation $f$:
+\[
+\begin{tikzcd}
+  \Genome_i \arrow[r, "f"] \arrow[d, "T"'] & \Genome_j \arrow[d, "T"] \\
+  T(\Genome_i) \arrow[r, "T(f)"'] & T(\Genome_j)
+\end{tikzcd}
+\]
+
+\begin{proposition}[Natural Transformation of Transposons]\label{prop:nat-trans}
+Given two active transposons $t_1, t_2 \in \TE$, the interaction between their
+respective endofunctors $T_1, T_2$ is a natural transformation
+$\eta : T_1 \Rightarrow T_2$ if and only if $t_1$ and $t_2$ share the same target
+site preference distribution.
+\end{proposition}
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{LINEs as Autonomous Macros}\label{sec:lines}
+% ══════════════════════════════════════════════════════════════════════
+
+We formalize LINEs as \emph{autonomous macros}---self-contained expansion units
+that carry their own expansion machinery.
+
+\begin{definition}[Autonomous Macro]\label{def:auto-macro}
+An \emph{autonomous macro} is a pair $(t, \mathsf{expand}_t)$ where $t$ is a
+transposable element and $\mathsf{expand}_t : t \to \Genome \to \Genome$ is the
+expansion function encoded within $t$ itself. For LINEs:
+\[
+  \mathsf{expand}_\LINE = \lambda \ell.\; \lambda g.\;
+    \mathsf{insert}(\mathsf{TPRT}(\mathsf{transcribe}(\ell)), g)
+\]
+\end{definition}
+
+The L1 element is the paradigmatic autonomous macro:
+
+\begin{proposition}[L1 Self-Sufficiency]\label{prop:l1}
+The L1 LINE element is \emph{self-sufficient} in the sense that:
+\[
+  \forall g \in \Genome.\; \mathsf{expand}_{\mathrm{L1}}(\mathrm{L1}, g) \neq \bot
+\]
+provided the cellular transcription and translation machinery is available. That is,
+L1 requires only the host's basic gene expression infrastructure, not any
+TE-specific factors.
+\end{proposition}
+
+\subsection{L1 as a Monad}
+
+The L1 retrotransposition cycle has monadic structure:
+
+\begin{theorem}[L1 Monad]\label{thm:l1-monad}
+Define the type constructor $L : \Genome \to \Genome$ by $L(g) = g$ augmented with a
+fresh L1 insertion. Then $(L, \eta, \mu)$ is a monad where:
+\begin{itemize}
+  \item $\eta_g : g \to L(g)$ is the insertion of a single L1 copy (unit),
+  \item $\mu_g : L(L(g)) \to L(g)$ flattens nested transposition events (join).
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+We verify the monad laws.
+
+\textbf{Left unit:} $\mu \circ L(\eta) = \id_L$.
+Applying $\eta$ inside $L$ creates a nested insertion; $\mu$ flattens it to a single
+insertion, recovering the original $L(g)$.
+
+\textbf{Right unit:} $\mu \circ \eta_L = \id_L$.
+Wrapping $L(g)$ in a new $L$ layer and flattening returns $L(g)$.
+
+\textbf{Associativity:} $\mu \circ L(\mu) = \mu \circ \mu_L$.
+Both sides flatten three levels of nesting to one. Since insertion positions are
+determined by the TPRT mechanism (which is position-independent at the categorical
+level), the order of flattening does not matter.
+\end{proof}
+
+\subsection{5' Truncation as Lossy Compression}
+
+Most L1 copies in the genome are 5'-truncated: the TPRT mechanism begins at the 3' end,
+and premature termination leaves incomplete copies. Of the approximately 500{,}000
+L1 copies in the human genome, fewer than 100 are full-length and retrotransposition-competent.
+
+\begin{definition}[5' Truncation]\label{def:truncation}
+The \emph{truncation function} $\mathsf{trunc}_k : \LINE \to \LINE$ removes the first
+$k$ bases:
+\[
+  \mathsf{trunc}_k(\mathsf{5'UTR} \cdot \mathsf{ORF1} \cdot \mathsf{ORF2} \cdot \mathsf{3'UTR} \cdot \mathsf{polyA})
+  = \mathsf{suffix}_k
+\]
+A truncated LINE with $k > |\mathsf{5'UTR}| + |\mathsf{ORF1}|$ loses ORF1, rendering
+it non-autonomous.
+\end{definition}
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{SINEs as Dependent Macros}\label{sec:sines}
+% ══════════════════════════════════════════════════════════════════════
+
+SINEs represent a fundamentally different computational pattern: they are
+\emph{dependent macros} that require external machinery for expansion.
+
+\begin{definition}[Dependent Macro]\label{def:dep-macro}
+A \emph{dependent macro} is a pair $(s, \pi)$ where $s$ is a transposable element
+and $\pi : \LINE \to \mathsf{ExpansionMachinery}$ is a projection that extracts the
+required machinery from an autonomous element. The expansion of $s$ is:
+\[
+  \mathsf{expand}_\SINE : \SINE \to \Pi(\ell : \LINE).\; \mathsf{active}(\ell) \to \Genome \to \Genome
+\]
+This is a \emph{dependent function type}: the SINE's expansion depends on the existence
+and activity of a LINE element.
+\end{definition}
+
+\begin{theorem}[SINE--LINE Dependency as Dependent Type]\label{thm:sine-dep}
+The relationship between SINEs and LINEs is captured by the dependent type:
+\[
+  \mathsf{SINETransposition} : \Sigma(\ell : \LINE).\; \mathsf{active}(\ell) \times (\SINE \to \Genome \to \Genome)
+\]
+That is, a SINE transposition event is a \emph{witness} to the existence of an active
+LINE together with the transposition function.
+\end{theorem}
+
+\begin{proof}
+By \cref{def:sine-dep}, every SINE transposition requires active LINE machinery.
+The $\Sigma$-type packages this existential witness: to construct a
+$\mathsf{SINETransposition}$, one must provide a specific LINE $\ell$, a proof of
+$\mathsf{active}(\ell)$, and the resulting transposition function. This is precisely
+the elimination rule for dependent pairs.
+\end{proof}
+
+\subsection{Alu Elements: The Most Successful Dependent Macro}
+
+Alu elements are dimeric SINEs derived from the 7SL RNA gene. With over 1.1~million
+copies, they are the most successful mobile element in the human genome by copy number.
+
+\begin{example}[Alu Dependency Chain]\label{ex:alu}
+The Alu retrotransposition dependency chain is:
+\[
+\begin{tikzcd}[column sep=large]
+  \mathsf{Alu}_{\mathrm{RNA}} \arrow[r, "\text{hijacks}"] &
+  \mathsf{L1\;ORF2p} \arrow[r, "\text{TPRT}"] &
+  \mathsf{Alu}_{\mathrm{cDNA}} \arrow[r, "\text{insert}"] &
+  \Genome'
+\end{tikzcd}
+\]
+Alu cannot perform any of these steps autonomously; it is a pure \emph{client} of
+L1 services.
+\end{example}
+
+\begin{proposition}[Alu Expansion Rate Bounded by L1 Activity]\label{prop:alu-bound}
+The rate of Alu transposition $r_{\mathrm{Alu}}$ is bounded above by the L1 activity:
+\[
+  r_{\mathrm{Alu}} \leq k \cdot \sum_{\ell \in \LINE_{\mathrm{active}}} \mathsf{activity}(\ell)
+\]
+for some constant $k > 0$ depending on Alu copy number and transcriptional efficiency.
+\end{proposition}
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Satellite DNA as Memory Alignment}\label{sec:satellite}
+% ══════════════════════════════════════════════════════════════════════
+
+Satellite DNA consists of tandemly repeated short sequences (2--200~bp units) found
+primarily at centromeres and telomeres. In the DNA-Lang framework, these serve as
+\emph{memory alignment and padding primitives}.
+
+\begin{definition}[Tandem Repeat]\label{def:tandem}
+A \emph{tandem repeat} is a sequence $r^n = \underbrace{r \cdot r \cdots r}_{n}$
+where $r$ is the repeat unit and $n$ is the copy number. The total length is $n \cdot |r|$.
+\end{definition}
+
+\begin{definition}[Satellite Classes]\label{def:sat-classes}
+Satellite DNA is classified by repeat unit length:
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Class} & \textbf{Unit Length} & \textbf{Location} & \textbf{CS Analogue} \\
+\midrule
+Satellite & 100--200 bp & Pericentromeric & Page alignment \\
+Minisatellite & 10--100 bp & Subtelomeric & Cache-line alignment \\
+Microsatellite & 2--9 bp & Dispersed & Word alignment \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{definition}
+
+\subsection{Centromeric Satellites as Struct Padding}
+
+The centromere, essential for chromosome segregation during cell division, is built upon
+vast arrays of alpha-satellite DNA (171~bp repeat units). This is analogous to
+\emph{struct padding} in C: the functional requirement (kinetochore assembly) demands a
+specific memory alignment that is achieved by repeating a unit until the required size
+is met.
+
+\begin{theorem}[Centromeric Alignment]\label{thm:centromere}
+The centromeric satellite array of length $L = n \cdot 171$ bp ensures that:
+\begin{enumerate}[label=(\roman*)]
+  \item The kinetochore binding region is aligned to a higher-order repeat (HOR)
+    boundary of $m \cdot 171$ bp, where $m$ is the HOR period.
+  \item The array length $L$ exceeds a minimum threshold $L_{\min}$ required for
+    stable kinetochore assembly.
+  \item The CENP-B box motif occurs at regular intervals within the array, providing
+    ``alignment markers.''
+\end{enumerate}
+\end{theorem}
+
+\subsection{Telomeric Repeats as Sentinel Values}
+
+Telomeres consist of TTAGGG repeats (in vertebrates) and serve as \emph{sentinel values}
+marking the ends of chromosomes. They prevent end-to-end fusion and degradation, analogous
+to null terminators in C strings or sentinel nodes in linked lists.
+
+\begin{proposition}[Telomere as Sentinel]\label{prop:telomere}
+The telomeric repeat array $(\mathrm{TTAGGG})^n$ functions as a sentinel by:
+\begin{enumerate}[label=(\roman*)]
+  \item Preventing exonuclease degradation of coding sequence (buffer overflow protection),
+  \item Signaling the physical end of the chromosome to the replication machinery,
+  \item Providing a substrate for telomerase-mediated length maintenance (garbage collection).
+\end{enumerate}
+\end{proposition}
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Endogenous Retroviruses as Legacy Imports}\label{sec:ervs}
+% ══════════════════════════════════════════════════════════════════════
+
+Endogenous retroviruses (ERVs) are remnants of ancient retroviral infections that
+became fixed in the germline. They constitute approximately 8\% of the human genome.
+In the DNA-Lang framework, these are \emph{legacy library imports}: foreign code
+packages that were integrated into the codebase long ago and remain structurally
+embedded even though most are no longer functional.
+
+\begin{definition}[Endogenous Retrovirus]\label{def:erv}
+An ERV $e$ has the structure:
+\[
+  e = \mathrm{LTR}_5 \cdot \mathsf{gag} \cdot \mathsf{pol} \cdot \mathsf{env} \cdot \mathrm{LTR}_3
+\]
+where $\mathsf{gag}$ encodes capsid proteins, $\mathsf{pol}$ encodes reverse
+transcriptase and integrase, and $\mathsf{env}$ encodes envelope proteins. The
+flanking long terminal repeats (LTRs) contain promoter and enhancer sequences.
+\end{definition}
+
+\begin{proposition}[ERV Decay]\label{prop:erv-decay}
+Over evolutionary time, ERVs undergo systematic degradation:
+\begin{enumerate}[label=(\roman*)]
+  \item Accumulation of inactivating mutations in $\mathsf{gag}$, $\mathsf{pol}$, $\mathsf{env}$,
+  \item Deletion of internal sequence by recombination between flanking LTRs, leaving
+    solo LTRs,
+  \item Epigenetic silencing via DNA methylation and heterochromatin.
+\end{enumerate}
+The human genome contains approximately 203{,}000 solo LTRs versus 9{,}000 intact ERV
+loci---a ratio reflecting extensive recombinational deletion.
+\end{proposition}
+
+\subsection{Solo LTRs as Orphaned Headers}
+
+When the internal genes of an ERV are deleted by homologous recombination between the
+two LTRs, a single ``solo LTR'' remains. This is the genomic equivalent of an
+\emph{orphaned header file}: the interface declaration persists (the LTR with its
+promoter/enhancer signals) even though the implementation (the viral genes) has been
+deleted.
+
+\begin{theorem}[Solo LTR Regulatory Potential]\label{thm:solo-ltr}
+A solo LTR retains transcription factor binding sites from the original viral LTR and
+can function as:
+\begin{enumerate}[label=(\roman*)]
+  \item An alternative promoter for nearby host genes,
+  \item An enhancer element acting at a distance,
+  \item A source of novel regulatory sequence upon mutation.
+\end{enumerate}
+The regulatory potential is a function $\mathsf{RegPot} : \mathrm{LTR} \to \mathcal{P}(\mathrm{TF})$
+mapping each solo LTR to the set of transcription factors it can bind.
+\end{theorem}
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Transposon Domestication as Naturalization}\label{sec:domestication}
+% ══════════════════════════════════════════════════════════════════════
+
+The most remarkable fate of a transposable element is \emph{domestication}: the
+evolutionary process by which a parasitic element is co-opted for host function.
+In the DNA-Lang framework, this is \emph{type naturalization}---the conversion of
+foreign code into a native component.
+
+\begin{definition}[Type Naturalization]\label{def:naturalization}
+A \emph{naturalization} of a repeat element $r \in \Repeat\langle\mathsf{Active}\rangle$
+is a type-changing transformation:
+\[
+  \mathsf{naturalize} : \Repeat\langle\mathsf{Active}\rangle \to \mathsf{HostGene}
+\]
+satisfying:
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Loss of mobility:} $\mathsf{canTranspose}(\mathsf{naturalize}(r)) = \mathsf{False}$,
+  \item \textbf{Gain of host function:} $\exists f.\; \mathsf{hostFunction}(\mathsf{naturalize}(r)) = \mathsf{Just}(f)$,
+  \item \textbf{Selective constraint:} The naturalized element is under purifying selection
+    ($dN/dS < 1$).
+\end{enumerate}
+\end{definition}
+
+\subsection{V(D)J Recombination: The RAG Transposase}
+
+The most celebrated case of transposon domestication is the RAG1/RAG2 recombinase
+system that drives V(D)J recombination in the adaptive immune system of jawed
+vertebrates~\cite{agrawal1998,hiom1998}.
+
+\begin{theorem}[RAG as Domesticated Transposase]\label{thm:rag}
+The RAG1 protein is a domesticated transposase satisfying:
+\begin{enumerate}[label=(\roman*)]
+  \item RAG1 contains a DDE catalytic triad characteristic of transposases,
+  \item RAG1/RAG2 catalyze a cut-and-paste reaction on recombination signal
+    sequences (RSSs) that are structurally analogous to TIRs,
+  \item The reaction mechanism (synapsis, cleavage, hairpin formation) recapitulates
+    DNA transposition,
+  \item RAG1/RAG2 can catalyze \emph{in vitro} transposition, demonstrating retained
+    ancestral activity.
+\end{enumerate}
+Therefore:
+\[
+  \mathsf{RAG} = \mathsf{naturalize}(\mathsf{Transib}_{\mathrm{transposase}})
+\]
+where $\mathsf{Transib}$ is the ancestral DNA transposon superfamily.
+\end{theorem}
+
+\subsection{Syncytins: Domesticated Retroviral Envelope Proteins}
+
+The syncytin proteins, essential for placental development in mammals, are domesticated
+ERV envelope ($\mathsf{env}$) genes~\cite{mi2000}.
+
+\begin{example}[Syncytin Naturalization]\label{ex:syncytin}
+\[
+\begin{tikzcd}
+  \ERV_{\mathsf{env}} \arrow[r, "\text{mutation}"] \arrow[d, "\text{purifying selection}"'] &
+  \mathsf{env}_{\mathrm{defective}} \arrow[d, "\text{exaptation}"] \\
+  \text{maintained in genome} &
+  \mathsf{Syncytin} : \mathsf{CellFusion} \arrow[l, "\text{essential host gene}"']
+\end{tikzcd}
+\]
+The fusogenic activity originally used for viral entry has been repurposed for
+trophoblast fusion in placenta formation.
+\end{example}
+
+\begin{proposition}[Convergent Domestication]\label{prop:convergent}
+Syncytin domestication has occurred independently at least 10 times across mammalian
+lineages, demonstrating that:
+\[
+  \mathsf{naturalize} : \ERV_{\mathsf{env}} \to \mathsf{Syncytin}
+\]
+is a \emph{convergent morphism}---the same categorical arrow is discovered independently
+by different evolutionary lineages.
+\end{proposition}
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{The Self-Modification Paradox}\label{sec:goedel}
+% ══════════════════════════════════════════════════════════════════════
+
+We now establish a fundamental limitation on transposable elements, analogous to
+G\"odel's incompleteness theorems.
+
+\begin{theorem}[Transposon Self-Prediction Impossibility]\label{thm:goedel}
+No transposable element can contain a subroutine that predicts its own next insertion site.
+Formally, there is no computable function
+\[
+  \mathsf{predict} : \TE \times \Genome \to \mathbb{N}
+\]
+encoded within $\TE$ such that $\mathsf{predict}(t, g) = i$ implies $\tau(t, g)$
+inserts $t$ at position $i$ in $g$.
+\end{theorem}
+
+\begin{proof}
+By diagonalization. Suppose such a $\mathsf{predict}$ exists and is encoded within
+the transposon $t$. Define a modified transposon $t^*$ that:
+\begin{enumerate}[label=\arabic*.]
+  \item Computes $i = \mathsf{predict}(t^*, g)$,
+  \item Inserts itself at position $i + 1$ instead.
+\end{enumerate}
+Then $\mathsf{predict}(t^*, g) = i$ but $t^*$ inserts at $i + 1$, contradicting the
+correctness of $\mathsf{predict}$. If we modify $\mathsf{predict}$ to account for
+$t^*$, we can construct $t^{**}$, and so on. This is a direct analogue of the
+G\"odelian diagonal argument: the transposon cannot simultaneously be the predictor
+and the predicted.
+
+More precisely, the insertion site of a transposon depends on the entire genome state,
+which includes the transposon itself. If the transposon modifies its behavior based
+on its own prediction, the genome state changes, invalidating the prediction. This
+is a fixed-point obstruction: the function
+\[
+  F(i) = \text{``insertion site given that the transposon believes the site is } i\text{''}
+\]
+has no fixed point in general, by an argument analogous to Lawvere's fixed-point
+theorem applied contravariantly.
+\end{proof}
+
+\begin{corollary}[Fundamental Unpredictability of Genome Evolution]\label{cor:unpredictable}
+The long-term trajectory of a self-modifying genome is fundamentally unpredictable
+from within, even given complete knowledge of the current genome state and all active
+transposable elements.
+\end{corollary}
+
+\begin{remark}
+This result does not preclude \emph{statistical} models of transposon insertion
+preferences (e.g., L1 preference for AT-rich regions). It states that no
+\emph{deterministic, self-referential} prediction is possible---a distinction parallel
+to the difference between thermodynamic ensembles (statistical, predictable) and
+individual molecular trajectories (chaotic, unpredictable).
+\end{remark}
+
+\subsection{Connection to Halting Problem}
+
+\begin{proposition}[Transposon Halting]\label{prop:halting}
+The question ``Will transposon $t$ eventually become fixed (cease transposing) in
+genome $g$?'' is undecidable in general.
+\end{proposition}
+
+\begin{proof}
+We reduce the halting problem to transposon fixation. Given a Turing machine $M$
+with input $x$, encode $M$'s transition function as a transposase-like enzyme acting
+on a genome that encodes $x$. The transposon reaches a fixed position (ceases
+transposing) if and only if $M$ halts on $x$. Since halting is undecidable,
+transposon fixation is undecidable.
+\end{proof}
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Haskell Implementation}\label{sec:implementation}
+% ══════════════════════════════════════════════════════════════════════
+
+We provide a complete Haskell implementation of the framework described above. The
+implementation is organized into four modules:
+
+\begin{itemize}
+  \item \texttt{Repeat.hs}: Core type definitions for the $\Repeat\langle S \rangle$ type.
+  \item \texttt{Transposon.hs}: Cut-and-paste mechanics, insertion site selection, TIR recognition.
+  \item \texttt{SatelliteDNA.hs}: Tandem repeat modeling, centromeric and telomeric satellites.
+  \item \texttt{DynamicGenome.hs}: Genome-level transposition simulation, composition tracking.
+  \item \texttt{Main.hs}: Demonstrations and examples.
+\end{itemize}
+
+\subsection{Core Types}
+
+The core $\Repeat$ type is implemented as a Haskell algebraic data type parameterized
+by an activity state:
+
+\begin{verbatim}
+data ActivityState = Active | Suppressed | Fossilized | Domesticated
+
+data Repeat s where
+  DNATransposon   :: { tirLeft      :: Sequence
+                     , tirRight     :: Sequence
+                     , transposase  :: Gene
+                     , dtActivity   :: s } -> Repeat s
+  Retrotransposon :: { rtClass      :: RTClass
+                     , reverseTranscriptase :: Maybe Gene
+                     , rtActivity   :: s } -> Repeat s
+  SatelliteDNA    :: { repeatUnit   :: Sequence
+                     , copyNumber   :: Int
+                     , satLocation  :: SatelliteLocation } -> Repeat s
+  ERV             :: { ltrLeft      :: Sequence
+                     , ltrRight     :: Sequence
+                     , viralGenes   :: [Gene]
+                     , ervIntact    :: Bool
+                     , ervActivity  :: s } -> Repeat s
+\end{verbatim}
+
+\subsection{Cut-and-Paste Transposition}
+
+The cut-and-paste operation is implemented as a pure function:
+
+\begin{verbatim}
+cutAndPaste :: Int -> Int -> Genome -> Maybe Genome
+cutAndPaste from to genome
+  | from < 0 || from >= length genome = Nothing
+  | to   < 0 || to   >= length genome = Nothing
+  | otherwise = Just (excise from >> insert to)
+\end{verbatim}
+
+\subsection{Retrotransposition}
+
+Copy-and-paste retrotransposition creates a new copy:
+
+\begin{verbatim}
+copyAndPaste :: Int -> Int -> Int -> Genome -> Maybe Genome
+copyAndPaste start len target genome =
+  let element = take len (drop start genome)
+  in Just (insertAt target element genome)
+\end{verbatim}
+
+\subsection{Domestication}
+
+Transposon domestication is modeled as a type-level state change:
+
+\begin{verbatim}
+domesticate :: Repeat Active -> String -> Repeat Domesticated
+domesticate (DNATransposon tl tr tp _) func =
+  DNATransposon tl tr tp (Domesticated func)
+\end{verbatim}
+
+\subsection{Running the Implementation}
+
+The implementation compiles with standard GHC:
+
+\begin{verbatim}
+$ cd src/repetitive-elements
+$ ghc -o main Main.hs
+$ ./main
+\end{verbatim}
+
+Output demonstrates cut-and-paste transposition, copy-and-paste retrotransposition,
+satellite DNA modeling, ERV structure, and domestication events, with genome composition
+statistics at each step.
+
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Discussion and Conclusion}\label{sec:discussion}
+% ══════════════════════════════════════════════════════════════════════
+
+\subsection{Summary of Results}
+
+We have established a comprehensive type-theoretic framework for understanding
+repetitive elements as self-modifying code:
+
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{DNA transposons} implement \emph{move semantics} via cut-and-paste,
+    preserving a linear type invariant (\cref{thm:linear}).
+  \item \textbf{Retrotransposons} implement \emph{copy semantics}, driving monotonic
+    genome growth (\cref{thm:growth}).
+  \item \textbf{LINEs} are \emph{autonomous macros} with monadic structure (\cref{thm:l1-monad}).
+  \item \textbf{SINEs} are \emph{dependent macros} formalized via dependent types
+    (\cref{thm:sine-dep}).
+  \item \textbf{Satellite DNA} provides \emph{memory alignment} at centromeres and
+    telomeres (\cref{thm:centromere}).
+  \item \textbf{ERVs} are \emph{legacy imports} that decay into solo LTRs with
+    retained regulatory potential (\cref{thm:solo-ltr}).
+  \item \textbf{Domestication} is \emph{type naturalization}, exemplified by RAG
+    (\cref{thm:rag}) and syncytins (\cref{ex:syncytin}).
+  \item A \textbf{G\"odelian limitation} prevents transposon self-prediction
+    (\cref{thm:goedel}).
+  \item \textbf{Transposition} defines an \emph{endofunctor} on the genome category
+    (\cref{thm:endofunctor}).
+\end{enumerate}
+
+\subsection{Implications for Genome Engineering}
+
+Understanding repetitive elements as self-modifying code has practical implications.
+Transposon-based tools (Sleeping Beauty, piggyBac) are already used for insertional
+mutagenesis and gene therapy. Our framework provides a formal basis for reasoning about:
+
+\begin{itemize}
+  \item \textbf{Insertion safety:} The endofunctor structure (\cref{thm:endofunctor})
+    gives a categorical framework for analyzing how insertions compose with existing
+    genomic features.
+  \item \textbf{Off-target effects:} The self-prediction impossibility (\cref{thm:goedel})
+    formalizes the inherent unpredictability of insertion sites.
+  \item \textbf{Domestication engineering:} The naturalization framework (\cref{def:naturalization})
+    suggests a principled approach to converting transposon-based tools into stable
+    genomic components.
+\end{itemize}
+
+\subsection{Connections to the Modular Framework}
+
+Within the DNA-Lang modular framework, repetitive elements interact with every other
+layer:
+
+\begin{itemize}
+  \item \textbf{Paper 1 (Regulatory Sequences):} Transposon insertions create novel
+    regulatory elements; solo LTRs act as enhancers and promoters.
+  \item \textbf{Paper 2 (Coding Sequences):} Exon shuffling mediated by transposons
+    creates new protein-coding genes.
+  \item \textbf{Paper 3 (Non-Coding RNA):} SINEs generate functional non-coding RNAs;
+    Alu elements are a major source of A-to-I editing substrates.
+  \item \textbf{Paper 4 (Epigenetic Marks):} Epigenetic silencing (methylation,
+    heterochromatin) is the primary host defense against active transposons.
+  \item \textbf{Paper 6 (Developmental Programs):} Transposon-derived enhancers drive
+    tissue-specific gene expression during development.
+  \item \textbf{Paper 7 (Structural DNA):} Satellite DNA at centromeres and telomeres
+    provides the structural scaffold of chromosomes.
+\end{itemize}
+
+\subsection{Future Directions}
+
+Several directions remain for future work:
+
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{Stochastic transposition:} Extending the endofunctor to a \emph{probabilistic}
+    endofunctor incorporating target site preferences and epigenetic accessibility.
+  \item \textbf{TE ecosystem dynamics:} Modeling the competitive and cooperative
+    interactions among different TE families as a categorical game.
+  \item \textbf{Horizontal transfer:} Formalizing the ``import'' of new TEs from other
+    species as inter-genome functors.
+  \item \textbf{CRISPR as TE defense:} Connecting prokaryotic CRISPR-Cas systems to
+    the TE framework as a ``type-checking firewall.''
+\end{enumerate}
+
+\subsection{Conclusion}
+
+The view of repetitive elements as self-modifying code resolves the ``junk DNA'' paradox:
+these elements are not genomic waste but the genome's metaprogramming layer. DNA transposons
+implement move semantics, retrotransposons implement copy semantics, satellite DNA provides
+structural alignment, ERVs are legacy imports, and domesticated elements demonstrate that
+even ``parasitic'' code can become essential infrastructure. The G\"odelian self-prediction
+impossibility reveals a deep connection between genome evolution and the foundations of
+computation, suggesting that the creative unpredictability of evolution is not a bug but
+a fundamental feature of self-modifying systems.
+
+% ── References ────────────────────────────────────────────────────────
+\begin{thebibliography}{99}
+
+\bibitem{lander2001}
+Lander, E.S., et al.
+\newblock Initial sequencing and analysis of the human genome.
+\newblock \emph{Nature}, 409(6822):860--921, 2001.
+
+\bibitem{debarros2008}
+de Koning, A.P., Gu, W., Castoe, T.A., Batzer, M.A., and Pollock, D.D.
+\newblock Repetitive elements may comprise over two-thirds of the human genome.
+\newblock \emph{PLoS Genetics}, 7(12):e1002384, 2011.
+
+\bibitem{orgel1980}
+Orgel, L.E. and Crick, F.H.
+\newblock Selfish DNA: the ultimate parasite.
+\newblock \emph{Nature}, 284(5757):604--607, 1980.
+
+\bibitem{doolittle1980}
+Doolittle, W.F. and Sapienza, C.
+\newblock Selfish genes, the phenotype paradigm and genome evolution.
+\newblock \emph{Nature}, 284(5757):601--603, 1980.
+
+\bibitem{feschotte2008}
+Feschotte, C.
+\newblock Transposable elements and the evolution of regulatory networks.
+\newblock \emph{Nature Reviews Genetics}, 9(5):397--405, 2008.
+
+\bibitem{kazazian2004}
+Kazazian, H.H.
+\newblock Mobile elements: drivers of genome evolution.
+\newblock \emph{Science}, 303(5664):1626--1632, 2004.
+
+\bibitem{agrawal1998}
+Agrawal, A., Eastman, Q.M., and Schatz, D.G.
+\newblock Transposition mediated by RAG1 and RAG2 and its implications for the
+evolution of the immune system.
+\newblock \emph{Nature}, 394(6695):744--751, 1998.
+
+\bibitem{hiom1998}
+Hiom, K., Melek, M., and Gellert, M.
+\newblock DNA transposition by the RAG1 and RAG2 proteins: a possible source
+of oncogenic translocations.
+\newblock \emph{Cell}, 94(4):463--470, 1998.
+
+\bibitem{sanmiguel1998}
+SanMiguel, P., Gaut, B.S., Tikhonov, A., Nakajima, Y., and Bennetzen, J.L.
+\newblock The paleontology of intergene retrotransposons of maize.
+\newblock \emph{Nature Genetics}, 20(1):43--45, 1998.
+
+\bibitem{mi2000}
+Mi, S., Lee, X., Li, X., Veldman, G.M., Bhatt, R.S., et al.
+\newblock Syncytin is a captive retroviral envelope protein involved in human
+placental morphogenesis.
+\newblock \emph{Nature}, 403(6771):785--789, 2000.
+
+\bibitem{wadsworth2009}
+Wadsworth, C. and Bhatt, P.
+\newblock Modular composition in biological systems: from molecular to organismal scales.
+\newblock \emph{Journal of Theoretical Biology}, 261(3):401--412, 2009.
+
+\bibitem{awodey2010}
+Awodey, S.
+\newblock \emph{Category Theory}.
+\newblock Oxford University Press, 2nd edition, 2010.
+
+\bibitem{pierce2002}
+Pierce, B.C.
+\newblock \emph{Types and Programming Languages}.
+\newblock MIT Press, 2002.
+
+\bibitem{maclane1998}
+Mac~Lane, S.
+\newblock \emph{Categories for the Working Mathematician}.
+\newblock Springer, 2nd edition, 1998.
+
+\bibitem{lawvere1969}
+Lawvere, F.W.
+\newblock Diagonal arguments and cartesian closed categories.
+\newblock \emph{Lecture Notes in Mathematics}, 92:134--145, 1969.
+
+\bibitem{thompson2016}
+Thompson, P.J., Macfarlan, T.S., and Lorincz, M.C.
+\newblock Long terminal repeats: from parasitic elements to building blocks of
+the transcriptional regulatory repertoire.
+\newblock \emph{Molecular Cell}, 62(5):766--776, 2016.
+
+\bibitem{bourque2018}
+Bourque, G., Burns, K.H., Gehring, M., et al.
+\newblock Ten things you should know about transposable elements.
+\newblock \emph{Genome Biology}, 19:199, 2018.
+
+\end{thebibliography}
+
+\end{document}

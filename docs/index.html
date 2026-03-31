@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNA-Lang | A Typed Programming Language for Biological Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e14;--surface:#111827;--surface2:#1f2937;
+  --text:#e5e7eb;--text-dim:#9ca3af;
+  --accent:#00b894;--accent2:#55efc4;--accent-dim:rgba(0,184,148,0.12);
+  --border:#1f2937;
+  --font-body:Inter,system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono','Fira Code',monospace;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent)}
+::selection{background:rgba(0,184,148,0.3);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+.nav{position:sticky;top:0;z-index:50;background:rgba(10,14,20,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:.8rem 0}
+.nav .container{display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.1rem;color:var(--text)}
+.nav-logo{width:28px;height:28px;border-radius:6px;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;font-family:var(--font-mono)}
+.nav-links{display:flex;gap:1.5rem;align-items:center;font-size:.85rem}
+.nav-links a{color:var(--text-dim)}
+.nav-links a:hover{color:var(--accent2)}
+.btn-gh{padding:.4rem 1rem;border-radius:8px;background:var(--accent-dim);color:var(--accent2)!important;border:1px solid rgba(0,184,148,0.2);font-weight:500}
+.hero{text-align:center;padding:5rem 0 4rem}
+.hero-badge{display:inline-block;padding:.3rem 1rem;border-radius:100px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(0,184,148,0.2);margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2.8rem,8vw,4.5rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin-bottom:.8rem;background:linear-gradient(135deg,#e5e7eb 0%,#55efc4 50%,#00b894 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.3rem;color:var(--text-dim);margin-bottom:1rem;font-weight:500}
+.hero-desc{max-width:640px;margin:0 auto 2rem;color:var(--text-dim);font-size:.95rem;line-height:1.8}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{padding:.7rem 1.8rem;border-radius:10px;background:var(--accent);color:#0a0e14;font-weight:700;font-size:.9rem}
+.btn-secondary{padding:.7rem 1.8rem;border-radius:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border);font-weight:600;font-size:.9rem}
+.type-section{padding:3rem 0}
+.section-title{font-size:1.8rem;font-weight:700;text-align:center;margin-bottom:.3rem}
+.section-sub{text-align:center;color:var(--text-dim);font-size:.85rem;margin-bottom:2rem}
+.code-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;font-family:var(--font-mono);font-size:.82rem;line-height:1.7;overflow-x:auto;color:var(--text-dim);white-space:pre}
+.kw{color:#6c5ce7}.ty{color:var(--accent2)}.field{color:#fdcb6e}.cm{color:#636e72}
+.t1{color:#00b894}.t2{color:#0984e3}.t3{color:#6c5ce7}.t4{color:#e17055}.t5{color:#fdcb6e}.t6{color:#e84393}.t7{color:#00cec9}
+.papers-section{padding:3rem 0}
+.papers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem}
+.paper-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:transform .2s}
+.paper-card:hover{transform:translateY(-2px)}
+.paper-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.8rem}
+.paper-tags{display:flex;gap:.4rem;align-items:center}
+.tag{font-size:.65rem;font-weight:700;padding:.15rem .5rem;border-radius:4px}
+.paper-type{font-family:var(--font-mono);font-size:.7rem}
+.paper-card h3{font-size:1.05rem;font-weight:700;margin-bottom:.2rem;color:var(--text)}
+.paper-card .subtitle{font-size:.78rem;color:var(--text-dim);margin-bottom:.5rem;font-weight:500}
+.paper-card .desc{font-size:.82rem;color:var(--text-dim);line-height:1.6;margin-bottom:1rem}
+.paper-links{display:flex;gap:.5rem}
+.paper-links a{font-size:.72rem;padding:.3rem .7rem;border-radius:6px;font-weight:600;border:1px solid}
+.footer{padding:3rem 0;border-top:1px solid var(--border);text-align:center;margin-top:3rem}
+.footer p{font-size:.82rem;color:var(--text-dim)}
+.footer a{color:var(--accent);font-size:.75rem}
+@media(max-width:640px){.papers-grid{grid-template-columns:1fr}.hero{padding:3rem 0 2rem}.nav-links .hide-mobile{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <div class="nav-brand"><div class="nav-logo">{}</div> DNA-Lang</div>
+    <div class="nav-links">
+      <a href="#papers" class="hide-mobile">Papers</a>
+      <a href="#architecture" class="hide-mobile">Architecture</a>
+      <a href="https://github.com/YonedaAI/dna-lang" class="btn-gh" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">8 Research Papers &middot; Haskell Implementations &middot; bio.PL</div>
+    <h1>DNA-Lang</h1>
+    <p class="hero-sub">A Typed Programming Language for Biological Systems</p>
+    <p class="hero-desc">DNA is not one type&mdash;it contains seven functional data types that compose into a complete programming model. We formalize each as a typed construct, implement them in Haskell, and synthesize a unified orchestration language for biological intent, AI prediction, genome editing, and regulatory traceability.</p>
+    <div class="hero-actions">
+      <a href="#papers" class="btn-primary">Read the Papers</a>
+      <a href="https://github.com/YonedaAI/dna-lang/tree/main/src" class="btn-secondary" target="_blank" rel="noopener">View Haskell Source</a>
+    </div>
+  </div>
+</section>
+
+<section class="type-section" id="architecture">
+  <div class="container">
+    <h2 class="section-title">The Genome Type System</h2>
+    <p class="section-sub">Seven biological data types compose into a complete programming model</p>
+    <div class="code-block" style="max-width:720px;margin:0 auto"><span class="kw">data</span> <span class="ty">Genome</span> <span class="kw">=</span> <span class="ty">Genome</span>
+  { <span class="field">code</span>        :: [<span class="t1">ProteinCode</span>]      <span class="cm">-- Paper I:   Executable Functions</span>
+  , <span class="field">regulators</span>  :: [<span class="t2">Regulator</span>]        <span class="cm">-- Paper II:  Control Flow</span>
+  , <span class="field">ncRNAs</span>      :: [<span class="t3">RNAControl</span>]       <span class="cm">-- Paper III: Signals &amp; Middleware</span>
+  , <span class="field">structure</span>   :: [<span class="t4">Structure</span>]        <span class="cm">-- Paper IV:  Memory Layout</span>
+  , <span class="field">repeats</span>     :: [<span class="t5">Repeat</span>]           <span class="cm">-- Paper V:   Self-Modifying Code</span>
+  , <span class="field">epigenetics</span> :: [<span class="t6">State</span>]            <span class="cm">-- Paper VI:  Runtime State</span>
+  , <span class="field">programs</span>    :: [<span class="t7">Program</span>]          <span class="cm">-- Paper VII: Orchestration</span>
+  }</div>
+  </div>
+</section>
+
+<section class="papers-section" id="papers">
+  <div class="container">
+    <h2 class="section-title">Research Papers</h2>
+    <p class="section-sub">Matthew Long &middot; The YonedaAI Collaboration &middot; Chicago, IL &middot; March 2026</p>
+    <div class="papers-grid">
+
+      <div class="paper-card">
+        <div class="paper-header">
+          <div class="paper-tags"><span class="tag" style="background:#00b89420;color:#00b894">Part I</span><span class="tag" style="background:var(--surface2);color:var(--text-dim)">bio.PL</span></div>
+          <span class="paper-type" style="color:#00b894">ProteinCode&lt;T&gt;</span>
+        </div>
+        <h3>Coding Sequences as Executable Functions</h3>
+        <div class="subtitle">A Type-Theoretic Framework for the Central Dogma</div>
+        <div class="desc">Formalizes the central dogma (DNA&#8594;mRNA&#8594;Protein) as a typed compilation pipeline. Codons as opcodes, alternative splicing as dependent types, mutations as type errors.</div>
+        <div class="paper-links">
+          <a href="papers/coding-sequences.html" style="background:#00b89415;color:#00b894;border-color:#00b89430">Read HTML</a>
+          <a href="../papers/pdf/coding-sequences.pdf" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">PDF</a>
+          <a href="https://github.com/YonedaAI/dna-lang/tree/main/src/coding-sequences" target="_blank" rel="noopener" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">Haskell</a>
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-header">
+          <div class="paper-tags"><span class="tag" style="background:#0984e320;color:#0984e3">Part II</span><span class="tag" style="background:var(--surface2);color:var(--text-dim)">bio.PL</span></div>
+          <span class="paper-type" style="color:#0984e3">Regulator&lt;ExpressionLevel&gt;</span>
+        </div>
+        <h3>Regulatory Sequences as Control Flow</h3>
+        <div class="subtitle">A Type-Theoretic Framework for Gene Expression</div>
+        <div class="desc">Promoters as function entry points, enhancers as environment variables, silencers as access control. Gene regulatory networks as typed dataflow graphs.</div>
+        <div class="paper-links">
+          <a href="papers/regulatory-sequences.html" style="background:#0984e315;color:#0984e3;border-color:#0984e330">Read HTML</a>
+          <a href="../papers/pdf/regulatory-sequences.pdf" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">PDF</a>
+          <a href="https://github.com/YonedaAI/dna-lang/tree/main/src/regulatory-sequences" target="_blank" rel="noopener" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">Haskell</a>
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-header">
+          <div class="paper-tags"><span class="tag" style="background:#6c5ce720;color:#6c5ce7">Part III</span><span class="tag" style="background:var(--surface2);color:var(--text-dim)">bio.PL</span></div>
+          <span class="paper-type" style="color:#6c5ce7">RNAControl&lt;Process&gt;</span>
+        </div>
+        <h3>Non-Coding RNAs as Signals and Middleware</h3>
+        <div class="subtitle">A Type-Theoretic Framework for Post-Transcriptional Control</div>
+        <div class="desc">miRNA as guard clauses, siRNA as exception handlers, lncRNA as middleware scaffolds, tRNA as natural transformations between codon and amino acid functors.</div>
+        <div class="paper-links">
+          <a href="papers/noncoding-rna.html" style="background:#6c5ce715;color:#6c5ce7;border-color:#6c5ce730">Read HTML</a>
+          <a href="../papers/pdf/noncoding-rna.pdf" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">PDF</a>
+          <a href="https://github.com/YonedaAI/dna-lang/tree/main/src/noncoding-rna" target="_blank" rel="noopener" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">Haskell</a>
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-header">
+          <div class="paper-tags"><span class="tag" style="background:#e1705520;color:#e17055">Part IV</span><span class="tag" style="background:var(--surface2);color:var(--text-dim)">bio.PL</span></div>
+          <span class="paper-type" style="color:#e17055">Structure&lt;GenomeLayout&gt;</span>
+        </div>
+        <h3>Structural DNA as Memory Architecture</h3>
+        <div class="subtitle">A Type-Theoretic Framework for Genome Organization</div>
+        <div class="desc">Telomeres as linear resources, centromeres as synchronization primitives, TADs as memory segments, chromatin loops as pointers.</div>
+        <div class="paper-links">
+          <a href="papers/structural-dna.html" style="background:#e1705515;color:#e17055;border-color:#e1705530">Read HTML</a>
+          <a href="../papers/pdf/structural-dna.pdf" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">PDF</a>
+          <a href="https://github.com/YonedaAI/dna-lang/tree/main/src/structural-dna" target="_blank" rel="noopener" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">Haskell</a>
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-header">
+          <div class="paper-tags"><span class="tag" style="background:#fdcb6e20;color:#fdcb6e">Part V</span><span class="tag" style="background:var(--surface2);color:var(--text-dim)">bio.PL</span></div>
+          <span class="paper-type" style="color:#fdcb6e">Repeat&lt;SelfModifying&gt;</span>
+        </div>
+        <h3>Repetitive Elements as Self-Modifying Code</h3>
+        <div class="subtitle">A Type-Theoretic Framework for Genome Plasticity</div>
+        <div class="desc">Transposons as endofunctors on the genome category. Cut-and-paste as move semantics, copy-and-paste as template instantiation.</div>
+        <div class="paper-links">
+          <a href="papers/repetitive-elements.html" style="background:#fdcb6e15;color:#fdcb6e;border-color:#fdcb6e30">Read HTML</a>
+          <a href="../papers/pdf/repetitive-elements.pdf" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">PDF</a>
+          <a href="https://github.com/YonedaAI/dna-lang/tree/main/src/repetitive-elements" target="_blank" rel="noopener" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">Haskell</a>
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-header">
+          <div class="paper-tags"><span class="tag" style="background:#e8439320;color:#e84393">Part VI</span><span class="tag" style="background:var(--surface2);color:var(--text-dim)">bio.PL</span></div>
+          <span class="paper-type" style="color:#e84393">State&lt;Accessibility&gt;</span>
+        </div>
+        <h3>Epigenetic Marks as Runtime State</h3>
+        <div class="subtitle">A Type-Theoretic Framework for Chromatin Accessibility</div>
+        <div class="desc">DNA methylation as monadic configuration, histone modifications as access permissions, chromatin remodeling as garbage collection.</div>
+        <div class="paper-links">
+          <a href="papers/epigenetic-marks.html" style="background:#e8439315;color:#e84393;border-color:#e8439330">Read HTML</a>
+          <a href="../papers/pdf/epigenetic-marks.pdf" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">PDF</a>
+          <a href="https://github.com/YonedaAI/dna-lang/tree/main/src/epigenetic-marks" target="_blank" rel="noopener" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">Haskell</a>
+        </div>
+      </div>
+
+      <div class="paper-card">
+        <div class="paper-header">
+          <div class="paper-tags"><span class="tag" style="background:#00cec920;color:#00cec9">Part VII</span><span class="tag" style="background:var(--surface2);color:var(--text-dim)">bio.PL</span></div>
+          <span class="paper-type" style="color:#00cec9">Program&lt;OrganismDevelopment&gt;</span>
+        </div>
+        <h3>Developmental Programs as Orchestration</h3>
+        <div class="subtitle">A Type-Theoretic Framework for Morphogenesis</div>
+        <div class="desc">Hox genes as the main module, morphogen gradients as distributed config, cell fate as refinement type narrowing.</div>
+        <div class="paper-links">
+          <a href="papers/developmental-programs.html" style="background:#00cec915;color:#00cec9;border-color:#00cec930">Read HTML</a>
+          <a href="../papers/pdf/developmental-programs.pdf" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">PDF</a>
+          <a href="https://github.com/YonedaAI/dna-lang/tree/main/src/developmental-programs" target="_blank" rel="noopener" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">Haskell</a>
+        </div>
+      </div>
+
+      <div class="paper-card" style="border-color:rgba(85,239,196,0.3)">
+        <div class="paper-header">
+          <div class="paper-tags"><span class="tag" style="background:#55efc420;color:#55efc4">Synthesis</span><span class="tag" style="background:var(--surface2);color:var(--text-dim)">bio.PL</span></div>
+          <span class="paper-type" style="color:#55efc4">Genome</span>
+        </div>
+        <h3>DNA-Lang: A Typed Orchestration Language</h3>
+        <div class="subtitle">For Biological Programming</div>
+        <div class="desc">Synthesizes all 7 types into a unified language specification with parser, type checker, compiler (4 targets), and runtime.</div>
+        <div class="paper-links">
+          <a href="papers/dna-lang.html" style="background:#55efc415;color:#55efc4;border-color:#55efc430">Read HTML</a>
+          <a href="../papers/pdf/dna-lang.pdf" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">PDF</a>
+          <a href="https://github.com/YonedaAI/dna-lang/tree/main/src/dna-lang" target="_blank" rel="noopener" style="background:var(--surface2);color:var(--text-dim);border-color:var(--border)">Haskell</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>Matthew Long &middot; The YonedaAI Research Collective &middot; Chicago, IL &middot; 2026</p>
+    <p style="margin-top:.5rem"><a href="https://github.com/YonedaAI/dna-lang">github.com/YonedaAI/dna-lang</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

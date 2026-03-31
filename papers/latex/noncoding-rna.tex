@@ -1,0 +1,1439 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{everypage}
+\usepackage{abstract}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{listings}
+
+% ── Theorem environments ──────────────────────────────────────────────
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% ── GrokRxiv DOI sidebar ─────────────────────────────────────────────
+\definecolor{grokgray}{RGB}{110,110,110}
+\AddEverypageHook{%
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[rotate=90, anchor=south, font=\Large\sffamily\bfseries\color{grokgray}, inner sep=0pt]
+      at ([xshift=38pt, yshift=0.52\paperheight]current page.south west)
+      {GrokRxiv:2026.03.noncoding-rna-signals-interrupts\quad [\,bio.PL\,]\quad 31 Mar 2026};
+    \end{tikzpicture}
+  \fi
+}
+
+% ── Listings style ────────────────────────────────────────────────────
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codecomment}{RGB}{80,120,80}
+\definecolor{codekw}{RGB}{0,0,160}
+\definecolor{codestr}{RGB}{160,0,0}
+\lstset{
+  language=Haskell,
+  basicstyle=\small\ttfamily,
+  backgroundcolor=\color{codebg},
+  keywordstyle=\color{codekw}\bfseries,
+  commentstyle=\color{codecomment}\itshape,
+  stringstyle=\color{codestr},
+  breaklines=true,
+  frame=single,
+  framerule=0.4pt,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  tabsize=2,
+  showstringspaces=false,
+  columns=flexible,
+  morekeywords={data,where,type,class,instance,deriving,newtype,module,import,qualified,as,do,let,in,case,of,if,then,else,forall}
+}
+
+% ── Header / Footer ──────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Non-Coding RNAs as Signals and Middleware}
+\fancyhead[R]{\small Page \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Macros ────────────────────────────────────────────────────────────
+\newcommand{\mimark}{\texttt{miRNA}}
+\newcommand{\simark}{\texttt{siRNA}}
+\newcommand{\lncmark}{\texttt{lncRNA}}
+\newcommand{\tmark}{\texttt{tRNA}}
+\newcommand{\rmark}{\texttt{rRNA}}
+\newcommand{\pimark}{\texttt{piRNA}}
+\newcommand{\Cat}{\mathbf{Cat}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\RNAType}{\mathsf{RNAControl}}
+\newcommand{\RISC}{\mathrm{RISC}}
+\newcommand{\Hom}{\mathrm{Hom}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=blue!60!black,
+  urlcolor=blue!60!black
+}
+
+% ══════════════════════════════════════════════════════════════════════
+\begin{document}
+
+\title{\textbf{Non-Coding RNAs as Signals and Middleware:\\
+A Type-Theoretic Framework for Post-Transcriptional Control}}
+
+\author{
+  Matthew Long \\
+  \textit{The YonedaAI Collaboration} \\
+  Chicago, IL \\
+  \texttt{mlong@yoneda-ai.org}
+}
+
+\date{March 31, 2026}
+
+\maketitle
+
+% ── Abstract ──────────────────────────────────────────────────────────
+\begin{abstract}
+\noindent
+The non-coding transcriptome---comprising over 98\% of eukaryotic RNA
+output---enacts a vast post-transcriptional control layer that has no
+satisfying formal account.  We propose that non-coding RNAs are most
+naturally described as \emph{typed signals, interrupts, and middleware}
+within a programming-language--theoretic framework.  MicroRNAs (miRNAs)
+are formalized as \emph{guard clauses} that conditionally suppress
+translation; small interfering RNAs (siRNAs) and the RISC complex
+implement a \emph{typed exception-handling system} with
+sequence-complementarity--based pattern matching; long non-coding RNAs
+(lncRNAs) serve as \emph{middleware scaffolds} whose assembly is
+captured by categorical colimits; transfer RNAs (tRNAs) constitute a
+\emph{natural transformation} between the codon functor and the amino
+acid functor; ribosomal RNAs (rRNAs) define the \emph{virtual machine}
+on which the genetic program executes; and PIWI-interacting RNAs
+(piRNAs) act as a \emph{security monitor} that silences transposable
+elements.  We introduce a parametric type $\RNAType\langle P\rangle$
+that unifies these roles, prove that RISC loading implements typed
+pattern matching (the \emph{RISC Pattern-Matching Theorem}), and
+establish the \emph{Scaffold Colimit Theorem} showing that
+lncRNA-mediated complex assembly satisfies the universal property of the
+colimit.  A complete Haskell implementation accompanies the theory.
+\end{abstract}
+
+\medskip
+\noindent\textbf{Keywords:}
+non-coding RNA, type theory, miRNA, siRNA, lncRNA, tRNA, rRNA, piRNA,
+category theory, natural transformation, colimit, middleware, guard clause,
+exception handling, RNA interference, RISC, post-transcriptional regulation
+
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Introduction}\label{sec:intro}
+
+The Central Dogma of molecular biology, in its most simplistic reading,
+posits a linear flow $\text{DNA} \to \text{RNA} \to \text{Protein}$.
+This reading assigns to RNA the role of a passive intermediate---a mere
+``messenger.''  The genomic era has shattered this view.  Deep
+sequencing reveals that while only $\sim$1.5\% of the human genome
+encodes proteins, \emph{over 80\%} is transcribed into RNA at some point
+in some cell type~\cite{encode2012}.  The vast majority of the
+transcriptome---conservatively 98\%---is \emph{non-coding}.
+
+This non-coding RNA (ncRNA) revolution poses a conceptual challenge:
+if these transcripts are not mere noise, what computational role do they
+play?  We argue that the answer comes naturally from programming language
+theory.  Non-coding RNAs are not data; they are \emph{control flow}.
+Specifically:
+
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{miRNAs} are \emph{guard clauses}: short ($\sim$22\,nt)
+    sequences that post-transcriptionally test whether a target mRNA
+    should be translated, repressing it if the guard evaluates to
+    \texttt{true} (i.e., if complementarity is sufficient).
+  \item \textbf{siRNAs} and the \textbf{RNA interference} (RNAi) pathway
+    implement \emph{exception handling}: the RISC complex is a
+    pattern-matching exception handler that degrades mRNAs whose
+    sequences match the loaded guide strand.
+  \item \textbf{lncRNAs} are \emph{middleware scaffolds}: they bring
+    together protein complexes into higher-order regulatory assemblies,
+    formalizable as categorical colimits.
+  \item \textbf{tRNAs} are \emph{natural transformations}: adaptors that
+    mediate between the codon functor (reading mRNA) and the amino acid
+    functor (building protein), satisfying naturality conditions.
+  \item \textbf{rRNAs} define the \emph{virtual machine}: the ribosome
+    is the execution engine whose structure and catalytic center are
+    RNA-based.
+  \item \textbf{piRNAs} are \emph{security monitors}: they silence
+    transposable elements in the germline, acting as an anti-malware
+    system.
+\end{enumerate}
+
+We unify these roles under a single parametric type
+$\RNAType\langle P\rangle$, where $P$ is the controlled process, and
+develop the associated formal theory.
+
+\subsection{Related Work}
+
+The analogy between molecular biology and computation has a long
+history, from von Neumann's self-reproducing automata through Turing
+machine models of gene regulation.  Regev and
+Shapiro~\cite{regev2001} modeled cellular processes in the
+$\pi$-calculus.  Cardelli~\cite{cardelli2005} introduced abstract
+machines for molecular systems.  Fontana and Buss~\cite{fontana1994}
+explored $\lambda$-calculus as a chemistry.  Our contribution is
+the first systematic type-theoretic treatment of the full ncRNA
+landscape, emphasizing the role of non-coding transcripts as typed
+control-flow primitives rather than as data.
+
+\subsection{Contributions}
+
+\begin{enumerate}[label=(\arabic*)]
+  \item A type-theoretic formalization of six major ncRNA classes as
+    programming-language control-flow primitives.
+  \item The parametric type $\RNAType\langle P\rangle$ unifying ncRNA
+    control roles.
+  \item The \emph{RISC Pattern-Matching Theorem} (Theorem~\ref{thm:risc}).
+  \item The \emph{Scaffold Colimit Theorem} (Theorem~\ref{thm:scaffold-colimit}).
+  \item The \emph{tRNA Natural Transformation Theorem} (Theorem~\ref{thm:trna-nat}).
+  \item A complete, compilable Haskell implementation.
+\end{enumerate}
+
+\subsection{Paper Organization}
+
+Sections~\ref{sec:mirna}--\ref{sec:rrna} develop the formalization for
+each ncRNA class.  Section~\ref{sec:rnacontrol} introduces the unifying
+type.  Sections~\ref{sec:rnai-typed}--\ref{sec:pirna} present the main
+theorems.  Section~\ref{sec:haskell} describes the implementation.
+Section~\ref{sec:discussion} concludes.
+
+% ══════════════════════════════════════════════════════════════════════
+\section{miRNA as Guard Clauses}\label{sec:mirna}
+
+MicroRNAs (miRNAs) are $\sim$22-nucleotide single-stranded RNA molecules
+that regulate gene expression post-transcriptionally.  They are processed
+from longer precursors (pri-miRNA $\to$ pre-miRNA $\to$ mature miRNA)
+and loaded into Argonaute (AGO) proteins to form the miRNA-induced
+silencing complex (miRISC).  The loaded miRNA then guides miRISC to
+complementary sites in the 3\('\)~UTR of target mRNAs, resulting in
+translational repression or mRNA destabilization.
+
+\subsection{The Guard Clause Interpretation}
+
+In programming, a \emph{guard clause} is a conditional test that, when
+true, causes early termination or redirection of execution:
+
+\begin{lstlisting}
+translate :: mRNA -> Maybe Protein
+translate msg
+  | miRNAGuard seed msg = Nothing   -- repressed
+  | otherwise           = Just (ribosome msg)
+\end{lstlisting}
+
+The key insight is that the miRNA seed region (positions 2--8 of the
+guide strand) functions exactly as a \emph{pattern} in a guard clause.
+
+\begin{definition}[miRNA Guard]\label{def:mirna-guard}
+Let $\Sigma = \{A, U, G, C\}$ be the RNA alphabet.  A \emph{miRNA guard}
+is a triple $g = (s, \theta, \sigma)$ where:
+\begin{itemize}
+  \item $s \in \Sigma^{6\text{--}8}$ is the \emph{seed sequence}
+    (the pattern),
+  \item $\theta \in [0,1]$ is the \emph{repression threshold}
+    (minimum complementarity score),
+  \item $\sigma : \Sigma^* \times \Sigma^* \to [0,1]$ is the
+    \emph{seed-match scoring function}.
+\end{itemize}
+The guard \emph{fires} on a target $t \in \Sigma^*$ if and only if
+$\sigma(s, t) \geq \theta$.
+\end{definition}
+
+\begin{definition}[Seed Match Score]\label{def:seed-score}
+Given seed $s = s_1 s_2 \cdots s_k$ and a target subsequence
+$t = t_1 t_2 \cdots t_k$, define the \emph{Watson--Crick complementarity
+indicator}:
+\[
+  \mathrm{wc}(a, b) =
+  \begin{cases}
+    1 & \text{if } (a,b) \in \{(A,U),(U,A),(G,C),(C,G)\} \\
+    0.5 & \text{if } (a,b) \in \{(G,U),(U,G)\} \quad\text{(wobble)} \\
+    0 & \text{otherwise}
+  \end{cases}
+\]
+Then:
+\[
+  \sigma(s, t) = \frac{1}{k}\sum_{i=1}^{k} \mathrm{wc}(s_i, t_i)
+\]
+\end{definition}
+
+\begin{proposition}[Guard Compositionality]\label{prop:guard-compose}
+Let $g_1 = (s_1, \theta_1, \sigma)$ and $g_2 = (s_2, \theta_2, \sigma)$
+be miRNA guards targeting the same mRNA $m$.  Define the
+\emph{cooperative guard} $g_1 \wedge g_2$ by:
+\[
+  (g_1 \wedge g_2)(m) = g_1(m) \lor g_2(m)
+\]
+Then the effective repression of $m$ under multiple miRNAs is captured by
+the disjunction of individual guards.  If miRNAs act cooperatively, the
+effective threshold is lowered:
+\[
+  \theta_{\text{eff}} = \min(\theta_1, \theta_2) \cdot
+  (1 - \alpha \cdot \mathbb{1}[\text{sites within 40\,nt}])
+\]
+where $\alpha \in [0, 0.3]$ is the cooperativity factor.
+\end{proposition}
+
+\subsection{Target Multiplicity and the Many-to-Many Relation}
+
+A single miRNA can target hundreds of distinct mRNAs, and a single mRNA
+can be targeted by many miRNAs.  This yields a bipartite graph
+$G = (M, T, E)$ where $M$ is the set of miRNAs, $T$ the set of target
+mRNAs, and $E \subseteq M \times T$ the targeting relation.
+
+\begin{definition}[miRNA Regulatory Network]
+The \emph{miRNA regulatory network} is the profunctor
+$\mathcal{R} : M^{\mathrm{op}} \times T \to \Set$ defined by:
+\[
+  \mathcal{R}(m, t) = \{(i, \sigma_i) \mid
+    \text{site } i \text{ in 3'\,UTR of } t \text{ matches seed of } m
+    \text{ with score } \sigma_i \geq \theta_m\}
+\]
+\end{definition}
+
+This profunctor captures not just \emph{whether} targeting occurs but
+\emph{where} and \emph{how strongly}.
+
+% ══════════════════════════════════════════════════════════════════════
+\section{siRNA and RNA Interference as Exception Handling}\label{sec:sirna}
+
+Small interfering RNAs (siRNAs) are $\sim$20--25\,nt double-stranded
+RNA molecules that trigger the RNA interference (RNAi) pathway.  Unlike
+miRNAs, which typically achieve partial complementarity and translational
+repression, siRNAs achieve \emph{perfect} or \emph{near-perfect}
+complementarity with their targets, leading to endonucleolytic cleavage
+and degradation.
+
+\subsection{The Exception-Handling Interpretation}
+
+The RNAi pathway closely parallels a typed exception-handling system:
+
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Exception generation}: Double-stranded RNA (dsRNA)
+    signals an anomaly (e.g., viral replication, transposon activity).
+    This is the \texttt{throw} statement.
+  \item \textbf{Exception processing}: The enzyme Dicer cleaves dsRNA
+    into $\sim$21\,nt siRNA duplexes---breaking the exception into
+    typed fragments.
+  \item \textbf{Handler registration}: One strand (the \emph{guide
+    strand}) is loaded into the RISC complex, registering the
+    exception handler.
+  \item \textbf{Pattern matching}: RISC scans the transcriptome,
+    testing each mRNA against the guide strand by sequence
+    complementarity---this is pattern matching.
+  \item \textbf{Exception propagation}: Upon a match, AGO2 cleaves the
+    target mRNA, propagating the ``exception'' (silencing) to all
+    copies.
+\end{enumerate}
+
+\begin{definition}[RNAi Exception Type]\label{def:rnai-exception}
+An \emph{RNAi exception} is a tuple $\varepsilon = (d, c, g, h)$ where:
+\begin{itemize}
+  \item $d \in \Sigma^*$ is the trigger dsRNA (the thrown exception),
+  \item $c : \Sigma^* \to [\Sigma^{21}]$ is the Dicer cleavage function
+    (exception decomposition),
+  \item $g \in \Sigma^{21}$ is the selected guide strand,
+  \item $h : \Sigma^{21} \times \Sigma^* \to \{\mathsf{Cleave},
+    \mathsf{Pass}\}$ is the RISC handler function.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[RISC Handler]\label{def:risc-handler}
+The RISC handler $h$ is defined by:
+\[
+  h(g, m) =
+  \begin{cases}
+    \mathsf{Cleave} & \text{if } \mathrm{hamming}(g, \mathrm{rc}(m_i)) \leq \delta
+      \text{ for some site } i \\
+    \mathsf{Pass} & \text{otherwise}
+  \end{cases}
+\]
+where $\mathrm{rc}$ denotes the reverse complement and $\delta$ is the
+mismatch tolerance (typically 0 for siRNAs, $\leq 4$ for miRNAs).
+\end{definition}
+
+\begin{proposition}[Specificity--Sensitivity Tradeoff]
+Let $\delta$ be the mismatch tolerance of the RISC handler.
+\begin{enumerate}[label=(\alph*)]
+  \item $\delta = 0$ (perfect match) yields maximum specificity but
+    limited sensitivity.  This is the siRNA regime.
+  \item $\delta \leq 4$ (partial match) yields lower specificity but
+    broader regulatory reach.  This is the miRNA regime.
+\end{enumerate}
+The type system enforces:
+\[
+  \text{siRNA} <: \text{miRNA}
+\]
+in the sense that siRNA-mediated cleavage is a \emph{strict} subcase of
+miRNA-mediated repression.
+\end{proposition}
+
+\subsection{The Exception Hierarchy}
+
+We organize the RNAi-related exceptions into a type hierarchy:
+
+\[
+\begin{tikzcd}[column sep=small]
+  & \mathsf{RNAException} \arrow[dl] \arrow[dr] & \\
+  \mathsf{SiRNAException} \arrow[d] & & \mathsf{MiRNAException} \arrow[d] \\
+  \mathsf{ViralDefense} & & \mathsf{TranslationalRepression}
+\end{tikzcd}
+\]
+
+This hierarchy ensures that handlers for general $\mathsf{RNAException}$
+can catch both siRNA- and miRNA-generated signals, while specialized
+handlers can discriminate.
+
+% ══════════════════════════════════════════════════════════════════════
+\section{lncRNA as Middleware and Scaffolds}\label{sec:lncrna}
+
+Long non-coding RNAs (lncRNAs) are transcripts exceeding 200 nucleotides
+that do not encode proteins.  Their functions are extraordinarily
+diverse: they act as scaffolds for chromatin-modifying complexes (e.g.,
+HOTAIR, Xist), as decoys sequestering transcription factors or miRNAs,
+as guides recruiting regulatory complexes to specific genomic loci, and
+as enhancer-derived transcripts (eRNAs) facilitating gene activation.
+
+\subsection{The Middleware Interpretation}
+
+In software architecture, \emph{middleware} is software that sits between
+the operating system and applications, providing services such as
+message passing, authentication, transaction management, and resource
+brokering.  LncRNAs play an analogous role in the cell.
+
+\begin{definition}[lncRNA Middleware]\label{def:lncrna-middleware}
+An \emph{lncRNA middleware} is a tuple $\mu = (l, B, \phi, \psi)$ where:
+\begin{itemize}
+  \item $l$ is the lncRNA transcript (the middleware module),
+  \item $B = \{b_1, \ldots, b_n\}$ is a set of \emph{binding partners}
+    (proteins, other RNAs, or DNA loci),
+  \item $\phi : l \to 2^B$ is the \emph{binding function} mapping
+    structural domains of $l$ to subsets of binding partners,
+  \item $\psi : 2^B \to \mathsf{Effect}$ is the \emph{effector function}
+    mapping assembled complexes to downstream effects.
+\end{itemize}
+\end{definition}
+
+The composition $\psi \circ \phi$ maps lncRNA structural features
+directly to biological effects, with the lncRNA serving as the
+\emph{middleware} that mediates between signal and response.
+
+\subsection{The Scaffold as Categorical Colimit}
+
+When a lncRNA assembles multiple proteins into a functional complex, it
+is computing a \emph{colimit} in the category of molecular assemblies.
+
+\begin{definition}[Assembly Diagram]\label{def:assembly-diagram}
+Let $\mathcal{C}$ be the category whose objects are molecular
+species (proteins, RNAs, DNA loci) and whose morphisms are
+binding interactions.  An \emph{assembly diagram} for a lncRNA scaffold
+$l$ is a functor $D : J \to \mathcal{C}$ from a small indexing category
+$J$ (encoding the combinatorics of binding) to $\mathcal{C}$.
+\end{definition}
+
+\begin{example}[HOTAIR Scaffold]
+The lncRNA HOTAIR binds PRC2 at its 5\('\) end and the
+LSD1/CoREST/REST complex at its 3\('\) end, bridging two chromatin
+modification activities.  The assembly diagram is:
+\[
+\begin{tikzcd}
+  \text{PRC2} & \text{HOTAIR} \arrow[l, "\phi_1"'] \arrow[r, "\phi_2"] &
+  \text{LSD1/CoREST}
+\end{tikzcd}
+\]
+The scaffold colimit is the assembled complex
+$\text{PRC2--HOTAIR--LSD1/CoREST}$.
+\end{example}
+
+\subsection{Functional Classification of lncRNA Middleware}
+
+\begin{table}[H]
+\centering
+\caption{lncRNA middleware roles and their software analogues.}
+\label{tab:lncrna-roles}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{lncRNA Role} & \textbf{Example} & \textbf{Software Analogue} \\
+\midrule
+Scaffold   & HOTAIR  & Service bus / message broker \\
+Guide      & Xist    & Router / request dispatcher \\
+Decoy      & PTENP1  & Load balancer / circuit breaker \\
+Enhancer   & eRNAs   & Event-driven middleware \\
+Sponge     & circRNAs & Rate limiter \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{tRNA as Natural Transformation}\label{sec:trna}
+
+Transfer RNAs (tRNAs) are the molecular adaptors that decode the
+genetic code during translation.  Each tRNA carries an amino acid and
+presents an anticodon complementary to a specific mRNA codon.
+
+\subsection{The Natural Transformation Interpretation}
+
+\begin{definition}[Codon Functor]\label{def:codon-functor}
+Let $\mathcal{G}$ be the category of genetic sequences (objects are
+sequence positions, morphisms are reading frame shifts).  The
+\emph{codon functor} $F : \mathcal{G} \to \Set$ maps each position
+to the codon triplet at that position:
+\[
+  F(i) = (m_i, m_{i+1}, m_{i+2}) \in \Sigma^3
+\]
+\end{definition}
+
+\begin{definition}[Amino Acid Functor]\label{def:aa-functor}
+The \emph{amino acid functor} $G : \mathcal{G} \to \Set$ maps each
+position to the set of amino acids that could be incorporated at
+that position:
+\[
+  G(i) = \{a \in \mathcal{A} \mid \exists\, \text{tRNA}_{a,c} \text{ with anticodon } c \text{ matching } F(i)\}
+\]
+where $\mathcal{A}$ is the set of 20 standard amino acids.
+\end{definition}
+
+\begin{theorem}[tRNA as Natural Transformation]\label{thm:trna-nat}
+The collection of tRNAs defines a natural transformation
+$\eta : F \Rightarrow G$ from the codon functor to the amino acid
+functor.  Specifically, for each position $i$:
+\[
+  \eta_i : F(i) \to G(i)
+\]
+maps the codon at position $i$ to the amino acid carried by the
+cognate tRNA.  Naturality requires that for any reading-frame morphism
+$f : i \to j$ in $\mathcal{G}$:
+\[
+\begin{tikzcd}
+  F(i) \arrow[r, "\eta_i"] \arrow[d, "F(f)"'] & G(i) \arrow[d, "G(f)"] \\
+  F(j) \arrow[r, "\eta_j"'] & G(j)
+\end{tikzcd}
+\]
+commutes.
+\end{theorem}
+
+\begin{proof}
+Naturality follows from the \emph{universality of the genetic code}:
+the mapping from codons to amino acids is position-independent.  That
+is, the same codon yields the same amino acid regardless of where it
+appears in the mRNA.  Formally, if $f : i \to j$ is a position shift
+and $F(f)$ carries the codon at position $i$ to the codon at position
+$j$, then:
+\[
+  G(f)(\eta_i(F(i))) = \eta_j(F(f)(F(i)))
+\]
+because the tRNA that decodes a given codon does not depend on
+the codon's position in the transcript.  This is precisely the
+commutativity of the naturality square.
+\end{proof}
+
+\subsection{Wobble Pairing and Lax Naturality}
+
+The wobble base-pairing rules allow certain tRNAs to recognize multiple
+codons.  This relaxes strict naturality to \emph{lax naturality}:
+
+\begin{definition}[Wobble-Extended Natural Transformation]
+The \emph{wobble-extended} tRNA mapping $\tilde{\eta}$ is a lax natural
+transformation where the naturality squares commute up to a specified
+2-cell $\alpha$:
+\[
+  G(f) \circ \tilde{\eta}_i \cong \tilde{\eta}_j \circ F(f)
+  \quad \text{(up to wobble equivalence)}
+\]
+where wobble equivalence identifies codons that differ only in the
+third (wobble) position and are decoded by the same tRNA.
+\end{definition}
+
+\subsection{Codon Degeneracy as Kernel}
+
+The degeneracy of the genetic code (multiple codons encoding the same
+amino acid) is precisely the \emph{kernel} of the natural
+transformation $\eta$:
+\[
+  \ker(\eta) = \{(c_1, c_2) \in \Sigma^3 \times \Sigma^3 \mid
+    \eta(c_1) = \eta(c_2)\}
+\]
+This kernel defines an equivalence relation whose equivalence classes
+are the synonymous codon families (e.g., $\{$UCU, UCC, UCA, UCG$\}$
+for Serine).
+
+% ══════════════════════════════════════════════════════════════════════
+\section{rRNA as Virtual Machine}\label{sec:rrna}
+
+Ribosomal RNA (rRNA) constitutes the structural and catalytic core of
+the ribosome, the molecular machine that translates mRNA into protein.
+In eukaryotes, the ribosome consists of a small (40S) and a large (60S)
+subunit, together forming the 80S ribosome.  Remarkably, the peptidyl
+transferase activity---the catalytic heart of translation---resides in
+the 23S/28S rRNA, not in any ribosomal protein.
+
+\subsection{The Virtual Machine Interpretation}
+
+The ribosome is the \emph{virtual machine} (VM) on which the genetic
+program executes.  The rRNAs define the VM's architecture:
+
+\begin{definition}[Ribosome VM]\label{def:ribosome-vm}
+The \emph{ribosome virtual machine} is a tuple
+$\mathcal{V} = (S, I, \delta, s_0, F)$ where:
+\begin{itemize}
+  \item $S = \{$\textsf{Scanning}, \textsf{Initiation},
+    \textsf{Elongation}, \textsf{Termination}$\}$ is the set of
+    machine states,
+  \item $I = \Sigma^3$ is the instruction set (codons),
+  \item $\delta : S \times I \to S \times \mathcal{A}^*$ is the
+    transition function,
+  \item $s_0 = \textsf{Scanning}$ is the initial state,
+  \item $F = \{\textsf{Termination}\}$ is the set of accepting states.
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[rRNA as VM Microcode]
+The rRNA components provide the following VM services:
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{16S/18S rRNA}: instruction fetch and decode
+    (codon--anticodon recognition in the A site),
+  \item \textbf{23S/28S rRNA}: the ALU---peptidyl transferase center
+    catalyzes peptide bond formation,
+  \item \textbf{5S/5.8S rRNA}: structural scaffolding of the large subunit
+    (memory bus).
+\end{enumerate}
+\end{proposition}
+
+\subsection{Execution Semantics}
+
+Translation can be described by the following operational semantics.
+Let $\Gamma$ denote the execution context (mRNA, tRNA pool, ribosome
+state).
+
+\[
+\frac{
+  \Gamma \vdash \text{codon}(i) = c \quad
+  \Gamma \vdash \text{tRNA}(c) = (a, \text{tRNA}_c) \quad
+  c \notin \{\text{UAA}, \text{UAG}, \text{UGA}\}
+}{
+  \Gamma \vdash \langle \textsf{Elong}, i, p \rangle
+    \longrightarrow \langle \textsf{Elong}, i{+}3, p \cdot a \rangle
+}
+\;\textsc{[E-Elongation]}
+\]
+
+\[
+\frac{
+  \Gamma \vdash \text{codon}(i) = c \quad
+  c \in \{\text{UAA}, \text{UAG}, \text{UGA}\}
+}{
+  \Gamma \vdash \langle \textsf{Elong}, i, p \rangle
+    \longrightarrow \langle \textsf{Term}, i, p \rangle
+}
+\;\textsc{[E-Termination]}
+\]
+
+\[
+\frac{
+  \Gamma \vdash \text{codon}(i) = \text{AUG}
+}{
+  \Gamma \vdash \langle \textsf{Scan}, i, \epsilon \rangle
+    \longrightarrow \langle \textsf{Elong}, i{+}3, \text{Met} \rangle
+}
+\;\textsc{[E-Initiation]}
+\]
+
+% ══════════════════════════════════════════════════════════════════════
+\section{The \texorpdfstring{$\RNAType\langle P\rangle$}{RNAControl<P>} Type}\label{sec:rnacontrol}
+
+We now introduce the central type of our framework, parameterized by
+the process being controlled.
+
+\begin{definition}[RNAControl Type]\label{def:rnacontrol}
+The \emph{RNAControl} type, parameterized by a process type $P$, is
+defined as the sum type:
+\begin{align*}
+  \RNAType\langle P\rangle \;::=\;
+    &\; \mathsf{MiRNA}\;\{\;\mathit{seed} : \Sigma^{6\text{--}8},\;
+      \mathit{targets} : [P],\;
+      \mathit{threshold} : [0,1]\;\} \\
+    \mid\; &\; \mathsf{SiRNA}\;\{\;\mathit{guide} : \Sigma^{21},\;
+      \mathit{passenger} : \Sigma^{21},\;
+      \mathit{handler} : P \to \mathsf{Effect}\;\} \\
+    \mid\; &\; \mathsf{LncRNA}\;\{\;\mathit{sequence} : \Sigma^*,\;
+      \mathit{partners} : [\mathsf{Molecule}],\;
+      \mathit{scaffold} : [\mathsf{Molecule}] \to \mathsf{Complex}\;\} \\
+    \mid\; &\; \mathsf{TRNA}\;\{\;\mathit{anticodon} : \Sigma^3,\;
+      \mathit{aminoAcid} : \mathcal{A},\;
+      \mathit{adapt} : \Sigma^3 \to \mathcal{A}\;\} \\
+    \mid\; &\; \mathsf{RRNA}\;\{\;\mathit{subunit} : \mathsf{SubunitType},\;
+      \mathit{execute} : P \to \mathsf{Protein}\;\} \\
+    \mid\; &\; \mathsf{PiRNA}\;\{\;\mathit{guide} : \Sigma^{24\text{--}31},\;
+      \mathit{target} : \mathsf{Transposon},\;
+      \mathit{silence} : \mathsf{Transposon} \to \mathsf{Effect}\;\}
+\end{align*}
+\end{definition}
+
+\begin{proposition}[Exhaustiveness]
+Every known functional class of non-coding RNA in the eukaryotic cell
+maps to exactly one constructor of $\RNAType\langle P\rangle$ (or to a
+composition thereof).
+\end{proposition}
+
+\begin{remark}
+The type parameter $P$ allows the same framework to describe
+ncRNA control at different levels of abstraction:
+\begin{itemize}
+  \item $\RNAType\langle\mathsf{mRNA}\rangle$: post-transcriptional
+    control of individual transcripts,
+  \item $\RNAType\langle\mathsf{Gene}\rangle$: gene-level regulation,
+  \item $\RNAType\langle\mathsf{Pathway}\rangle$: pathway-level control.
+\end{itemize}
+\end{remark}
+
+\subsection{Functor Instance}
+
+\begin{proposition}[$\RNAType$ is a Functor]\label{prop:rnacontrol-functor}
+$\RNAType$ admits a functorial action: given a morphism $f : P \to Q$
+between process types, we obtain
+$\RNAType(f) : \RNAType\langle P\rangle \to \RNAType\langle Q\rangle$
+defined by:
+\begin{align*}
+  \RNAType(f)(\mathsf{MiRNA}(s, ts, \theta)) &=
+    \mathsf{MiRNA}(s, \mathrm{map}\;f\;ts, \theta) \\
+  \RNAType(f)(\mathsf{SiRNA}(g, p, h)) &=
+    \mathsf{SiRNA}(g, p, h \circ f^{-1}) \\
+  &\;\vdots
+\end{align*}
+where the remaining cases follow by applying $f$ or $f^{-1}$ to
+each occurrence of $P$ in the constructor fields.  The functor laws
+hold by construction.
+\end{proposition}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{RNAi as a Typed Exception System}\label{sec:rnai-typed}
+
+We now present the main theorem characterizing RNA interference as
+typed pattern matching.
+
+\begin{definition}[Sequence Pattern]\label{def:seq-pattern}
+A \emph{sequence pattern} is a pair $\pi = (g, \delta)$ where
+$g \in \Sigma^{21}$ is the guide sequence and $\delta \in \mathbb{N}$
+is the mismatch tolerance.  A target $t \in \Sigma^*$ \emph{matches}
+$\pi$ at position $i$ if:
+\[
+  \mathrm{hamming}(g, \overline{t[i..i{+}20]}) \leq \delta
+\]
+where $\overline{(\cdot)}$ denotes the reverse complement.
+\end{definition}
+
+\begin{definition}[Typed Pattern Matching]
+A \emph{typed pattern-matching system} is a tuple
+$(\Pi, T, \mathsf{match})$ where:
+\begin{itemize}
+  \item $\Pi$ is a set of patterns,
+  \item $T$ is a set of targets,
+  \item $\mathsf{match} : \Pi \times T \to \{\top, \bot\}$ is the
+    matching function.
+\end{itemize}
+It is \emph{typed} if patterns and targets carry type annotations
+and matching respects the type discipline---i.e., a pattern of type
+$\tau$ can only match targets of type $\tau$ or a subtype thereof.
+\end{definition}
+
+\begin{theorem}[RISC Pattern-Matching Theorem]\label{thm:risc}
+The RISC complex implements a typed pattern-matching system
+$(\Pi_{\RISC}, T_{\text{mRNA}}, \mathsf{match}_{\RISC})$ where:
+\begin{enumerate}[label=(\roman*)]
+  \item The pattern set $\Pi_{\RISC}$ consists of all loaded guide
+    strands, each carrying the type annotation of its source
+    (siRNA vs.\ miRNA).
+  \item The target set $T_{\text{mRNA}}$ is the cellular transcriptome.
+  \item The matching function $\mathsf{match}_{\RISC}$ satisfies:
+    \begin{enumerate}[label=(\alph*)]
+      \item \textbf{Determinism}: For each guide--target pair,
+        the match outcome is deterministic.
+      \item \textbf{Type discrimination}: siRNA guides ($\delta = 0$)
+        yield cleavage; miRNA guides ($\delta > 0$) yield repression.
+      \item \textbf{Exhaustive scanning}: every mRNA in the
+        transcriptome is tested against every loaded guide.
+    \end{enumerate}
+  \item The system satisfies the \emph{progress} and \emph{preservation}
+    properties of a well-typed evaluation:
+    \begin{itemize}
+      \item \textbf{Progress}: If a guide is loaded and a target
+        exists with complementarity $\leq \delta$, cleavage/repression
+        will occur.
+      \item \textbf{Preservation}: The type of the silencing action
+        (cleavage vs.\ repression) is preserved throughout the
+        silencing process.
+    \end{itemize}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We verify each property:
+
+(i)~Guide strands are loaded into RISC as single-stranded RNA with
+known provenance (Dicer processing of dsRNA for siRNA; Drosha/Dicer
+processing of pri-miRNA for miRNA).  The provenance annotation serves
+as the type tag.
+
+(ii)~The transcriptome is accessible to cytoplasmic RISC.
+
+(iii-a)~Complementarity is a deterministic function of sequence.
+
+(iii-b)~AGO2, the catalytic component of RISC, requires extensive
+base-pairing (positions 2--21, with tolerance $\delta$) for
+endonucleolytic cleavage.  When complementarity is partial
+(miRNA-type), the complex instead recruits deadenylation and
+translational repression factors.  Thus the mismatch tolerance $\delta$
+determines the outcome type.
+
+(iii-c)~RISC scans by three-dimensional diffusion and sampling, giving
+all mRNAs a non-zero probability of encounter.
+
+Progress follows from the thermodynamic favorability of
+guide--target hybridization: if complementarity is sufficient, the
+duplex forms spontaneously.
+
+Preservation follows from the structural integrity of the RISC complex:
+once a guide is loaded, it remains stably associated with AGO, ensuring
+the same type of silencing action throughout the guide's lifetime.
+\end{proof}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{The Scaffold Colimit Theorem}\label{sec:scaffold-colimit}
+
+We now formalize the observation that lncRNA-mediated scaffold assembly
+satisfies the universal property of a colimit.
+
+\begin{definition}[Binding Category]\label{def:binding-cat}
+For a lncRNA scaffold $l$ with binding partners $B = \{b_1, \ldots,
+b_n\}$, define the \emph{binding category} $\mathcal{B}_l$ as follows:
+\begin{itemize}
+  \item Objects: the binding domains $\{d_1, \ldots, d_k\}$ of $l$
+    together with the partners $B$.
+  \item Morphisms: $d_i \to b_j$ if domain $d_i$ binds partner $b_j$;
+    $b_j \to b_{j'}$ if partners $j$ and $j'$ interact when
+    co-scaffolded.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Assembly Functor]\label{def:assembly-functor}
+The \emph{assembly functor} $A : \mathcal{B}_l \to \mathcal{C}$ maps:
+\begin{itemize}
+  \item Each binding domain $d_i$ to the corresponding structural
+    region of $l$ in the category of molecular assemblies $\mathcal{C}$.
+  \item Each partner $b_j$ to the molecule $b_j$ in $\mathcal{C}$.
+  \item Each binding morphism to the binding interaction in
+    $\mathcal{C}$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Scaffold Colimit Theorem]\label{thm:scaffold-colimit}
+Let $l$ be a lncRNA scaffold with binding category $\mathcal{B}_l$ and
+assembly functor $A : \mathcal{B}_l \to \mathcal{C}$.  Then the
+assembled ribonucleoprotein complex $\mathsf{RNP}_l$ satisfies the
+universal property of the colimit:
+\[
+  \mathsf{RNP}_l \cong \mathrm{colim}(A)
+\]
+That is, for any molecular complex $X$ and family of binding maps
+$\{f_i : A(b_i) \to X\}$ compatible with the diagram, there exists a
+unique map $u : \mathsf{RNP}_l \to X$ such that $u \circ \iota_i = f_i$
+for all $i$, where $\iota_i : A(b_i) \to \mathsf{RNP}_l$ are the
+canonical inclusions.
+\[
+\begin{tikzcd}
+  A(b_1) \arrow[r, "\iota_1"] \arrow[dr, "f_1"'] &
+  \mathsf{RNP}_l \arrow[d, dashed, "{\exists!\, u}"] &
+  A(b_2) \arrow[l, "\iota_2"'] \arrow[dl, "f_2"] \\
+  & X &
+\end{tikzcd}
+\]
+\end{theorem}
+
+\begin{proof}
+We must show that $\mathsf{RNP}_l$ satisfies the two colimit conditions:
+
+\textbf{Existence of cocone:} Each partner $b_j$ binds to $l$ at
+domain $d_j$, yielding inclusion maps
+$\iota_j : A(b_j) \to \mathsf{RNP}_l$.  These are compatible: for any
+morphism $d_i \to b_j$ in $\mathcal{B}_l$, the diagram commutes because
+the binding of $b_j$ to domain $d_i$ is the same whether we first
+include $d_i$ into $\mathsf{RNP}_l$ and then identify with $b_j$'s
+binding site, or bind directly.
+
+\textbf{Universality:} Suppose $X$ is any complex with compatible
+maps $f_j : A(b_j) \to X$.  Define $u : \mathsf{RNP}_l \to X$ by
+mapping each component of $\mathsf{RNP}_l$ to $X$ via the
+corresponding $f_j$.  Compatibility of the $f_j$ ensures $u$ is
+well-defined on overlaps (shared interfaces between partners).
+Uniqueness follows from the fact that $\mathsf{RNP}_l$ is generated
+by the images of $\iota_j$, so $u$ is determined on all of
+$\mathsf{RNP}_l$ by the $f_j$.
+\end{proof}
+
+\begin{corollary}[Scaffold Modularity]
+The colimit construction implies that the scaffolded complex is the
+\emph{minimal} complex containing all partners with all specified
+interactions.  Adding or removing a binding domain from the lncRNA
+corresponds to modifying the indexing category $\mathcal{B}_l$,
+yielding a different colimit---formalizing the modularity of
+scaffold-mediated assembly.
+\end{corollary}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{piRNA as Security Monitor}\label{sec:pirna}
+
+PIWI-interacting RNAs (piRNAs) are 24--31\,nt non-coding RNAs that
+associate with PIWI-subfamily Argonaute proteins.  They are primarily
+expressed in the germline, where they defend genome integrity by
+silencing transposable elements (TEs).
+
+\subsection{The Security Monitor Interpretation}
+
+Transposable elements are, from the genome's perspective, \emph{malware}:
+self-replicating sequences that insert themselves into the host genome,
+potentially disrupting gene function.  The piRNA pathway is the cell's
+\emph{anti-malware system}.
+
+\begin{definition}[piRNA Security Monitor]\label{def:pirna-monitor}
+A \emph{piRNA security monitor} is a tuple $\mu = (P, L, \mathsf{scan},
+\mathsf{silence})$ where:
+\begin{itemize}
+  \item $P$ is a library of piRNA guide sequences (the malware
+    signature database),
+  \item $L$ is the set of known transposon families (the threat
+    landscape),
+  \item $\mathsf{scan} : P \times \Sigma^* \to \{\top, \bot\}$ is the
+    scanning function that detects transposon transcripts by
+    complementarity,
+  \item $\mathsf{silence} : \Sigma^* \to \mathsf{Effect}$ triggers
+    transcriptional and post-transcriptional silencing of detected
+    threats.
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[Ping-Pong Amplification as Adaptive Immune Response]
+The ping-pong amplification cycle, in which sense and antisense piRNAs
+reciprocally generate each other using transposon transcripts as
+templates, is formally analogous to an \emph{adaptive immune response}:
+\begin{enumerate}[label=(\roman*)]
+  \item Initial piRNAs from piRNA clusters serve as the \emph{innate}
+    signature set.
+  \item Slicing of transposon mRNA by antisense piRNAs generates new
+    sense piRNAs---this is \emph{adaptive} expansion of the signature
+    database.
+  \item The cycle amplifies the response specifically against
+    \emph{active} transposons, implementing a form of
+    threat-proportional response.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Formal Properties of the piRNA Monitor}
+
+\begin{theorem}[Completeness of Germline Defense]\label{thm:pirna-complete}
+Under the assumptions that (a) piRNA clusters collectively contain
+representatives of all active transposon families and (b) the ping-pong
+cycle reaches steady state, the piRNA security monitor achieves
+\emph{coverage completeness}:
+\[
+  \forall\, t \in L_{\text{active}},\; \exists\, p \in P_{\infty}
+  \text{ such that } \mathsf{scan}(p, \mathrm{seq}(t)) = \top
+\]
+where $P_{\infty}$ is the steady-state piRNA library and
+$L_{\text{active}}$ is the set of currently active transposon families.
+\end{theorem}
+
+\begin{proof}
+By assumption (a), every active transposon family has at least one
+representative sequence in a piRNA cluster.  Transcription of this
+cluster produces primary piRNAs antisense to the transposon.  These
+primary piRNAs, loaded into PIWI, cleave transposon mRNAs, generating
+sense piRNAs that are loaded into a second PIWI paralog.  These sense
+piRNAs in turn cleave cluster-derived antisense transcripts, regenerating
+antisense piRNAs.  By assumption (b), this cycle converges, and the
+steady-state library $P_{\infty}$ contains both sense and antisense
+piRNAs complementary to every active transposon, establishing coverage
+completeness.
+\end{proof}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Haskell Implementation}\label{sec:haskell}
+
+We provide a complete Haskell implementation of the framework described
+above.  The implementation consists of the following modules:
+
+\begin{itemize}
+  \item \texttt{RNAControl.hs}: The core parametric type
+    $\RNAType\langle P\rangle$ with all six constructors.
+  \item \texttt{MicroRNA.hs}: miRNA seed matching, target prediction,
+    and repression scoring.
+  \item \texttt{SiRNA.hs}: RNA interference pathway including RISC
+    loading, guide strand selection, and target degradation.
+  \item \texttt{LncRNA.hs}: Scaffold assembly and complex formation.
+  \item \texttt{Main.hs}: Demonstrations of miRNA targeting, siRNA/RNAi
+    silencing, tRNA adaptation, and lncRNA scaffolding.
+\end{itemize}
+
+\subsection{Core Type Definition}
+
+The Haskell encoding of $\RNAType\langle P\rangle$ mirrors the
+mathematical definition:
+
+\begin{lstlisting}
+data RNAControl p
+  = MiRNA  { miSeed :: String, miTargets :: [p],
+             miThreshold :: Double }
+  | SiRNA  { siGuide :: String, siPassenger :: String,
+             siMismatchTol :: Int }
+  | LncRNA { lncSequence :: String,
+             lncPartners :: [String],
+             lncRole :: LncRNARole }
+  | TRNA   { trnaAnticodon :: String,
+             trnaAminoAcid :: Char }
+  | RRNA   { rrnaSubunit :: SubunitType }
+  | PiRNA  { piGuide :: String, piTarget :: String }
+  deriving (Show, Eq)
+\end{lstlisting}
+
+The type parameter \texttt{p} allows the same type to describe
+control over different process types, as discussed in
+Section~\ref{sec:rnacontrol}.
+
+\subsection{miRNA Seed Matching}
+
+The seed-matching algorithm implements Definition~\ref{def:seed-score}:
+
+\begin{lstlisting}
+seedMatch :: String -> String -> Double
+seedMatch seed target
+  | length target < length seed = 0.0
+  | otherwise = maximum scores
+  where
+    k = length seed
+    windows = [ take k (drop i target)
+              | i <- [0 .. length target - k] ]
+    scores = map (scoreSeed seed) windows
+
+scoreSeed :: String -> String -> Double
+scoreSeed s t =
+  let pairs = zip s t
+      wcScore (a, b)
+        | isComplement a b = 1.0
+        | isWobble a b     = 0.5
+        | otherwise        = 0.0
+  in sum (map wcScore pairs) /
+     fromIntegral (length pairs)
+\end{lstlisting}
+
+\subsection{RISC Pattern Matching}
+
+The RISC handler implements Definition~\ref{def:risc-handler}:
+
+\begin{lstlisting}
+data RISCResult = Cleave | Repress | Pass
+  deriving (Show, Eq)
+
+riscMatch :: String -> Int -> String -> RISCResult
+riscMatch guide tolerance target =
+  let rc = reverseComplement guide
+      mismatches = hammingDistance rc target
+  in if mismatches <= tolerance
+     then if tolerance == 0
+          then Cleave
+          else Repress
+     else Pass
+\end{lstlisting}
+
+\subsection{Scaffold Assembly}
+
+The scaffold colimit (Theorem~\ref{thm:scaffold-colimit}) is
+implemented via the \texttt{assembleComplex} function:
+
+\begin{lstlisting}
+data Complex = Complex
+  { complexName     :: String
+  , complexMembers  :: [String]
+  , complexScaffold :: String
+  } deriving (Show, Eq)
+
+assembleComplex :: String -> [String] -> Complex
+assembleComplex scaffold partners =
+  Complex { complexName =
+              scaffold ++ "-complex"
+          , complexMembers = partners
+          , complexScaffold = scaffold
+          }
+\end{lstlisting}
+
+\subsection{tRNA Adaptation}
+
+The natural transformation $\eta$ (Theorem~\ref{thm:trna-nat}) is
+encoded as a pure function:
+
+\begin{lstlisting}
+adaptCodon :: String -> Maybe Char
+adaptCodon codon = lookup codon codonTable
+
+codonTable :: [(String, Char)]
+codonTable =
+  [ ("AUG", 'M'), ("UUU", 'F'), ("UUC", 'F')
+  , ("UUA", 'L'), ("UUG", 'L'), ...
+  ]
+\end{lstlisting}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Extended Type-Theoretic Analysis}\label{sec:extended}
+
+\subsection{The ncRNA Control Monad}
+
+The various ncRNA control mechanisms can be composed monadically.
+Consider the following observation: an mRNA transcript may be subject
+to multiple layers of ncRNA control simultaneously---miRNA repression,
+possible RNAi degradation, and lncRNA-mediated sequestration.
+
+\begin{definition}[ncRNA Control Monad]
+Define the monad $\mathcal{M} : \Set \to \Set$ by:
+\[
+  \mathcal{M}(X) = \prod_{r \in \RNAType} (r \to X + \mathbf{1})
+\]
+where $\mathbf{1}$ represents the ``silenced'' outcome.  The unit
+$\eta : X \to \mathcal{M}(X)$ embeds uncontrolled expression, and the
+multiplication $\mu : \mathcal{M}(\mathcal{M}(X)) \to \mathcal{M}(X)$
+flattens nested control layers.
+\end{definition}
+
+\begin{proposition}[Monad Laws]
+$\mathcal{M}$ satisfies the monad laws:
+\begin{enumerate}[label=(\roman*)]
+  \item Left unit: $\mu \circ \eta_{\mathcal{M}} = \mathrm{id}$
+  \item Right unit: $\mu \circ \mathcal{M}(\eta) = \mathrm{id}$
+  \item Associativity: $\mu \circ \mu_{\mathcal{M}} =
+    \mu \circ \mathcal{M}(\mu)$
+\end{enumerate}
+\end{proposition}
+
+\subsection{Interaction Between ncRNA Classes}
+
+The different ncRNA classes do not act in isolation; they form a
+complex interaction network:
+
+\begin{definition}[ceRNA Hypothesis, Formalized]
+The \emph{competing endogenous RNA} (ceRNA) hypothesis posits that
+transcripts sharing miRNA response elements (MREs) can regulate each
+other by competing for a shared pool of miRNAs.  Formally, let
+$m_1, m_2$ be two transcripts with shared MREs for miRNA $\mu$.
+Then:
+\[
+  \text{Abundance}(m_1) \uparrow \;\implies\;
+  \text{Free}(\mu) \downarrow \;\implies\;
+  \text{Repression}(m_2) \downarrow
+\]
+This implements a form of \emph{inter-process communication} mediated
+by the shared miRNA signal.
+\end{definition}
+
+\begin{proposition}[lncRNA--miRNA Sponge Effect]
+A lncRNA acting as a miRNA sponge (e.g., circRNAs with dense MRE
+arrays) implements a \emph{rate limiter} in the middleware stack:
+\[
+  \text{Effective silencing rate} =
+  \frac{[\mu]_{\text{free}}}{[\mu]_{\text{total}}} \cdot k_{\text{max}}
+\]
+where $[\mu]_{\text{free}}$ is the concentration of miRNA not
+sequestered by the sponge.
+\end{proposition}
+
+\subsection{Type Safety of the ncRNA Control Layer}
+
+\begin{theorem}[Type Safety]\label{thm:type-safety}
+The ncRNA control system, modeled as $\RNAType\langle P\rangle$,
+satisfies type safety in the following sense:
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Progress}: Every ncRNA control element either actively
+    modifies its target process or is in a well-defined inactive state
+    (not loaded, sequestered, or degraded).
+  \item \textbf{Preservation}: The type of control (guard, exception,
+    middleware, transformation, VM instruction, security scan) is
+    preserved throughout the ncRNA's functional lifetime.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Progress: Each constructor of $\RNAType\langle P\rangle$ carries the
+necessary information to execute its control function.  An MiRNA
+carries its seed and threshold; if a matching target exists and the
+score exceeds the threshold, repression occurs (progress).  If no
+target matches, the miRNA remains in RISC in a scannable state
+(well-defined inactive state).  Similar arguments apply to each
+constructor.
+
+Preservation: The ncRNA's type is determined at biogenesis (Dicer
+processing for siRNA/miRNA, transcription for lncRNA, tRNA gene
+expression for tRNA, etc.)\ and is structurally encoded in its
+sequence and modifications.  Post-biogenesis, no process converts
+one ncRNA class into another (an miRNA does not become an siRNA).
+Thus the control type is preserved.
+\end{proof}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Compositional Semantics of ncRNA Networks}\label{sec:composition}
+
+\subsection{The ncRNA Operad}
+
+The various modes of ncRNA control can be organized into an operad
+structure, capturing how multiple ncRNA inputs compose to produce
+a single regulatory output.
+
+\begin{definition}[ncRNA Operad]
+Define the operad $\mathcal{O}_{\text{ncRNA}}$ with:
+\begin{itemize}
+  \item Operations $\mathcal{O}(n)$: the set of ncRNA regulatory
+    functions with $n$ inputs (target transcripts) and one output
+    (regulatory effect).
+  \item Composition: given $f \in \mathcal{O}(n)$ and
+    $g_i \in \mathcal{O}(k_i)$ for $1 \leq i \leq n$, the composite
+    $f \circ (g_1, \ldots, g_n) \in \mathcal{O}(k_1 + \cdots + k_n)$
+    represents hierarchical regulation.
+  \item Unit: the identity regulation (no effect).
+\end{itemize}
+\end{definition}
+
+\subsection{Regulatory Cascades as Kleisli Composition}
+
+When ncRNA control effects compose sequentially (e.g., a lncRNA
+modulates miRNA availability, which in turn affects mRNA translation),
+the appropriate compositional structure is Kleisli composition in the
+ncRNA control monad:
+
+\begin{definition}[Regulatory Cascade]
+A \emph{regulatory cascade} is a sequence of Kleisli arrows:
+\[
+  f_1 : A \to \mathcal{M}(B), \quad
+  f_2 : B \to \mathcal{M}(C), \quad \ldots, \quad
+  f_n : Y \to \mathcal{M}(Z)
+\]
+with composite:
+\[
+  f_n \circ_{\mathcal{M}} \cdots \circ_{\mathcal{M}} f_1
+  : A \to \mathcal{M}(Z)
+\]
+\end{definition}
+
+\begin{example}[ceRNA Cascade]
+Consider the cascade: lncRNA PTENP1 (sponge) $\to$ miR-21 (freed) $\to$
+PTEN mRNA (derepressed) $\to$ PI3K/AKT pathway (modulated).  This
+four-step cascade is a Kleisli composite:
+\[
+  \text{PTENP1-sponge} \circ_{\mathcal{M}} \text{miR-21-guard}
+  \circ_{\mathcal{M}} \text{PTEN-translation}
+  : \text{lncRNA-level} \to \mathcal{M}(\text{pathway-level})
+\]
+\end{example}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Discussion and Conclusion}\label{sec:discussion}
+
+\subsection{Summary of Results}
+
+We have developed a comprehensive type-theoretic framework for
+non-coding RNA function, showing that:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item The six major classes of ncRNAs correspond precisely to six
+    fundamental programming-language control-flow primitives: guards,
+    exceptions, middleware, natural transformations, virtual machines,
+    and security monitors.
+  \item These roles are unified under the parametric type
+    $\RNAType\langle P\rangle$.
+  \item The RISC complex implements typed pattern matching
+    (Theorem~\ref{thm:risc}).
+  \item lncRNA scaffold assembly satisfies the universal property
+    of the categorical colimit (Theorem~\ref{thm:scaffold-colimit}).
+  \item tRNA decoding is a natural transformation between the codon
+    and amino acid functors (Theorem~\ref{thm:trna-nat}).
+  \item The ncRNA control layer satisfies type safety
+    (Theorem~\ref{thm:type-safety}).
+\end{enumerate}
+
+\subsection{Biological Implications}
+
+Our framework suggests that the cell has evolved a \emph{typed control
+plane} separate from the data plane (protein-coding mRNAs).  This
+separation of concerns mirrors a fundamental software engineering
+principle and may explain the explosive growth of the non-coding
+transcriptome in complex organisms: as biological ``programs'' grow
+larger, proportionally more control flow is required.
+
+The observation that $>98\%$ of the transcriptome is non-coding
+parallels the observation in large software systems that control
+logic (configuration, middleware, monitoring, error handling) often
+exceeds the core business logic in volume.
+
+\subsection{Predictions}
+
+Our framework makes several testable predictions:
+
+\begin{enumerate}[label=(\roman*)]
+  \item Organisms with more complex developmental programs should
+    have proportionally larger ncRNA repertoires (more control flow
+    for larger programs).
+  \item ncRNA regulatory networks should exhibit compositionality:
+    the effect of multiple ncRNAs should be predictable from their
+    individual effects and their interaction type (guard composition,
+    exception hierarchy, middleware chaining).
+  \item The piRNA system should show adaptive dynamics consistent with
+    our security monitor formalization---specifically,
+    threat-proportional response amplification.
+\end{enumerate}
+
+\subsection{Limitations}
+
+Our framework intentionally abstracts away quantitative kinetics in
+favor of type-theoretic precision.  A full quantitative treatment
+would require combining our type theory with a stochastic process
+calculus.  Additionally, many ncRNA functions remain undiscovered;
+our six-constructor type may require extension as new functional
+classes emerge.
+
+\subsection{Future Work}
+
+Several directions merit exploration:
+\begin{itemize}
+  \item Extending the framework to circular RNAs (circRNAs) and their
+    unique back-splicing--derived topology.
+  \item Developing a dependent type theory where ncRNA types depend on
+    cellular state (tissue type, developmental stage).
+  \item Connecting to the broader DNA-Lang framework, where ncRNAs serve
+    as the control-flow layer for the genetic programming language.
+  \item Formalizing epitranscriptomic modifications (m$^6$A, pseudouridine)
+    as type annotations on ncRNAs.
+\end{itemize}
+
+\subsection{Conclusion}
+
+The non-coding RNA transcriptome is not genomic noise; it is the
+cell's control plane.  By recognizing miRNAs as guards, siRNAs as
+exception handlers, lncRNAs as middleware, tRNAs as natural
+transformations, rRNAs as virtual machines, and piRNAs as security
+monitors, we gain both formal precision and conceptual clarity.  The
+parametric type $\RNAType\langle P\rangle$ provides a unifying
+abstraction, and the accompanying theorems establish rigorous
+connections between molecular biology and type theory.  The complete
+Haskell implementation demonstrates that these abstractions are not
+merely metaphorical but computationally precise.
+
+% ── References ────────────────────────────────────────────────────────
+\begin{thebibliography}{99}
+
+\bibitem{encode2012}
+ENCODE Project Consortium.
+\newblock An integrated encyclopedia of DNA elements in the human genome.
+\newblock \emph{Nature}, 489(7414):57--74, 2012.
+
+\bibitem{bartel2009}
+D.~P. Bartel.
+\newblock MicroRNAs: target recognition and regulatory functions.
+\newblock \emph{Cell}, 136(2):215--233, 2009.
+
+\bibitem{fire1998}
+A.~Fire, S.~Xu, M.~K. Montgomery, S.~A. Kostas, S.~E. Driver, and
+  C.~C. Mello.
+\newblock Potent and specific genetic interference by double-stranded RNA in
+  \emph{Caenorhabditis elegans}.
+\newblock \emph{Nature}, 391(6669):806--811, 1998.
+
+\bibitem{rinn2012}
+J.~L. Rinn and H.~Y. Chang.
+\newblock Genome regulation by long noncoding RNAs.
+\newblock \emph{Annual Review of Biochemistry}, 81:145--166, 2012.
+
+\bibitem{cech2014}
+T.~R. Cech and J.~A. Steitz.
+\newblock The noncoding RNA revolution---trashing old rules to forge new ones.
+\newblock \emph{Cell}, 157(1):77--94, 2014.
+
+\bibitem{regev2001}
+A.~Regev and E.~Shapiro.
+\newblock Cellular abstractions: cells as computation.
+\newblock \emph{Nature}, 419(6905):343, 2001.
+
+\bibitem{cardelli2005}
+L.~Cardelli.
+\newblock Abstract machines of systems biology.
+\newblock \emph{Transactions on Computational Systems Biology III}, pages
+  145--168, 2005.
+
+\bibitem{fontana1994}
+W.~Fontana and L.~W. Buss.
+\newblock ``The arrival of the fittest'': toward a theory of biological
+  organization.
+\newblock \emph{Bulletin of Mathematical Biology}, 56(1):1--64, 1994.
+
+\bibitem{aravin2007}
+A.~A. Aravin, G.~J. Hannon, and J.~Brennecke.
+\newblock The Piwi-piRNA pathway provides an adaptive defense in the
+  transposon arms race.
+\newblock \emph{Science}, 318(5851):761--764, 2007.
+
+\bibitem{salmena2011}
+L.~Salmena, L.~Poliseno, Y.~Tay, L.~Kats, and P.~P. Pandolfi.
+\newblock A ceRNA hypothesis: the Rosetta Stone of a hidden RNA language?
+\newblock \emph{Cell}, 146(3):353--358, 2011.
+
+\bibitem{tsai2010}
+M.-C. Tsai, O.~Manor, Y.~Wan, N.~Mosammaparast, J.~K. Wang,
+  F.~Lan, Y.~Shi, E.~Segal, and H.~Y. Chang.
+\newblock Long noncoding RNA as modular scaffold of histone modification
+  complexes.
+\newblock \emph{Science}, 329(5992):689--693, 2010.
+
+\bibitem{mac1971}
+S.~Mac~Lane.
+\newblock \emph{Categories for the Working Mathematician}.
+\newblock Springer, 1971.
+
+\bibitem{wadler2015}
+P.~Wadler.
+\newblock Propositions as types.
+\newblock \emph{Communications of the ACM}, 58(12):75--84, 2015.
+
+\bibitem{pierce2002}
+B.~C. Pierce.
+\newblock \emph{Types and Programming Languages}.
+\newblock MIT Press, 2002.
+
+\bibitem{nishikura2010}
+K.~Nishikura.
+\newblock Functions and regulation of RNA editing by ADAR deaminases.
+\newblock \emph{Annual Review of Biochemistry}, 79:321--349, 2010.
+
+\bibitem{yoneda1954}
+N.~Yoneda.
+\newblock On the homology theory of modules.
+\newblock \emph{Journal of the Faculty of Science, University of Tokyo},
+  7:193--227, 1954.
+
+\end{thebibliography}
+
+\end{document}
