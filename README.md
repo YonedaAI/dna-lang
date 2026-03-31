@@ -8,14 +8,16 @@ DNA is not one type — it contains seven functional data types that compose int
 
 | Part | Title | Type | Pages |
 |------|-------|------|-------|
-| I | Coding Sequences as Executable Functions | `ProteinCode<T>` | — |
-| II | Regulatory Sequences as Control Flow | `Regulator<ExpressionLevel>` | — |
-| III | Non-Coding RNAs as Signals and Middleware | `RNAControl<Process>` | — |
-| IV | Structural DNA as Memory Architecture | `Structure<GenomeLayout>` | — |
-| V | Repetitive Elements as Self-Modifying Code | `Repeat<SelfModifying>` | — |
-| VI | Epigenetic Marks as Runtime State | `State<Accessibility>` | — |
-| VII | Developmental Programs as Orchestration | `Program<OrganismDevelopment>` | — |
-| VIII | **DNA-Lang: A Typed Orchestration Language** | `Genome` | — |
+| I | Coding Sequences as Executable Functions | `ProteinCode<T>` | 41 |
+| II | Regulatory Sequences as Control Flow | `Regulator<ExpressionLevel>` | 23 |
+| III | Non-Coding RNAs as Signals and Middleware | `RNAControl<Process>` | 23 |
+| IV | Structural DNA as Memory Architecture | `Structure<GenomeLayout>` | 28 |
+| V | Repetitive Elements as Self-Modifying Code | `Repeat<SelfModifying>` | 19 |
+| VI | Epigenetic Marks as Runtime State | `State<Accessibility>` | 26 |
+| VII | Developmental Programs as Orchestration | `Program<OrganismDevelopment>` | 21 |
+| VIII | **DNA-Lang: A Typed Orchestration Language** | `Genome` | 26 |
+
+**Total: 207 pages across 8 papers**
 
 ## The Genome Type System
 
@@ -92,5 +94,6 @@ Matthew Long — The YonedaAI Research Collective — Chicago, IL — 2026
 
 ## Website
 
+- Vercel: https://dna-lang.vercel.app
 - GitHub Pages: https://yonedaai.github.io/dna-lang/
 - Papers: available as PDF and HTML with KaTeX math rendering

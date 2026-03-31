@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 const paperData: Record<
@@ -164,6 +165,37 @@ export function generateStaticParams() {
   return Object.keys(paperData).map((slug) => ({ slug }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const paper = paperData[slug];
+  if (!paper) return {};
+
+  const title = `${paper.title} | DNA-Lang`;
+  const description = paper.abstract;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: paper.title,
+      description,
+      type: "article",
+      url: `https://dna-lang.vercel.app/papers/${slug}`,
+      siteName: "DNA-Lang",
+      authors: ["Matthew Long"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: paper.title,
+      description,
+    },
+  };
+}
+
 export default async function PaperPage({
   params,
 }: {
@@ -179,6 +211,7 @@ export default async function PaperPage({
     <div className="min-h-screen" style={{ background: "var(--bg)" }}>
       {/* Nav */}
       <nav
+        aria-label="Paper navigation"
         className="sticky top-0 z-50 border-b backdrop-blur-xl"
         style={{
           background: "rgba(10,14,20,0.88)",

@@ -114,6 +114,7 @@ export default function Home() {
 
       {/* Nav */}
       <nav
+        aria-label="Main navigation"
         className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-xl"
         style={{
           background: "rgba(10,14,20,0.88)",
@@ -123,6 +124,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 no-underline">
             <div
+              aria-hidden="true"
               className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs sm:text-sm font-bold"
               style={{
                 background: "var(--accent-dim)",
@@ -218,7 +220,7 @@ export default function Home() {
           <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
             <a
               href="#papers"
-              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all hover:brightness-110 hover:shadow-lg hover:shadow-[rgba(0,184,148,0.25)]"
               style={{
                 background: "var(--accent)",
                 color: "#0a0e14",
@@ -230,7 +232,7 @@ export default function Home() {
               href="https://github.com/YonedaAI/dna-lang/tree/main/src"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all hover:brightness-125 hover:border-[var(--accent)]"
               style={{
                 background: "var(--surface2)",
                 color: "var(--text)",
@@ -365,9 +367,9 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
             {papers.map((paper) => (
-              <article
+              <div
                 key={paper.slug}
-                className="rounded-xl p-5 sm:p-6 transition-all duration-200 group"
+                className="rounded-xl p-5 sm:p-6 transition-all duration-200 group hover:translate-y-[-2px]"
                 style={{
                   background: "var(--surface)",
                   border: `1px solid ${"isSynthesis" in paper && paper.isSynthesis ? "rgba(85,239,196,0.3)" : "var(--border)"}`,
@@ -407,11 +409,14 @@ export default function Home() {
                   </code>
                 </div>
 
-                <h3
-                  className="font-bold text-base sm:text-lg mb-1"
-                  style={{ color: "var(--text)" }}
-                >
-                  {paper.title}
+                <h3 className="font-bold text-base sm:text-lg mb-1">
+                  <a
+                    href={`/html/${paper.slug}.html`}
+                    className="no-underline hover:underline"
+                    style={{ color: "var(--text)" }}
+                  >
+                    {paper.title}
+                  </a>
                 </h3>
                 <p
                   className="text-[11px] sm:text-xs mb-2 sm:mb-3 font-medium"
@@ -429,7 +434,8 @@ export default function Home() {
                 <div className="flex items-center gap-2 sm:gap-3 text-xs flex-wrap">
                   <a
                     href={`/html/${paper.slug}.html`}
-                    className="px-3 py-1.5 rounded-md font-medium transition-all inline-flex items-center gap-1"
+                    
+                    className="px-3 py-1.5 rounded-md font-medium transition-all inline-flex items-center gap-1 hover:brightness-125 relative z-10"
                     style={{
                       background: `${paper.color}15`,
                       color: paper.color,
@@ -451,7 +457,8 @@ export default function Home() {
                   </a>
                   <a
                     href={`/papers/${paper.slug}.pdf`}
-                    className="px-3 py-1.5 rounded-md font-medium transition-all inline-flex items-center gap-1"
+                    
+                    className="px-3 py-1.5 rounded-md font-medium transition-all inline-flex items-center gap-1 hover:brightness-125 relative z-10"
                     style={{
                       background: "var(--surface2)",
                       color: "var(--text-dim)",
@@ -476,7 +483,8 @@ export default function Home() {
                     href={`https://github.com/YonedaAI/dna-lang/tree/main/src/${paper.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-md font-medium transition-all inline-flex items-center gap-1"
+                    
+                    className="px-3 py-1.5 rounded-md font-medium transition-all inline-flex items-center gap-1 hover:brightness-125 relative z-10"
                     style={{
                       background: "var(--surface2)",
                       color: "var(--text-dim)",
@@ -497,7 +505,7 @@ export default function Home() {
                     Haskell
                   </a>
                 </div>
-              </article>
+              </div>
             ))}
           </div>
         </div>
@@ -589,7 +597,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-6 sm:mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {[
               { name: "Design", desc: "Sequences, guides, constructs" },
               { name: "AI Pipeline", desc: "Predictions, scores, uncertainty" },

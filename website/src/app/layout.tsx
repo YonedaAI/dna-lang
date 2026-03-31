@@ -4,13 +4,21 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "DNA-Lang | A Typed Programming Language for Biological Systems",
   description:
-    "8 research papers + Haskell implementations mapping DNA sequence categories to programming language constructs. By the YonedaAI Research Collective.",
+    "8 research papers (207 pages) + Haskell implementations mapping DNA sequence categories to programming language constructs. By the YonedaAI Research Collective.",
+  metadataBase: new URL("https://dna-lang.vercel.app"),
   openGraph: {
     title: "DNA-Lang",
-    description: "A Typed Programming Language for Biological Systems",
-    url: "https://yonedaai.github.io/dna-lang/",
+    description:
+      "A Typed Programming Language for Biological Systems. 8 papers, 207 pages, Haskell implementations.",
+    url: "https://dna-lang.vercel.app",
     siteName: "DNA-Lang",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DNA-Lang",
+    description:
+      "A Typed Programming Language for Biological Systems. 8 papers, 207 pages.",
   },
 };
 
