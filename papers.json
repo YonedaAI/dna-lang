@@ -1,0 +1,16 @@
+{
+  "project_title": "DNA-Lang",
+  "latex_dir": "papers/latex",
+  "html_dir": "website/public/html",
+  "template": "scripts/paper-template.html",
+  "papers": [
+    {"name": "coding-sequences", "title": "Coding Sequences as Executable Functions", "part": "Part I"},
+    {"name": "regulatory-sequences", "title": "Regulatory Sequences as Control Flow", "part": "Part II"},
+    {"name": "noncoding-rna", "title": "Non-Coding RNAs as Signals and Middleware", "part": "Part III"},
+    {"name": "structural-dna", "title": "Structural DNA as Memory Architecture", "part": "Part IV"},
+    {"name": "repetitive-elements", "title": "Repetitive Elements as Self-Modifying Code", "part": "Part V"},
+    {"name": "epigenetic-marks", "title": "Epigenetic Marks as Runtime State", "part": "Part VI"},
+    {"name": "developmental-programs", "title": "Developmental Programs as Orchestration", "part": "Part VII"},
+    {"name": "dna-lang", "title": "DNA-Lang: A Typed Orchestration Language", "part": "Synthesis"}
+  ]
+}
