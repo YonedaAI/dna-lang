@@ -238,7 +238,7 @@ export default async function PaperPage({
           </Link>
           <div className="flex items-center gap-2 sm:gap-3 text-xs">
             <a
-              href={`/html/${slug}.html`}
+              href={`/read/${slug}`}
               className="px-3 py-1.5 rounded-md font-medium inline-flex items-center gap-1.5"
               style={{
                 background: `${paper.color}15`,
@@ -417,7 +417,7 @@ export default async function PaperPage({
         {/* Actions */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <a
-            href={`/html/${slug}.html`}
+            href={`/read/${slug}`}
             className="flex-1 px-5 py-3 rounded-lg font-semibold text-center text-sm sm:text-base"
             style={{ background: paper.color, color: "#0a0e14" }}
           >

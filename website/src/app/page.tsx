@@ -411,7 +411,7 @@ export default function Home() {
 
                 <h3 className="font-bold text-base sm:text-lg mb-1">
                   <a
-                    href={`/html/${paper.slug}.html`}
+                    href={`/read/${paper.slug}`}
                     className="no-underline hover:underline"
                     style={{ color: "var(--text)" }}
                   >
@@ -433,7 +433,7 @@ export default function Home() {
 
                 <div className="flex items-center gap-2 sm:gap-3 text-xs flex-wrap">
                   <a
-                    href={`/html/${paper.slug}.html`}
+                    href={`/read/${paper.slug}`}
                     
                     className="px-3 py-1.5 rounded-md font-medium transition-all inline-flex items-center gap-1 hover:brightness-125 relative z-10"
                     style={{

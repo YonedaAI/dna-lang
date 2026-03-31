@@ -1,0 +1,858 @@
+1:"$Sreact.fragment"
+2:I[9766,[],""]
+3:I[8924,[],""]
+5:I[4431,[],"OutletBoundary"]
+7:I[5278,[],"AsyncMetadataOutlet"]
+9:I[4431,[],"ViewportBoundary"]
+b:I[4431,[],"MetadataBoundary"]
+c:"$Sreact.suspense"
+e:I[7150,[],""]
+:HL["/_next/static/css/b09932e90edb0ded.css","style"]
+0:{"P":null,"b":"7gRSrD9bgsZE1qpWK-pHQ","p":"","c":["","read","developmental-programs"],"i":false,"f":[[["",{"children":["read",{"children":[["slug","developmental-programs","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/b09932e90edb0ded.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","link",null,{"rel":"preconnect","href":"https://fonts.googleapis.com"}],["$","link",null,{"rel":"preconnect","href":"https://fonts.gstatic.com","crossOrigin":""}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap","rel":"stylesheet"}]]}],["$","body",null,{"style":{"fontFamily":"Inter, system-ui, -apple-system, sans-serif"},"children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]]}],{"children":["read",["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["slug","developmental-programs","d"],["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L4",null,["$","$L5",null,{"children":["$L6",["$","$L7",null,{"promise":"$@8"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$L9",null,{"children":"$La"}],null],["$","$Lb",null,{"children":["$","div",null,{"hidden":true,"children":["$","$c",null,{"fallback":null,"children":"$Ld"}]}]}]]}],false]],"m":"$undefined","G":["$e",[]],"s":false,"S":true}
+f:T10fe7,<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developmental Programs as Orchestration — DNA-Lang, Part VII</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a2e;
+  --text:#e4e4ef;--text-dim:#9494a7;
+  --accent:#00b894;--accent2:#55efc4;--accent-dim:rgba(0,184,148,0.15);
+  --border:#2a2a3e;--code-bg:#0d0d14;
+  --success:#00b894;--warning:#fdcb6e;--error:#e17055;
+  --font-body:Inter,system-ui,-apple-system,sans-serif;
+  --font-mono:'SF Mono','Fira Code','JetBrains Mono',monospace;
+  --max-w:860px;--sidebar-w:260px
+}
+html{scroll-behavior:smooth;font-size:17px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent);text-decoration:underline}
+
+.page-wrapper{display:flex;min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--surface);border-right:1px solid var(--border);padding:1.5rem 1rem;overflow-y:auto;z-index:100;transition:transform .3s}
+.sidebar-header{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.sidebar-header a{font-size:.85rem;color:var(--text-dim);display:flex;align-items:center;gap:.4rem}
+.sidebar-header a:hover{color:var(--accent2)}
+.sidebar-title{font-size:.8rem;font-weight:600;color:var(--accent2);margin-top:.5rem;letter-spacing:.03em}
+
+.toc-nav{font-size:.82rem}
+.toc-nav ul{list-style:none;padding:0}
+.toc-nav li{margin-bottom:.25rem}
+.toc-nav a{display:block;padding:.3rem .6rem;border-radius:6px;color:var(--text-dim);transition:all .15s;font-size:.8rem;line-height:1.4}
+.toc-nav a:hover,.toc-nav a.active{background:var(--accent-dim);color:var(--accent2);text-decoration:none}
+.toc-nav ul ul{padding-left:.8rem}
+.toc-nav ul ul a{font-size:.75rem}
+
+.main-content{margin-left:var(--sidebar-w);flex:1;max-width:var(--max-w);padding:3rem 2.5rem 4rem}
+
+.paper-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.paper-part{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);background:var(--accent-dim);padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:1rem}
+.paper-header h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1.2;margin-bottom:.5rem;background:linear-gradient(135deg,var(--text),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.paper-subtitle{font-size:1rem;color:var(--text-dim);margin-bottom:1rem}
+.paper-meta-row{display:flex;gap:1rem;flex-wrap:wrap;font-size:.82rem;color:var(--text-dim)}
+.paper-meta-row a{font-size:.82rem}
+
+h1,h2,h3,h4,h5,h6{color:var(--text);letter-spacing:-.01em;margin-top:2.5rem;margin-bottom:.8rem}
+h2{font-size:1.5rem;font-weight:700;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.05rem;font-weight:600;color:var(--accent2)}
+
+p{margin-bottom:1rem}
+ul,ol{margin-bottom:1rem;padding-left:1.5rem}
+li{margin-bottom:.3rem}
+
+code{font-family:var(--font-mono);font-size:.88em;background:var(--code-bg);color:var(--accent2);padding:.15em .4em;border-radius:4px}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.5rem;overflow-x:auto;margin:1.5rem 0;line-height:1.5}
+pre code{background:none;padding:0;font-size:.85rem;color:var(--text)}
+
+.sourceCode{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.5rem;overflow-x:auto;margin:1.5rem 0}
+.sourceCode pre{background:none;border:none;padding:0;margin:0}
+.sourceCode code{font-size:.85rem;color:var(--text)}
+
+blockquote{border-left:3px solid var(--accent);padding:.8rem 1.2rem;margin:1.5rem 0;background:var(--accent-dim);border-radius:0 8px 8px 0;color:var(--text-dim);font-style:italic}
+
+table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.88rem}
+th{text-align:left;padding:.6rem .8rem;background:var(--surface2);color:var(--accent2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border)}
+td{padding:.6rem .8rem;border-bottom:1px solid var(--border);color:var(--text-dim)}
+tr:hover td{background:rgba(0,184,148,0.03);color:var(--text)}
+
+.theorem,.definition,.proposition,.lemma,.corollary,.invariant,.remark{
+  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;padding:1.2rem 1.5rem;margin:1.5rem 0
+}
+.theorem-title,.def-title{font-weight:700;color:var(--accent2);margin-bottom:.5rem;font-size:.9rem}
+
+figure{margin:1.5rem 0;text-align:center}
+figcaption{font-size:.82rem;color:var(--text-dim);margin-top:.5rem;font-style:italic}
+img{max-width:100%;height:auto;border-radius:8px}
+
+.menu-toggle{display:none;position:fixed;top:1rem;left:1rem;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;color:var(--text);cursor:pointer;font-size:1.2rem}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main-content{margin-left:0;padding:2rem 1.2rem}
+  .menu-toggle{display:block}
+}
+
+#TOC{display:none}
+.header-section-number{color:var(--accent);margin-right:.4rem;font-weight:600}
+</style>
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<div class="page-wrapper">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <a href="/">&larr; All Papers</a>
+    <div class="sidebar-title">Developmental Programs as Orchestration — DNA-Lang, Part VII</div>
+  </div>
+  <nav class="toc-nav" id="toc-nav"></nav>
+  <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+    <a href="../papers/developmental-programs.pdf" style="font-size:.8rem;color:var(--accent2);display:flex;align-items:center;gap:.4rem">PDF Version &darr;</a>
+  </div>
+</aside>
+<main class="main-content" id="content">
+  <div class="paper-header">
+    <span class="paper-part">Part VII</span>
+    <h1 style="margin-top:0">Developmental Programs as Orchestration — DNA-Lang, Part VII</h1>
+    <div class="paper-meta-row">
+      <span>Matthew Long</span>
+      <span>&middot;</span>
+      <span>YonedaAI Research Collective</span>
+      <span>&middot;</span>
+      <span>Chicago, IL</span>
+      <span>&middot;</span>
+      <a href="../papers/developmental-programs.pdf">PDF</a>
+    </div>
+  </div>
+<p><strong>Keywords:</strong> developmental biology, type theory, Hox genes, morphogenesis, Waddington landscape, dependent types, refinement types, category theory, orchestration, DNA-Lang</p>
+<h1 data-number="1" id="sec:intro"><span class="header-section-number">1</span> Introduction: From Genome to Organism</h1>
+<p>The central mystery of developmental biology is how a single fertilized egg gives rise to a complex multicellular organism with hundreds of distinct cell types, intricate tissue architectures, and precisely patterned organ systems. The genome, viewed as a static string over a four-letter alphabet, must be <em>executed</em> to produce a dynamic, three-dimensional living system.</p>
+<p>This is, fundamentally, a <em>programming problem</em>.</p>
+<div id="def:dev-problem" class="definition">
+<p><strong>Definition 1</strong> (The Developmental Programming Problem).  <em>Given a genome <span class="math inline">G</span> over alphabet <span class="math inline">\Sigma = \{A,T,C,G\}</span> and an initial cell state <span class="math inline">c_0</span>, the developmental programming problem asks for the existence of an execution semantics <span class="math inline">[\![ - ]\!]</span> such that <span class="math display">[\![ G ]\!](c_0) = \mathcal{O}</span> where <span class="math inline">\mathcal{O}</span> is a well-formed organism satisfying the species-specific body plan constraints <span class="math inline">\Phi</span>.</em></p>
+</div>
+<p>In classical computer science, orchestration refers to the automated coordination of multiple services, containers, or processes to achieve a complex workflow. The analogy to development is striking:</p>
+<ul>
+<li><p><strong>Genome <span class="math inline">\leftrightarrow</span> Source code</strong>: The DNA sequence encodes the full specification.</p></li>
+<li><p><strong>Transcription factors <span class="math inline">\leftrightarrow</span> Schedulers</strong>: Regulatory proteins decide which genes execute, when, and where.</p></li>
+<li><p><strong>Morphogen gradients <span class="math inline">\leftrightarrow</span> Configuration management</strong>: Spatially varying signals configure cell behavior.</p></li>
+<li><p><strong>Cell fate <span class="math inline">\leftrightarrow</span> Type refinement</strong>: As cells differentiate, their behavioral interface narrows.</p></li>
+<li><p><strong>Apoptosis <span class="math inline">\leftrightarrow</span> Graceful shutdown</strong>: Programmed cell death removes unnecessary processes.</p></li>
+<li><p><strong>Stem cells <span class="math inline">\leftrightarrow</span> Factory patterns</strong>: Self-renewing cells produce typed progeny on demand.</p></li>
+</ul>
+<p>The DNA-Lang project has, through its preceding six papers, developed a type-theoretic interpretation of genomic elements: coding sequences as executable functions, regulatory sequences as control flow, noncoding RNA as type-level metaprogramming, epigenetic marks as compiler pragmas, repetitive elements as memory architecture, and structural DNA as the runtime environment. In this seventh and final paper, we synthesize these perspectives into a unified account of <em>developmental programs as typed orchestration</em>.</p>
+<h2 data-number="1.1" id="contributions"><span class="header-section-number">1.1</span> Contributions</h2>
+<ol>
+<li><p>A formal type <code>Program&lt;OrganismDevelopment&gt;</code> that captures the full developmental pipeline.</p></li>
+<li><p>Hox gene collinearity as a monotone functor between ordered sets.</p></li>
+<li><p>Morphogen gradients as spatially-dependent types.</p></li>
+<li><p>Cell-fate determination as refinement-type narrowing over the Waddington landscape.</p></li>
+<li><p>Regulatory cascades as typed boot sequences with dependency resolution.</p></li>
+<li><p>Apoptosis as graceful shutdown with resource cleanup.</p></li>
+<li><p>Stem cells as abstract factories with polymorphic constructors.</p></li>
+<li><p>Organogenesis as container orchestration.</p></li>
+<li><p>A complete, compiling Haskell implementation.</p></li>
+</ol>
+<h2 data-number="1.2" id="organization"><span class="header-section-number">1.2</span> Organization</h2>
+<p><a href="#sec:hox" data-reference-type="ref+Label" data-reference="sec:hox">2</a> introduces Hox genes as the main module. <a href="#sec:morphogens" data-reference-type="ref+Label" data-reference="sec:morphogens">3</a> formalizes morphogen gradients as distributed configuration. <a href="#sec:cellfate" data-reference-type="ref+Label" data-reference="sec:cellfate">4</a> presents cell-fate determination as type refinement. <a href="#sec:program-type" data-reference-type="ref+Label" data-reference="sec:program-type">5</a> defines the core <code>Program</code> type. <a href="#sec:regulatory" data-reference-type="ref+Label" data-reference="sec:regulatory">6</a> treats regulatory cascades as boot sequences. <a href="#sec:apoptosis" data-reference-type="ref+Label" data-reference="sec:apoptosis">7</a> models apoptosis as graceful shutdown. <a href="#sec:stemcells" data-reference-type="ref+Label" data-reference="sec:stemcells">8</a> casts stem cells as factory patterns. <a href="#sec:waddington" data-reference-type="ref+Label" data-reference="sec:waddington">9</a> reinterprets the Waddington landscape via refinement types. <a href="#sec:morphogen-dependent" data-reference-type="ref+Label" data-reference="sec:morphogen-dependent">10</a> introduces morphogen gradients as dependent types. <a href="#sec:hox-functor" data-reference-type="ref+Label" data-reference="sec:hox-functor">11</a> establishes Hox collinearity as a monotone functor. <a href="#sec:organogenesis" data-reference-type="ref+Label" data-reference="sec:organogenesis">12</a> models organogenesis as container orchestration. <a href="#sec:implementation" data-reference-type="ref+Label" data-reference="sec:implementation">13</a> presents the Haskell implementation. <a href="#sec:discussion" data-reference-type="ref+Label" data-reference="sec:discussion">14</a> discusses implications and concludes.</p>
+<h1 data-number="2" id="sec:hox"><span class="header-section-number">2</span> Hox Genes as the Main Module</h1>
+<p>Hox genes encode homeodomain transcription factors that specify segment identity along the anterior–posterior (A–P) axis. In virtually all bilaterian animals, Hox genes are organized in genomic clusters, and their expression exhibits <em>collinearity</em>: genes located 3<span class="math inline">&#39;</span> in the cluster are expressed more anteriorly and earlier in development than genes located 5<span class="math inline">&#39;</span>.</p>
+<div id="def:hox-cluster" class="definition">
+<p><strong>Definition 2</strong> (Hox Cluster).  <em>A <em>Hox cluster</em> is a finite ordered set <span class="math inline">\mathcal{H} = (H_1, H_2, &hellip;, H_n)</span> of Hox genes equipped with:</em></p>
+<ol>
+<li><p><em>A <em>chromosomal order</em> <span class="math inline">&le;_{\text{chr}}</span> reflecting physical position on the chromosome.</em></p></li>
+<li><p><em>A <em>spatial expression function</em> <span class="math inline">\sigma : \mathcal{H} \to \mathcal{P}(\text{A--P axis})</span> mapping each gene to the set of body segments where it is expressed.</em></p></li>
+<li><p><em>A <em>temporal expression function</em> <span class="math inline">\tau : \mathcal{H} \to \mathbb{R}_{&ge; 0}</span> mapping each gene to its activation time.</em></p></li>
+</ol>
+</div>
+<div id="ax:spatial-col" class="axiom">
+<p><strong>Axiom 3</strong> (Spatial Collinearity).  <em>For Hox genes <span class="math inline">H_i, H_j</span> with <span class="math inline">i &le;_{\text{chr}} j</span>, we have <span class="math display">\max(\sigma(H_i)) &le; \max(\sigma(H_j))</span> That is, chromosomally later genes are expressed in more posterior segments.</em></p>
+</div>
+<div id="ax:temporal-col" class="axiom">
+<p><strong>Axiom 4</strong> (Temporal Collinearity).  <em>For Hox genes <span class="math inline">H_i, H_j</span> with <span class="math inline">i &le;_{\text{chr}} j</span>, we have <span class="math inline">\tau(H_i) &le; \tau(H_j)</span>. That is, chromosomally earlier genes are activated earlier in development.</em></p>
+</div>
+<p>In programming-language terms, the Hox cluster functions as the <code>main</code> module of the developmental program: it is the entry point that establishes the high-level body plan before delegating to subordinate modules for organ-specific differentiation.</p>
+<div id="prop:hox-main" class="proposition">
+<p><strong>Proposition 5</strong> (Hox Cluster as Main Module).  <em>The Hox cluster <span class="math inline">\mathcal{H}</span> acts as a main module in the sense that:</em></p>
+<ol>
+<li><p><em>It is activated early in development (boot priority).</em></p></li>
+<li><p><em>It establishes the global coordinate system (A–P axis).</em></p></li>
+<li><p><em>Downstream modules (organ-specific gene networks) depend on Hox-established segment identity.</em></p></li>
+<li><p><em>Mutations in <span class="math inline">\mathcal{H}</span> produce <em>homeotic transformations</em>—global structural errors analogous to type errors in the main module.</em></p></li>
+</ol>
+</div>
+<p>The Hox code is “read” by downstream regulatory networks, which interpret segment identity as a type tag determining which developmental subroutines to execute in each segment.</p>
+<figure id="fig:collinearity" data-latex-placement="H">
+
+<figcaption>Spatial collinearity: chromosomal order maps to body-axis position.</figcaption>
+</figure>
+<h1 data-number="3" id="sec:morphogens"><span class="header-section-number">3</span> Morphogen Gradients as Distributed Configuration</h1>
+<p>Morphogens are signaling molecules secreted by localized source cells that form concentration gradients across developing tissues. Cells respond to the local morphogen concentration by activating different gene-expression programs, effectively receiving <em>positional information</em> encoded in a continuous chemical signal.</p>
+<div id="def:morphogen-field" class="definition">
+<p><strong>Definition 6</strong> (Morphogen Field).  <em>A <em>morphogen field</em> is a triple <span class="math inline">(M, \Omega, c)</span> where:</em></p>
+<ul>
+<li><p><em><span class="math inline">M</span> is the morphogen identity (<em>e.g.</em>, Sonic Hedgehog, Wnt, BMP).</em></p></li>
+<li><p><em><span class="math inline">\Omega \subseteq \mathbb{R}^3</span> is the tissue domain.</em></p></li>
+<li><p><em><span class="math inline">c : \Omega &times; \mathbb{R}_{&ge; 0} \to \mathbb{R}_{&ge; 0}</span> is the concentration function, where <span class="math inline">c(\mathbf{x}, t)</span> gives the morphogen concentration at position <span class="math inline">\mathbf{x}</span> and time <span class="math inline">t</span>.</em></p></li>
+</ul>
+</div>
+<p>The <em>French flag model</em> (Wolpert, 1969) partitions the tissue domain into discrete fate zones based on concentration thresholds:</p>
+<div id="def:french-flag" class="definition">
+<p><strong>Definition 7</strong> (French Flag Partition).  <em>Given a morphogen field <span class="math inline">(M, \Omega, c)</span> and threshold concentrations <span class="math inline">\theta_1 &gt; \theta_2 &gt; &middot;s &gt; \theta_{k-1} &gt; 0</span>, the <em>French flag partition</em> at time <span class="math inline">t</span> is <span class="math display">\Omega = \Omega_1(t) \sqcup \Omega_2(t) \sqcup &middot;s \sqcup \Omega_k(t)</span> where <span class="math inline">\Omega_i(t) = \{ \mathbf{x} \in \Omega \mid \theta_{i-1} &ge;
+c(\mathbf{x},t) &gt; \theta_i \}</span> (with <span class="math inline">\theta_0 = &infin;</span> and <span class="math inline">\theta_k = 0</span>).</em></p>
+</div>
+<p>In distributed-systems terms, a morphogen gradient is a <em>configuration service</em> that provides position-dependent parameters to client cells. Each cell queries the local morphogen concentration and configures its behavior accordingly.</p>
+<div id="thm:morphogen-config" class="theorem">
+<p><strong>Theorem 8</strong> (Morphogen as Configuration).  <em>A morphogen field <span class="math inline">(M, \Omega, c)</span> with French flag thresholds <span class="math inline">\{\theta_i\}</span> induces a <em>spatially-dependent type assignment</em> <span class="math display">\Gamma_M : \Omega \to \mathsf{CellType}</span> defined by <span class="math inline">\Gamma_M(\mathbf{x}) = \tau_i</span> when <span class="math inline">\mathbf{x} \in
+\Omega_i</span>. This assignment is:</em></p>
+<ol>
+<li><p><em><em>Piecewise constant</em> on the French flag partition.</em></p></li>
+<li><p><em><em>Robust</em> to small perturbations in <span class="math inline">c</span> (threshold hysteresis).</em></p></li>
+<li><p><em><em>Scalable</em>: the partition rescales with tissue size when gradient shape is maintained.</em></p></li>
+</ol>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The type assignment is well-defined because the French flag partition is a disjoint cover. Robustness follows from the finite gap between thresholds: a perturbation <span class="math inline">\delta c</span> with <span class="math inline">|\delta c| &lt; \min_i |\theta_i - \theta_{i+1}|/2</span> preserves <span class="math inline">\Omega_i</span> boundaries. Scalability follows when <span class="math inline">c</span> satisfies the self-similar form <span class="math inline">c(\mathbf{x},t) = f(|\mathbf{x} - \mathbf{x}_s|/L)</span> for tissue size <span class="math inline">L</span>, since the partition scales with <span class="math inline">L</span>. ◻</p>
+</div>
+<p>Key morphogen pathways and their computational analogues:</p>
+<div id="tab:morphogens">
+<table>
+<caption>Morphogen pathways as distributed configuration services.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Morphogen</strong></th>
+<th style="text-align: left;"><strong>Biological Role</strong></th>
+<th style="text-align: left;"><strong>Computational Analogue</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Sonic Hedgehog (Shh)</td>
+<td style="text-align: left;">Ventral neural tube patterning</td>
+<td style="text-align: left;">Multi-threshold config</td>
+</tr>
+<tr>
+<td style="text-align: left;">Wnt</td>
+<td style="text-align: left;">A–P axis, stem cell niche</td>
+<td style="text-align: left;">Global state signal</td>
+</tr>
+<tr>
+<td style="text-align: left;">BMP</td>
+<td style="text-align: left;">Dorsal–ventral patterning</td>
+<td style="text-align: left;">Orthogonal config axis</td>
+</tr>
+<tr>
+<td style="text-align: left;">FGF</td>
+<td style="text-align: left;">Limb bud outgrowth</td>
+<td style="text-align: left;">Progress-dependent config</td>
+</tr>
+<tr>
+<td style="text-align: left;">Retinoic Acid</td>
+<td style="text-align: left;">Hox gene activation</td>
+<td style="text-align: left;">Boot-sequence trigger</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 data-number="4" id="sec:cellfate"><span class="header-section-number">4</span> Cell Fate as Type Refinement</h1>
+<p>Cell-fate determination proceeds through a series of increasingly committed states. Waddington (1957) visualized this as a ball rolling down a landscape of branching valleys—the <em>epigenetic landscape</em>.</p>
+<div id="def:fate-hierarchy" class="definition">
+<p><strong>Definition 9</strong> (Cell Fate Hierarchy).  <em>The cell-fate hierarchy is a chain of progressively refined types: <span class="math display"><code>StemCell</code>\;\sqsupseteq\; <code>Progenitor</code> \;\sqsupseteq\;
+  <code>Specified</code> \;\sqsupseteq\; <code>Determined</code> \;\sqsupseteq\;
+  <code>TerminalCell</code></span> where <span class="math inline">A \sqsupseteq B</span> means type <span class="math inline">A</span> is a supertype of <span class="math inline">B</span> (<span class="math inline">B</span> refines <span class="math inline">A</span>).</em></p>
+</div>
+<p>Each step in this hierarchy corresponds to a biological commitment:</p>
+<ol>
+<li><p><strong>Competence</strong> (<span class="math inline"><code>StemCell</code></span>): The cell is capable of responding to inductive signals. Maximal type—all methods available.</p></li>
+<li><p><strong>Specification</strong> (<span class="math inline"><code>Progenitor</code></span>): The cell has received inductive signals and adopts a fate in isolation, but can be re-specified. Type is narrowed but still mutable.</p></li>
+<li><p><strong>Determination</strong> (<span class="math inline"><code>Determined</code></span>): The cell is irreversibly committed. Type is sealed.</p></li>
+<li><p><strong>Differentiation</strong> (<span class="math inline"><code>TerminalCell</code></span>): The cell expresses its terminal phenotype. Final, concrete type.</p></li>
+</ol>
+<div id="thm:monotonic-narrow" class="theorem">
+<p><strong>Theorem 10</strong> (Monotonic Type Narrowing).  <em>Under normal development, cell-fate transitions are <em>monotonically narrowing</em>: for a cell <span class="math inline">c</span> at times <span class="math inline">t_1 &lt; t_2</span>, <span class="math display">\text{type}(c, t_1) \sqsupseteq \text{type}(c, t_2)</span> That is, the set of expressible behaviors can only decrease over developmental time.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Each inductive signal activates transcription factors that <em>close off</em> alternative fates (via chromatin remodeling, DNA methylation, and auto-regulatory loops). Formally, if <span class="math inline">\mathcal{B}(c,t)</span> is the set of behaviors available to cell <span class="math inline">c</span> at time <span class="math inline">t</span>, then each determination event removes behaviors from <span class="math inline">\mathcal{B}</span>, yielding <span class="math inline">\mathcal{B}(c,t_2) \subseteq \mathcal{B}(c,t_1)</span>. In the subtyping lattice, this corresponds to <span class="math inline">\text{type}(c,t_1) \sqsupseteq \text{type}(c,t_2)</span>. ◻</p>
+</div>
+<div class="remark">
+<p><strong>Remark 11</strong>.  <em>Cancer and reprogramming (iPSCs) represent violations of this monotonicity—type-safety failures in the developmental program.</em></p>
+</div>
+<h1 data-number="5" id="sec:program-type"><span class="header-section-number">5</span> The Program&lt;OrganismDevelopment&gt; Type</h1>
+<p>We now define the central type of our framework.</p>
+<div id="def:program-type" class="definition">
+<p><strong>Definition 12</strong> (Program Type).  <em>The <em>developmental program type</em> is a parameterized record: <span class="math display">\begin{align*}
+  &amp;<code>data Program d = Program</code> \\
+  &amp;\quad \{ <code>hoxCluster</code> :: <code>HoxCluster</code> \\
+  &amp;\quad ,\; <code>morphogens</code> :: [<code>MorphogenField</code>] \\
+  &amp;\quad ,\; <code>cellPopulation</code> :: [<code>Cell</code>] \\
+  &amp;\quad ,\; <code>regulatoryNetwork</code> :: <code>RegNetwork</code> \\
+  &amp;\quad ,\; <code>signalingState</code> :: <code>SignalState</code> \\
+  &amp;\quad ,\; <code>developmental\_stage</code> :: d \\
+  &amp;\quad \}
+\end{align*}</span> where <span class="math inline">d</span> is a type parameter representing the current developmental stage.</em></p>
+</div>
+<p>The type parameter <span class="math inline">d</span> serves a crucial role: it <em>indexes</em> the program by its developmental stage, ensuring that only stage-appropriate operations can be performed.</p>
+<div id="def:stage-ops" class="definition">
+<p><strong>Definition 13</strong> (Stage-Indexed Operations).  <em>For each developmental stage <span class="math inline">d</span>, we define the set of permissible operations <span class="math inline">\text{Ops}(d)</span>: <span class="math display">\begin{align*}
+  \text{Ops}(<code>Cleavage</code>) &amp;= \{<code>divide</code>, <code>compact</code>\} \\
+  \text{Ops}(<code>Gastrulation</code>) &amp;= \{<code>invaginate</code>,
+    <code>migrate</code>, <code>specify</code>\} \\
+  \text{Ops}(<code>Organogenesis</code>) &amp;= \{<code>differentiate</code>,
+    <code>morphogenize</code>, <code>apoptose</code>\} \\
+  \text{Ops}(<code>Maturation</code>) &amp;= \{<code>grow</code>,
+    <code>remodel</code>\}
+\end{align*}</span></em></p>
+</div>
+<div id="thm:stage-safety" class="theorem">
+<p><strong>Theorem 14</strong> (Stage Safety).  <em>If the developmental program is well-typed at stage <span class="math inline">d</span>, then only operations in <span class="math inline">\text{Ops}(d)</span> can be applied. Attempting to apply an operation from <span class="math inline">\text{Ops}(d&#39;)</span> with <span class="math inline">d&#39; \neq d</span> results in a type error.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The stage parameter <span class="math inline">d</span> is a phantom type that restricts the API surface. Operations are typed as <span class="math inline"><code>op</code> :: <code>Program</code>\;d \to <code>Program</code>\;d&#39;</span>, where the input stage must match <span class="math inline">d</span> exactly. By parametricity, no well-typed term can bypass this restriction. ◻</p>
+</div>
+<p>The developmental program proceeds through stages via typed transitions:</p>
+<p><span class="math display">\begin{tikzcd}
+  <code>Program Cleavage</code> \arrow[r, &quot;<code>gastrulate</code>&quot;] &amp;
+  <code>Program Gastrulation</code> \arrow[r, &quot;<code>organize</code>&quot;] &amp;
+  <code>Program Organogenesis</code> \arrow[r, &quot;<code>mature</code>&quot;] &amp;
+  <code>Program Maturation</code>
+\end{tikzcd}</span></p>
+<p>Each arrow is a function that transforms the program state while advancing the stage type parameter, ensuring the irreversibility of developmental progression at the type level.</p>
+<h1 data-number="6" id="sec:regulatory"><span class="header-section-number">6</span> Regulatory Cascades as Boot Sequences</h1>
+<p>The activation of the developmental program follows a strict order, reminiscent of an operating system’s boot sequence. Master regulatory transcription factors are activated first and progressively enable subordinate gene-regulatory networks.</p>
+<div id="def:boot-seq" class="definition">
+<p><strong>Definition 15</strong> (Regulatory Boot Sequence).  <em>A <em>regulatory boot sequence</em> is a directed acyclic graph (DAG) <span class="math inline">\mathcal{R} = (V, E)</span> where:</em></p>
+<ul>
+<li><p><em><span class="math inline">V</span> is a set of transcription factors (TFs).</em></p></li>
+<li><p><em><span class="math inline">(u, v) \in E</span> means TF <span class="math inline">u</span> must be activated before TF <span class="math inline">v</span> can be activated.</em></p></li>
+<li><p><em>The roots of <span class="math inline">\mathcal{R}</span> are <em>master regulators</em> (maternal factors, pioneering TFs).</em></p></li>
+</ul>
+</div>
+<div id="def:ffl" class="definition">
+<p><strong>Definition 16</strong> (Feed-Forward Loop).  <em>A <em>feed-forward loop</em> (FFL) is a three-node motif <span class="math inline">X \to Y \to Z</span> with <span class="math inline">X \to Z</span>, where TF <span class="math inline">X</span> activates both <span class="math inline">Y</span> and <span class="math inline">Z</span>, and <span class="math inline">Y</span> also activates <span class="math inline">Z</span>. This creates a <em>delay filter</em>: <span class="math inline">Z</span> is activated only after both <span class="math inline">X</span> and <span class="math inline">Y</span> are present, ensuring temporal ordering.</em></p>
+</div>
+<div id="thm:boot-order" class="theorem">
+<p><strong>Theorem 17</strong> (Boot Order Correctness).  <em>A regulatory boot sequence <span class="math inline">\mathcal{R}</span> admits a valid activation order if and only if <span class="math inline">\mathcal{R}</span> is acyclic. The activation order is any topological sort of <span class="math inline">\mathcal{R}</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Standard result from graph theory: a DAG admits a topological sort, and any topological sort respects all dependency edges. If <span class="math inline">\mathcal{R}</span> contains a cycle, no activation order can satisfy all dependencies simultaneously, analogous to a circular dependency error in a build system. ◻</p>
+</div>
+<p>In the type-theoretic framework, each TF is a typed value whose construction requires proofs that all upstream TFs have been activated:</p>
+<p><span class="math display"><code>activate</code> :: \forall v \in V.\;
+  \left(\prod_{(u,v) \in E} <code>Active</code>\;u\right) \to
+  <code>Active</code>\;v</span></p>
+<p>This signature ensures, at the type level, that activation order respects the regulatory DAG.</p>
+<div class="example">
+<p><strong>Example 18</strong> (MyoD Cascade).  <em>The myogenic regulatory cascade illustrates boot-sequence structure:</em></p>
+<ol>
+<li><p><em><code>Pax3/7</code> (master regulator, expressed in somites)</em></p></li>
+<li><p><em><code>Myf5</code> (activated by Pax3/7 + Shh signaling)</em></p></li>
+<li><p><em><code>MyoD</code> (activated by Pax3/7 + Myf5)</em></p></li>
+<li><p><em><code>Myogenin</code> (activated by MyoD, commits to differentiation)</em></p></li>
+<li><p><em><code>MRF4/Myosin</code> (terminal differentiation markers)</em></p></li>
+</ol>
+<p><em>Each step requires the previous as a type-level proof of readiness.</em></p>
+</div>
+<h1 data-number="7" id="sec:apoptosis"><span class="header-section-number">7</span> Apoptosis as Graceful Shutdown</h1>
+<p>Programmed cell death (apoptosis) is not failure but an essential feature of the developmental program. It sculpts tissues, removes transient structures, and eliminates cells that have fulfilled their signaling role.</p>
+<div id="def:apoptosis" class="definition">
+<p><strong>Definition 19</strong> (Apoptosis Pathways).  <em>Apoptosis proceeds via two pathways:</em></p>
+<ol>
+<li><p><em><strong>Intrinsic (mitochondrial)</strong>: Triggered by internal stress signals. Analogous to a process calling <code>exit()</code> on itself.</em></p></li>
+<li><p><em><strong>Extrinsic (death receptor)</strong>: Triggered by external signals (Fas ligand, TNF). Analogous to receiving <code>SIGTERM</code> from the orchestrator.</em></p></li>
+</ol>
+<p><em>Both pathways converge on caspase activation, which executes the shutdown program.</em></p>
+</div>
+<div id="def:shutdown" class="definition">
+<p><strong>Definition 20</strong> (Graceful Shutdown Protocol).  <em>The apoptotic shutdown protocol consists of:</em></p>
+<ol>
+<li><p><em><strong>Signal reception</strong>: Death signal received (intrinsic or extrinsic).</em></p></li>
+<li><p><em><strong>Commitment</strong>: Pro-apoptotic factors (Bax, Bak) overwhelm anti-apoptotic factors (Bcl-2).</em></p></li>
+<li><p><em><strong>Execution</strong>: Caspase cascade activates, cleaving cellular substrates.</em></p></li>
+<li><p><em><strong>Cleanup</strong>: Cell fragments are packaged into apoptotic bodies.</em></p></li>
+<li><p><em><strong>Resource reclamation</strong>: Phagocytes engulf and recycle cellular components.</em></p></li>
+</ol>
+</div>
+<div id="thm:apoptosis-typed" class="theorem">
+<p><strong>Theorem 21</strong> (Apoptosis as Typed Resource Management).  <em>Apoptosis can be modeled as a linear-type resource-management protocol. A cell <span class="math inline">c</span> of type <span class="math inline"><code>Cell</code>\;s</span> (where <span class="math inline">s</span> is its fate state) satisfies: <span class="math display"><code>apoptose</code> :: <code>Cell</code>\;s \multimap
+    <code>ApoptoticBody</code> \otimes <code>RecyclableResources</code></span> The linear arrow <span class="math inline">\multimap</span> ensures that the cell resource is <em>consumed exactly once</em>: no cell can be used after apoptosis (use-after-free), and no cell can avoid apoptosis when signaled (resource leak).</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> In linear type theory, a value of linear type must be consumed exactly once. Mapping cellular resources to linear types and the apoptotic pathway to the consumption operation yields the desired guarantee. The tensor product <span class="math inline">\otimes</span> captures the concurrent production of apoptotic bodies (for phagocytic cleanup) and recyclable molecular resources. ◻</p>
+</div>
+<p>Developmental examples of apoptotic sculpting include:</p>
+<ul>
+<li><p><strong>Digit separation</strong>: Interdigital webbing is removed by apoptosis (the “spaces between fingers” are carved, not grown).</p></li>
+<li><p><strong>Neural tube closure</strong>: Excess neural crest cells undergo apoptosis after migration.</p></li>
+<li><p><strong>Immune selection</strong>: T-cells failing positive/negative selection are eliminated.</p></li>
+<li><p><strong>Tail resorption</strong>: Tadpole tail is removed during metamorphosis.</p></li>
+</ul>
+<h1 data-number="8" id="sec:stemcells"><span class="header-section-number">8</span> Stem Cells as Factory Patterns</h1>
+<p>Stem cells are defined by two properties: <em>self-renewal</em> (producing copies of themselves) and <em>multipotent differentiation</em> (producing specialized daughter cells). This is precisely the <em>abstract factory pattern</em> from software engineering.</p>
+<div id="def:stem-factory" class="definition">
+<p><strong>Definition 22</strong> (Stem Cell as Abstract Factory).  <em>A stem cell of potency level <span class="math inline">p</span> is an abstract factory: <span class="math display"><code>StemCell</code>\;p :: <code>Factory</code>
+    \;(<code>StemCell</code>\;p \;|\; <code>DiffCell</code>\;t)</span> where <span class="math inline">t \in \text{Potency}(p)</span> ranges over the cell types producible at potency level <span class="math inline">p</span>: <span class="math display">\begin{align*}
+  \text{Potency}(<code>Totipotent</code>) &amp;= \text{All cell types including extraembryonic} \\
+  \text{Potency}(<code>Pluripotent</code>) &amp;= \text{All embryonic cell types} \\
+  \text{Potency}(<code>Multipotent</code>) &amp;= \text{Cell types within one lineage} \\
+  \text{Potency}(<code>Unipotent</code>) &amp;= \{t_0\} \text{ (single cell type)}
+\end{align*}</span></em></p>
+</div>
+<div id="thm:self-renewal" class="theorem">
+<p><strong>Theorem 23</strong> (Self-Renewal as Fixed Point).  <em>Self-renewal of a stem cell <span class="math inline">s</span> of type <span class="math inline"><code>StemCell</code>\;p</span> is a fixed-point operation: <span class="math display"><code>selfRenew</code> :: <code>StemCell</code>\;p \to
+    (<code>StemCell</code>\;p, <code>StemCell</code>\;p)</span> satisfying the invariant <span class="math inline"><code>type</code>(<code>fst</code>(<code>selfRenew</code>\;s))
+= <code>type</code>(s)</span>, <em>i.e.</em>, one daughter retains the stem-cell type.</em></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 24</strong> (Asymmetric Division as Polymorphic Constructor).  <em>Asymmetric stem-cell division is a polymorphic constructor: <span class="math display"><code>asymDivide</code> :: \forall\, t \in \text{Potency}(p).\;
+  <code>StemCell</code>\;p \to (<code>StemCell</code>\;p,\; <code>Cell</code>\;t)</span> The universal quantification over <span class="math inline">t</span> captures the multipotent nature: the same stem cell can produce different differentiated types depending on context (morphogen signals, niche interactions).</em></p>
+</div>
+<p>The stem-cell niche acts as the <em>dependency injection container</em>, providing the signals that determine which concrete type the factory produces on each division.</p>
+<h1 data-number="9" id="sec:waddington"><span class="header-section-number">9</span> Waddington Landscape as Refinement Types</h1>
+<p>Waddington’s epigenetic landscape (1957) depicts cell differentiation as a ball rolling downhill through a landscape of branching valleys. Each valley represents a stable cell fate, and the ridges between valleys represent barriers to trans-differentiation.</p>
+<div id="def:waddington" class="definition">
+<p><strong>Definition 25</strong> (Waddington Landscape).  <em>A <em>Waddington landscape</em> is a tuple <span class="math inline">(\mathcal{S}, U, \mathcal{T})</span> where:</em></p>
+<ul>
+<li><p><em><span class="math inline">\mathcal{S}</span> is the state space of cell configurations (gene expression profiles).</em></p></li>
+<li><p><em><span class="math inline">U : \mathcal{S} \to \mathbb{R}</span> is a quasi-potential function whose local minima correspond to stable cell fates.</em></p></li>
+<li><p><em><span class="math inline">\mathcal{T} \subset \mathcal{S}</span> is the set of <em>transition states</em> (saddle points of <span class="math inline">U</span>) that connect adjacent valleys.</em></p></li>
+</ul>
+</div>
+<div id="thm:waddington-lattice" class="theorem">
+<p><strong>Theorem 26</strong> (Waddington Landscape as Refinement Lattice).  <em>The Waddington landscape induces a refinement-type lattice <span class="math inline">(\mathcal{L}, \sqsubseteq)</span> where:</em></p>
+<ol>
+<li><p><em>The top element <span class="math inline">\top</span> is the totipotent stem-cell type.</em></p></li>
+<li><p><em>Each branching point in the landscape corresponds to a type-refinement decision.</em></p></li>
+<li><p><em>Each valley floor (attractor) corresponds to a terminal refined type.</em></p></li>
+<li><p><em>The partial order <span class="math inline">\sqsubseteq</span> reflects the “is a specialization of” relation.</em></p></li>
+</ol>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The quasi-potential <span class="math inline">U</span> induces a tree structure on the basins of attraction: the totipotent state sits at the global maximum, each bifurcation corresponds to a saddle point that separates two daughter basins, and the local minima are leaves. This tree, read from root to leaves, is exactly a refinement lattice where each node refines (specializes) its parent. ◻</p>
+</div>
+<figure id="fig:waddington" data-latex-placement="H">
+
+<figcaption>The Waddington landscape as a refinement-type lattice. The stem cell (top type) rolls downhill through progressive refinement to terminal cell fates (maximally refined types).</figcaption>
+</figure>
+<div id="def:refinement-path" class="definition">
+<p><strong>Definition 27</strong> (Refinement Path).  <em>A <em>refinement path</em> through the Waddington landscape is a sequence of types: <span class="math display"><code>StemCell</code>= T_0 \sqsupseteq T_1 \sqsupseteq &middot;s \sqsupseteq
+  T_n = <code>TerminalCell</code></span> where each <span class="math inline">T_{i+1}</span> is obtained from <span class="math inline">T_i</span> by responding to a specific inductive signal <span class="math inline">s_i</span>. The path is <em>deterministic</em> given the signal sequence <span class="math inline">(s_0, s_1, &hellip;, s_{n-1})</span>.</em></p>
+</div>
+<h1 data-number="10" id="sec:morphogen-dependent"><span class="header-section-number">10</span> Morphogen Gradient as Dependent Type</h1>
+<p>The French flag model (<a href="#sec:morphogens" data-reference-type="ref+label" data-reference="sec:morphogens">3</a>) assigns discrete cell fates based on morphogen concentration. We now formalize this as a <em>dependent type</em>: the cell-fate type <em>depends on</em> the cell’s spatial position and the local morphogen concentration.</p>
+<div id="def:dependent-fate" class="definition">
+<p><strong>Definition 28</strong> (Spatially-Dependent Cell Fate).  <em>Define the dependent type: <span class="math display"><code>CellFate</code> : \Omega &times; \mathbb{R}_{&ge; 0} \to \mathsf{Type}</span> such that <span class="math inline"><code>CellFate</code>(\mathbf{x}, c)</span> is the cell type assigned to a cell at position <span class="math inline">\mathbf{x}</span> experiencing morphogen concentration <span class="math inline">c</span>.</em></p>
+</div>
+<div id="thm:dependent-consistency" class="theorem">
+<p><strong>Theorem 29</strong> (Dependent Type Consistency).  <em>For a well-formed morphogen field <span class="math inline">(M, \Omega, c)</span>, the dependent type <span class="math inline"><code>CellFate</code>(\mathbf{x}, c(\mathbf{x},t))</span> satisfies:</em></p>
+<ol>
+<li><p><em><em>Local consistency</em>: Nearby cells with similar concentrations receive compatible types. <span class="math display">|\mathbf{x} - \mathbf{y}| &lt; \epsilon \implies
+      <code>CellFate</code>(\mathbf{x}, c(\mathbf{x},t)) =
+      <code>CellFate</code>(\mathbf{y}, c(\mathbf{y},t))</span> when <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span> lie in the same French flag zone.</em></p></li>
+<li><p><em><em>Boundary sharpness</em>: At zone boundaries, the type assignment changes discretely despite continuous concentration.</em></p></li>
+<li><p><em><em>Temporal stability</em>: Once determined, the type assignment is maintained even if the morphogen field dissipates.</em></p></li>
+</ol>
+</div>
+<div class="proof">
+<p><em>Proof.</em> (1) follows from the piecewise-constant nature of the French flag partition. (2) follows from threshold-based switching. (3) follows from the cell-autonomous maintenance of fate via auto-regulatory transcription factor networks that lock in the determined state, analogous to a latch in digital logic. ◻</p>
+</div>
+<p>The dependent-type perspective unifies several phenomena:</p>
+<div class="corollary">
+<p><strong>Corollary 30</strong>.  <em>The following are all instances of dependent typing:</em></p>
+<ol>
+<li><p><em><strong>Dorsal–ventral patterning</strong>: <span class="math inline"><code>CellFate</code>(y, [\text{BMP}](y))</span> where <span class="math inline">y</span> is the D–V coordinate.</em></p></li>
+<li><p><em><strong>Limb bud patterning</strong>: <span class="math inline"><code>CellFate</code>(x, y, z,
+    [\text{Shh}](x), [\text{FGF}](y), [\text{Wnt}](z))</span> with three morphogen axes.</em></p></li>
+<li><p><em><strong>Somitogenesis</strong>: <span class="math inline"><code>CellFate</code>(x, t, [\text{Notch}](x,t))</span> where the oscillatory Notch signal creates periodic segments.</em></p></li>
+</ol>
+</div>
+<h1 data-number="11" id="sec:hox-functor"><span class="header-section-number">11</span> Hox Collinearity as Monotone Functor</h1>
+<p>We now formalize the collinearity property of Hox genes in category-theoretic terms.</p>
+<div id="def:ordered-cat" class="definition">
+<p><strong>Definition 31</strong> (Ordered Sets as Categories).  <em>An ordered set <span class="math inline">(S, &le;)</span> can be viewed as a thin category <span class="math inline">\mathbf{S}</span> where:</em></p>
+<ul>
+<li><p><em>Objects are elements of <span class="math inline">S</span>.</em></p></li>
+<li><p><em>There is a unique morphism <span class="math inline">s_1 \to s_2</span> iff <span class="math inline">s_1 &le; s_2</span>.</em></p></li>
+</ul>
+</div>
+<div id="def:chr-body-cat" class="definition">
+<p><strong>Definition 32</strong> (Chromosome and Body-Axis Categories).  <em>Define:</em></p>
+<ul>
+<li><p><em><span class="math inline">\mathbf{Chr} = (\{1, 2, &hellip;, n\}, &le;)</span>: the category of chromosomal positions of Hox genes.</em></p></li>
+<li><p><em><span class="math inline">\mathbf{Axis} = (\{A, &hellip;, P\}, &le;_{AP})</span>: the category of anterior–posterior body positions.</em></p></li>
+</ul>
+</div>
+<div id="thm:collinearity-functor" class="theorem">
+<p><strong>Theorem 33</strong> (Collinearity Functor).  <em>Hox spatial collinearity is a <em>monotone functor</em> <span class="math inline">F : \mathbf{Chr} \to \mathbf{Axis}</span> satisfying:</em></p>
+<ol>
+<li><p><em><span class="math inline">F</span> maps each chromosomal position to a body-axis position.</em></p></li>
+<li><p><em><span class="math inline">F</span> preserves order: if <span class="math inline">i &le;_{\text{chr}} j</span>, then <span class="math inline">F(i) &le;_{AP} F(j)</span>.</em></p></li>
+</ol>
+<p><em>Similarly, temporal collinearity is a monotone functor <span class="math inline">G : \mathbf{Chr} \to \mathbf{Time}</span> where <span class="math inline">\mathbf{Time} =
+(\mathbb{R}_{&ge; 0}, &le;)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The functor <span class="math inline">F</span> is defined by the spatial expression function <span class="math inline">\sigma</span> from <a href="#def:hox-cluster" data-reference-type="ref+label" data-reference="def:hox-cluster">2</a>: <span class="math inline">F(i) = \max(\sigma(H_i))</span>. By <a href="#ax:spatial-col" data-reference-type="ref+label" data-reference="ax:spatial-col">3</a>, <span class="math inline">i &le;_{\text{chr}} j</span> implies <span class="math inline">F(i) &le;_{AP} F(j)</span>, so <span class="math inline">F</span> preserves order and is thus a monotone functor. The argument for <span class="math inline">G</span> using <span class="math inline">\tau</span> and <a href="#ax:temporal-col" data-reference-type="ref+label" data-reference="ax:temporal-col">4</a> is identical. ◻</p>
+</div>
+<div class="corollary">
+<p><strong>Corollary 34</strong> (Collinearity as Natural Transformation).  <em>When both spatial and temporal collinearity hold, the pair <span class="math inline">(F, G)</span> constitutes a <em>joint monotone functor</em> <span class="math inline">\mathbf{Chr} \to \mathbf{Axis} &times; \mathbf{Time}</span>, expressing the fact that chromosomal order simultaneously determines both spatial and temporal expression patterns.</em></p>
+</div>
+<p><span class="math display">\begin{tikzcd}
+  \mathbf{Chr} \arrow[r, &quot;F&quot;] \arrow[dr, &quot;G&quot;&#39;] &amp;
+    \mathbf{Axis} \\
+  &amp; \mathbf{Time}
+\end{tikzcd}
+\qquad\Longrightarrow\qquad
+\begin{tikzcd}
+  \mathbf{Chr} \arrow[r, &quot;{(F,G)}&quot;] &amp; \mathbf{Axis} &times; \mathbf{Time}
+\end{tikzcd}</span></p>
+<h1 data-number="12" id="sec:organogenesis"><span class="header-section-number">12</span> Organogenesis as Container Orchestration</h1>
+<p>Organogenesis—the formation of organs from groups of cells—bears a remarkable structural similarity to container orchestration in modern distributed systems. We develop this analogy formally.</p>
+<div id="def:tissue-container" class="definition">
+<p><strong>Definition 35</strong> (Tissue as Container).  <em>A <em>tissue container</em> is a tuple <span class="math inline">T = (C, I, R, H)</span> where:</em></p>
+<ul>
+<li><p><em><span class="math inline">C \subset <code>Cell</code></span> is the set of cells in the tissue.</em></p></li>
+<li><p><em><span class="math inline">I : C \to \mathsf{CellType}</span> is the cell-type assignment (the “image” each cell runs).</em></p></li>
+<li><p><em><span class="math inline">R : C \to \text{Resources}</span> specifies resource requirements (nutrients, oxygen, growth factors).</em></p></li>
+<li><p><em><span class="math inline">H : C \to \{0,1\}</span> is the health check function.</em></p></li>
+</ul>
+</div>
+<div id="def:organ-pod" class="definition">
+<p><strong>Definition 36</strong> (Organ as Pod).  <em>An <em>organ pod</em> is a collection of tissue containers that cooperate to provide a physiological function: <span class="math display">O = \{T_1, T_2, &hellip;, T_k\}</span> equipped with:</em></p>
+<ul>
+<li><p><em><em>Inter-tissue signaling</em>: Communication channels between tissues (paracrine signaling <span class="math inline">\approx</span> inter-container networking).</em></p></li>
+<li><p><em><em>Shared resources</em>: Common extracellular matrix and vasculature (<span class="math inline">\approx</span> shared volumes).</em></p></li>
+<li><p><em><em>Specification</em>: A declarative description of the organ’s target state (<span class="math inline">\approx</span> deployment manifest).</em></p></li>
+</ul>
+</div>
+<div id="tab:orchestration">
+<table>
+<caption>Container orchestration <span class="math inline">\leftrightarrow</span> organogenesis correspondence.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Container Orchestration</strong></th>
+<th style="text-align: left;"><strong>Organogenesis</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Container</td>
+<td style="text-align: left;">Cell</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pod</td>
+<td style="text-align: left;">Organ primordium</td>
+</tr>
+<tr>
+<td style="text-align: left;">Service</td>
+<td style="text-align: left;">Tissue type</td>
+</tr>
+<tr>
+<td style="text-align: left;">Deployment manifest</td>
+<td style="text-align: left;">Developmental gene network</td>
+</tr>
+<tr>
+<td style="text-align: left;">Scheduler</td>
+<td style="text-align: left;">Morphogen gradient</td>
+</tr>
+<tr>
+<td style="text-align: left;">Health check</td>
+<td style="text-align: left;">Cell viability signaling</td>
+</tr>
+<tr>
+<td style="text-align: left;">Auto-scaling</td>
+<td style="text-align: left;">Compensatory proliferation</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rolling update</td>
+<td style="text-align: left;">Tissue remodeling</td>
+</tr>
+<tr>
+<td style="text-align: left;">Namespace</td>
+<td style="text-align: left;">Germ layer (ectoderm/mesoderm/endoderm)</td>
+</tr>
+<tr>
+<td style="text-align: left;">ConfigMap</td>
+<td style="text-align: left;">Morphogen concentration profile</td>
+</tr>
+<tr>
+<td style="text-align: left;">Secret</td>
+<td style="text-align: left;">Intracellular signaling state</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="thm:organ-orch" class="theorem">
+<p><strong>Theorem 37</strong> (Organ Assembly as Typed Orchestration).  <em>Organ assembly can be modeled as a typed orchestration program where:</em></p>
+<ol>
+<li><p><em>Each tissue container has a typed interface specifying its signaling inputs and outputs.</em></p></li>
+<li><p><em>Container composition is type-checked: tissues can only be assembled if their interfaces are compatible.</em></p></li>
+<li><p><em>The orchestrator (morphogen fields + regulatory networks) ensures that tissue containers are deployed in the correct spatial arrangement and temporal order.</em></p></li>
+</ol>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The interface of a tissue container <span class="math inline">T_i</span> is the pair <span class="math inline">(\text{In}_i, \text{Out}_i)</span> of required input signals and provided output signals. Compatibility requires that for each required input of <span class="math inline">T_i</span>, there exists another container <span class="math inline">T_j</span> in the organ pod whose output provides that signal. This is precisely interface compatibility checking in a typed module system. The morphogen field provides the spatial scheduling information (which containers go where), and the regulatory network provides temporal ordering (which containers start first). ◻</p>
+</div>
+<div class="example">
+<p><strong>Example 38</strong> (Kidney Organogenesis).  <em>Kidney development illustrates container orchestration:</em></p>
+<ol>
+<li><p><em><strong>Ureteric bud</strong> (container 1): Expresses Ret receptor, branches iteratively.</em></p></li>
+<li><p><em><strong>Metanephric mesenchyme</strong> (container 2): Expresses GDNF (signals to ureteric bud), receives Wnt signals.</em></p></li>
+<li><p><em><strong>Signaling interface</strong>: GDNF (mesenchyme <span class="math inline">\to</span> bud), Wnt9b (bud <span class="math inline">\to</span> mesenchyme).</em></p></li>
+<li><p><em><strong>Orchestration</strong>: Reciprocal induction creates a feedback loop that drives iterative branching and nephron formation.</em></p></li>
+</ol>
+</div>
+<h1 data-number="13" id="sec:implementation"><span class="header-section-number">13</span> Haskell Implementation</h1>
+<p>We provide a complete Haskell implementation that demonstrates the key abstractions of our framework. The implementation compiles with GHC and uses no external dependencies.</p>
+<h2 data-number="13.1" id="module-structure"><span class="header-section-number">13.1</span> Module Structure</h2>
+<p>The implementation is organized into five modules:</p>
+<ul>
+<li><p><code>Program.hs</code>: Core <code>Program</code> type and developmental stage transitions.</p></li>
+<li><p><code>BodyPlan.hs</code>: Hox gene cluster, collinearity mapping, segment identity.</p></li>
+<li><p><code>RegulatoryNetwork.hs</code>: Master regulator cascades, feed-forward loops, regulatory graph traversal.</p></li>
+<li><p><code>Differentiation.hs</code>: Waddington landscape, cell fate decisions, stem cell <span class="math inline">\to</span> terminal cell paths, apoptosis.</p></li>
+<li><p><code>Main.hs</code>: Demonstration of all components.</p></li>
+</ul>
+<h2 data-number="13.2" id="core-program-type"><span class="header-section-number">13.2</span> Core Program Type</h2>
+<pre><code>data DevStage = Cleavage | Gastrulation | Organogenesis | Maturation
+  deriving (Show, Eq, Ord, Enum, Bounded)
+
+data Program d = Program
+  { hoxCluster       :: HoxCluster
+  , morphogens       :: [MorphogenField]
+  , cellPopulation   :: [Cell]
+  , regulatoryNet    :: RegNetwork
+  , signalingState   :: SignalState
+  , developmental_stage :: d
+  }</code></pre>
+<h2 data-number="13.3" id="hox-collinearity-verification"><span class="header-section-number">13.3</span> Hox Collinearity Verification</h2>
+<pre><code>verifyCollinearity :: HoxCluster -&gt; Bool
+verifyCollinearity cluster =
+  let genes = hoxGenes cluster
+      positions = map chromosomePosition genes
+      bodyPositions = map (axisPosition . expressionDomain) genes
+  in isSorted positions &amp;&amp; isSorted bodyPositions
+  where
+    isSorted [] = True
+    isSorted [_] = True
+    isSorted (x:y:xs) = x &lt;= y &amp;&amp; isSorted (y:xs)</code></pre>
+<h2 data-number="13.4" id="morphogen-gradient-interpretation"><span class="header-section-number">13.4</span> Morphogen Gradient Interpretation</h2>
+<pre><code>interpretGradient :: MorphogenField -&gt; Double -&gt; CellFateZone
+interpretGradient field concentration
+  | concentration &gt; highThreshold field = HighZone
+  | concentration &gt; midThreshold field  = MidZone
+  | concentration &gt; lowThreshold field  = LowZone
+  | otherwise                           = NoSignal</code></pre>
+<h2 data-number="13.5" id="cell-fate-decision-tree"><span class="header-section-number">13.5</span> Cell Fate Decision Tree</h2>
+<pre><code>decideFate :: Cell -&gt; [Signal] -&gt; Cell
+decideFate cell signals = case cellState cell of
+  Stem potency -&gt; case findSignal signals InductiveSignal of
+    Just sig -&gt; specifyCell cell sig
+    Nothing  -&gt; maintainStemness cell
+  Progenitor lineage -&gt; case findSignal signals DetermSignal of
+    Just sig -&gt; determineCell cell sig
+    Nothing  -&gt; cell
+  Determined fate -&gt; case findSignal signals DiffSignal of
+    Just _ -&gt; differentiate cell
+    Nothing -&gt; cell
+  Terminal _ -&gt; cell  -- already fully differentiated</code></pre>
+<h2 data-number="13.6" id="waddington-landscape-simulation"><span class="header-section-number">13.6</span> Waddington Landscape Simulation</h2>
+<pre><code>simulateWaddington :: Cell -&gt; [Signal] -&gt; [Cell]
+simulateWaddington cell [] = [cell]
+simulateWaddington cell (s:ss) =
+  let cell&#39; = decideFate cell [s]
+  in cell : simulateWaddington cell&#39; ss</code></pre>
+<h2 data-number="13.7" id="regulatory-boot-sequence"><span class="header-section-number">13.7</span> Regulatory Boot Sequence</h2>
+<pre><code>bootSequence :: RegNetwork -&gt; [TFActivation]
+bootSequence network =
+  topologicalSort (regNodes network) (regEdges network)</code></pre>
+<p>The full implementation, including all type definitions, helper functions, and demonstration code, is provided in the accompanying source files.</p>
+<h1 data-number="14" id="sec:discussion"><span class="header-section-number">14</span> Discussion and Conclusion</h1>
+<h2 data-number="14.1" id="synthesis"><span class="header-section-number">14.1</span> Synthesis</h2>
+<p>This paper has established a comprehensive type-theoretic framework for developmental biology. The key insight is that the developmental program of a multicellular organism is not merely <em>analogous to</em> a computer program—it <em>is</em> a program in a precise technical sense, with types, modules, dependencies, and execution semantics that map faithfully onto constructs from programming-language theory.</p>
+<div id="tab:correspondence">
+<table>
+<caption>Complete correspondence between developmental biology and type theory.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Biological Concept</strong></th>
+<th style="text-align: left;"><strong>Type-Theoretic Formalization</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Hox gene cluster</td>
+<td style="text-align: left;">Main module</td>
+</tr>
+<tr>
+<td style="text-align: left;">Morphogen gradient</td>
+<td style="text-align: left;">Dependent type / distributed config</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cell-fate determination</td>
+<td style="text-align: left;">Refinement-type narrowing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Waddington landscape</td>
+<td style="text-align: left;">Refinement-type lattice</td>
+</tr>
+<tr>
+<td style="text-align: left;">Regulatory cascade</td>
+<td style="text-align: left;">Typed boot sequence (DAG)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Apoptosis</td>
+<td style="text-align: left;">Linear-type resource consumption</td>
+</tr>
+<tr>
+<td style="text-align: left;">Stem cell</td>
+<td style="text-align: left;">Abstract factory with polymorphic constructors</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hox collinearity</td>
+<td style="text-align: left;">Monotone functor</td>
+</tr>
+<tr>
+<td style="text-align: left;">Organogenesis</td>
+<td style="text-align: left;">Container orchestration</td>
+</tr>
+<tr>
+<td style="text-align: left;">Developmental stage</td>
+<td style="text-align: left;">Phantom type parameter</td>
+</tr>
+<tr>
+<td style="text-align: left;">Homeotic mutation</td>
+<td style="text-align: left;">Type error in main module</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cancer</td>
+<td style="text-align: left;">Type-safety violation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 data-number="14.2" id="the-dna-lang-project-a-retrospective"><span class="header-section-number">14.2</span> The DNA-Lang Project: A Retrospective</h2>
+<p>This paper concludes the seven-paper DNA-Lang project, which has progressively developed a type-theoretic interpretation of the genome:</p>
+<ol>
+<li><p><strong>Paper 1</strong>: Coding sequences as executable functions.</p></li>
+<li><p><strong>Paper 2</strong>: Regulatory sequences as control flow.</p></li>
+<li><p><strong>Paper 3</strong>: Noncoding RNA as type-level metaprogramming.</p></li>
+<li><p><strong>Paper 4</strong>: Epigenetic marks as compiler pragmas.</p></li>
+<li><p><strong>Paper 5</strong>: Repetitive elements as memory architecture.</p></li>
+<li><p><strong>Paper 6</strong>: Structural DNA as runtime environment.</p></li>
+<li><p><strong>Paper 7</strong>: Developmental programs as orchestration (this paper).</p></li>
+</ol>
+<p>Together, these papers establish that the genome is not merely a passive database of gene sequences but an <em>active programming language</em> with a rich type system, modular architecture, and sophisticated execution semantics.</p>
+<h2 data-number="14.3" id="implications-for-biology"><span class="header-section-number">14.3</span> Implications for Biology</h2>
+<p>The type-theoretic framework offers several concrete benefits for biological reasoning:</p>
+<ol>
+<li><p><strong>Prediction</strong>: Type-checking developmental programs can predict which mutations will be lethal (type errors in essential modules), which will produce homeotic transformations (type errors in the Hox main module), and which will be tolerated (changes within a type’s implementation that preserve its interface).</p></li>
+<li><p><strong>Disease understanding</strong>: Cancer is a type-safety violation where cells escape their refinement constraints. Developmental disorders are compile-time errors. Aging is type erosion from accumulated runtime errors.</p></li>
+<li><p><strong>Synthetic biology</strong>: Engineering organisms becomes a programming task with type guidance. Well-typed developmental programs should produce well-formed organisms.</p></li>
+</ol>
+<h2 data-number="14.4" id="implications-for-computer-science"><span class="header-section-number">14.4</span> Implications for Computer Science</h2>
+<p>Biology, in turn, offers lessons for programming-language design:</p>
+<ol>
+<li><p><strong>Robustness</strong>: Developmental programs are extraordinarily robust to perturbation, suggesting that biological type systems have sophisticated error-correction mechanisms we have yet to replicate.</p></li>
+<li><p><strong>Self-organization</strong>: Morphogen-based configuration is inherently decentralized, suggesting alternatives to centralized orchestration systems.</p></li>
+<li><p><strong>Graceful degradation</strong>: Apoptosis and compensatory proliferation suggest that programs should be designed to lose components gracefully.</p></li>
+</ol>
+<h2 data-number="14.5" id="limitations-and-future-work"><span class="header-section-number">14.5</span> Limitations and Future Work</h2>
+<p>Our framework currently treats development as a deterministic, well-typed process. In reality, stochastic gene expression, environmental perturbation, and epigenetic noise introduce non-determinism. Future work should incorporate:</p>
+<ul>
+<li><p><em>Probabilistic types</em> to model stochastic fate decisions.</p></li>
+<li><p><em>Gradual typing</em> to model the spectrum from labile specification to irreversible determination.</p></li>
+<li><p><em>Session types</em> to model the dynamic signaling conversations between cells during induction.</p></li>
+<li><p><em>Spatial type systems</em> that natively encode the three-dimensional geometry of developing tissues.</p></li>
+</ul>
+<h2 data-number="14.6" id="conclusion"><span class="header-section-number">14.6</span> Conclusion</h2>
+<p>From genome to organism, development is orchestration. The DNA-Lang project has shown that this is not merely a metaphor but a formal correspondence, with each biological mechanism mapping to a precise type-theoretic construct. The genome is a program; the cell is a runtime; and the organism is the well-typed output of a developmental orchestration engine that has been refined by four billion years of evolution.</p>
+<p><strong>Acknowledgments.</strong> The author thanks the YonedaAI Collaboration for ongoing support and the broader communities at the intersection of biology, category theory, and programming-language theory.</p>
+<div class="thebibliography">
+<p><span>99</span></p>
+<p>C. H. Waddington. <em>The Strategy of the Genes</em>. George Allen &amp; Unwin, London, 1957.</p>
+<p>L. Wolpert. Positional information and the spatial pattern of cellular differentiation. <em>Journal of Theoretical Biology</em>, 25(1):1–47, 1969.</p>
+<p>W. McGinnis and R. Krumlauf. Homeobox genes and axial patterning. <em>Cell</em>, 68(2):283–302, 1992.</p>
+<p>D. Duboule. The rise and fall of Hox gene clusters. <em>Development</em>, 134(14):2549–2560, 2007.</p>
+<p>A. M. Turing. The chemical basis of morphogenesis. <em>Philosophical Transactions of the Royal Society B</em>, 237(641):37–72, 1952.</p>
+<p>P. Martin-Löf. <em>Intuitionistic Type Theory</em>. Bibliopolis, Naples, 1984.</p>
+<p>P. Wadler. Propositions as types. <em>Communications of the ACM</em>, 58(12):75–84, 2015.</p>
+<p>B. C. Pierce. <em>Types and Programming Languages</em>. MIT Press, Cambridge, MA, 2002.</p>
+<p>J.-Y. Girard. Linear logic. <em>Theoretical Computer Science</em>, 50(1):1–102, 1987.</p>
+<p>S. Huang. Reprogramming cell fates: reconciling rarity with robustness. <em>BioEssays</em>, 31(5):546–560, 2009.</p>
+<p>R. Keller. Cell migration during gastrulation. <em>Current Opinion in Cell Biology</em>, 17(5):533–541, 2005.</p>
+<p>J. B. A. Green and J. Sharpe. Positional information and reaction-diffusion: two big ideas in developmental biology combine. <em>Development</em>, 142(7):1203–1211, 2015.</p>
+<p>M. B. Elowitz and S. Leibler. A synthetic oscillatory network of transcriptional regulators. <em>Nature</em>, 403(6767):335–338, 2000.</p>
+<p>K. Burns et al. Container-based operating system virtualization. <em>Proceedings of EuroSys</em>, 2016.</p>
+<p>M. Freeman. Feedback control of intercellular signalling in development. <em>Nature</em>, 408(6810):313–319, 2000.</p>
+<p>K. Takahashi and S. Yamanaka. Induction of pluripotent stem cells from mouse embryonic and adult fibroblast cultures by defined factors. <em>Cell</em>, 126(4):663–676, 2006.</p>
+</div>
+
+</main>
+</div>
+<script>
+// Build sidebar TOC from h2/h3 in content
+(function(){
+  var nav=document.getElementById('toc-nav');
+  var headings=document.querySelectorAll('.main-content h2, .main-content h3');
+  if(!headings.length)return;
+  var items=[];
+  for(var i=0;i<headings.length;i++){
+    var h=headings[i];
+    if(!h.id){
+      h.id=h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+$/,'');
+    }
+    items.push({tag:h.tagName,id:h.id,text:h.textContent.trim()});
+  }
+  var ul=document.createElement('ul');
+  var currentLi=null;
+  var subUl=null;
+  for(var j=0;j<items.length;j++){
+    var item=items[j];
+    var li=document.createElement('li');
+    var a=document.createElement('a');
+    a.href='#'+item.id;
+    a.textContent=item.text;
+    if(item.tag==='H2'){
+      if(subUl&&currentLi){currentLi.appendChild(subUl);subUl=null;}
+      li.appendChild(a);
+      ul.appendChild(li);
+      currentLi=li;
+    } else {
+      if(!subUl)subUl=document.createElement('ul');
+      li.appendChild(a);
+      subUl.appendChild(li);
+    }
+  }
+  if(subUl&&currentLi)currentLi.appendChild(subUl);
+  nav.appendChild(ul);
+
+  // Active tracking on scroll
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var links=nav.querySelectorAll('a');
+        for(var k=0;k<links.length;k++)links[k].classList.remove('active');
+        var link=nav.querySelector('a[href="#'+e.target.id+'"]');
+        if(link)link.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  for(var m=0;m<headings.length;m++)observer.observe(headings[m]);
+})();
+</script>
+</body>
+</html>
+4:["$","iframe",null,{"srcDoc":"$f","title":"Developmental Programs as Orchestration","className":"w-full border-0","style":{"minHeight":"100vh","height":"100vh"}}]
+a:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+6:null
+8:{"metadata":[["$","title","0",{"children":"Developmental Programs as Orchestration | DNA-Lang"}],["$","meta","1",{"name":"description","content":"Read the full paper: Developmental Programs as Orchestration"}],["$","meta","2",{"property":"og:title","content":"DNA-Lang"}],["$","meta","3",{"property":"og:description","content":"A Typed Programming Language for Biological Systems. 8 papers, 207 pages, Haskell implementations."}],["$","meta","4",{"property":"og:url","content":"https://dna-lang.vercel.app"}],["$","meta","5",{"property":"og:site_name","content":"DNA-Lang"}],["$","meta","6",{"property":"og:type","content":"website"}],["$","meta","7",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","8",{"name":"twitter:title","content":"DNA-Lang"}],["$","meta","9",{"name":"twitter:description","content":"A Typed Programming Language for Biological Systems. 8 papers, 207 pages."}]],"error":null,"digest":"$undefined"}
+d:"$8:metadata"

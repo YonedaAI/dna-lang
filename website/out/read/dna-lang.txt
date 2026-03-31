@@ -1,0 +1,986 @@
+1:"$Sreact.fragment"
+2:I[9766,[],""]
+3:I[8924,[],""]
+5:I[4431,[],"OutletBoundary"]
+7:I[5278,[],"AsyncMetadataOutlet"]
+9:I[4431,[],"ViewportBoundary"]
+b:I[4431,[],"MetadataBoundary"]
+c:"$Sreact.suspense"
+e:I[7150,[],""]
+:HL["/_next/static/css/b09932e90edb0ded.css","style"]
+0:{"P":null,"b":"7gRSrD9bgsZE1qpWK-pHQ","p":"","c":["","read","dna-lang"],"i":false,"f":[[["",{"children":["read",{"children":[["slug","dna-lang","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/b09932e90edb0ded.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","link",null,{"rel":"preconnect","href":"https://fonts.googleapis.com"}],["$","link",null,{"rel":"preconnect","href":"https://fonts.gstatic.com","crossOrigin":""}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap","rel":"stylesheet"}]]}],["$","body",null,{"style":{"fontFamily":"Inter, system-ui, -apple-system, sans-serif"},"children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]]}],{"children":["read",["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["slug","dna-lang","d"],["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L4",null,["$","$L5",null,{"children":["$L6",["$","$L7",null,{"promise":"$@8"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$L9",null,{"children":"$La"}],null],["$","$Lb",null,{"children":["$","div",null,{"hidden":true,"children":["$","$c",null,{"fallback":null,"children":"$Ld"}]}]}]]}],false]],"m":"$undefined","G":["$e",[]],"s":false,"S":true}
+f:T14f53,<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNA-Lang: A Typed Orchestration Language — DNA-Lang, Synthesis</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a2e;
+  --text:#e4e4ef;--text-dim:#9494a7;
+  --accent:#00b894;--accent2:#55efc4;--accent-dim:rgba(0,184,148,0.15);
+  --border:#2a2a3e;--code-bg:#0d0d14;
+  --success:#00b894;--warning:#fdcb6e;--error:#e17055;
+  --font-body:Inter,system-ui,-apple-system,sans-serif;
+  --font-mono:'SF Mono','Fira Code','JetBrains Mono',monospace;
+  --max-w:860px;--sidebar-w:260px
+}
+html{scroll-behavior:smooth;font-size:17px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent);text-decoration:underline}
+
+.page-wrapper{display:flex;min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--surface);border-right:1px solid var(--border);padding:1.5rem 1rem;overflow-y:auto;z-index:100;transition:transform .3s}
+.sidebar-header{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.sidebar-header a{font-size:.85rem;color:var(--text-dim);display:flex;align-items:center;gap:.4rem}
+.sidebar-header a:hover{color:var(--accent2)}
+.sidebar-title{font-size:.8rem;font-weight:600;color:var(--accent2);margin-top:.5rem;letter-spacing:.03em}
+
+.toc-nav{font-size:.82rem}
+.toc-nav ul{list-style:none;padding:0}
+.toc-nav li{margin-bottom:.25rem}
+.toc-nav a{display:block;padding:.3rem .6rem;border-radius:6px;color:var(--text-dim);transition:all .15s;font-size:.8rem;line-height:1.4}
+.toc-nav a:hover,.toc-nav a.active{background:var(--accent-dim);color:var(--accent2);text-decoration:none}
+.toc-nav ul ul{padding-left:.8rem}
+.toc-nav ul ul a{font-size:.75rem}
+
+.main-content{margin-left:var(--sidebar-w);flex:1;max-width:var(--max-w);padding:3rem 2.5rem 4rem}
+
+.paper-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.paper-part{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);background:var(--accent-dim);padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:1rem}
+.paper-header h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1.2;margin-bottom:.5rem;background:linear-gradient(135deg,var(--text),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.paper-subtitle{font-size:1rem;color:var(--text-dim);margin-bottom:1rem}
+.paper-meta-row{display:flex;gap:1rem;flex-wrap:wrap;font-size:.82rem;color:var(--text-dim)}
+.paper-meta-row a{font-size:.82rem}
+
+h1,h2,h3,h4,h5,h6{color:var(--text);letter-spacing:-.01em;margin-top:2.5rem;margin-bottom:.8rem}
+h2{font-size:1.5rem;font-weight:700;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.05rem;font-weight:600;color:var(--accent2)}
+
+p{margin-bottom:1rem}
+ul,ol{margin-bottom:1rem;padding-left:1.5rem}
+li{margin-bottom:.3rem}
+
+code{font-family:var(--font-mono);font-size:.88em;background:var(--code-bg);color:var(--accent2);padding:.15em .4em;border-radius:4px}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.5rem;overflow-x:auto;margin:1.5rem 0;line-height:1.5}
+pre code{background:none;padding:0;font-size:.85rem;color:var(--text)}
+
+.sourceCode{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.5rem;overflow-x:auto;margin:1.5rem 0}
+.sourceCode pre{background:none;border:none;padding:0;margin:0}
+.sourceCode code{font-size:.85rem;color:var(--text)}
+
+blockquote{border-left:3px solid var(--accent);padding:.8rem 1.2rem;margin:1.5rem 0;background:var(--accent-dim);border-radius:0 8px 8px 0;color:var(--text-dim);font-style:italic}
+
+table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.88rem}
+th{text-align:left;padding:.6rem .8rem;background:var(--surface2);color:var(--accent2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border)}
+td{padding:.6rem .8rem;border-bottom:1px solid var(--border);color:var(--text-dim)}
+tr:hover td{background:rgba(0,184,148,0.03);color:var(--text)}
+
+.theorem,.definition,.proposition,.lemma,.corollary,.invariant,.remark{
+  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;padding:1.2rem 1.5rem;margin:1.5rem 0
+}
+.theorem-title,.def-title{font-weight:700;color:var(--accent2);margin-bottom:.5rem;font-size:.9rem}
+
+figure{margin:1.5rem 0;text-align:center}
+figcaption{font-size:.82rem;color:var(--text-dim);margin-top:.5rem;font-style:italic}
+img{max-width:100%;height:auto;border-radius:8px}
+
+.menu-toggle{display:none;position:fixed;top:1rem;left:1rem;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;color:var(--text);cursor:pointer;font-size:1.2rem}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main-content{margin-left:0;padding:2rem 1.2rem}
+  .menu-toggle{display:block}
+}
+
+#TOC{display:none}
+.header-section-number{color:var(--accent);margin-right:.4rem;font-weight:600}
+</style>
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<div class="page-wrapper">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <a href="/">&larr; All Papers</a>
+    <div class="sidebar-title">DNA-Lang: A Typed Orchestration Language — DNA-Lang, Synthesis</div>
+  </div>
+  <nav class="toc-nav" id="toc-nav"></nav>
+  <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+    <a href="../papers/dna-lang.pdf" style="font-size:.8rem;color:var(--accent2);display:flex;align-items:center;gap:.4rem">PDF Version &darr;</a>
+  </div>
+</aside>
+<main class="main-content" id="content">
+  <div class="paper-header">
+    <span class="paper-part">Synthesis</span>
+    <h1 style="margin-top:0">DNA-Lang: A Typed Orchestration Language — DNA-Lang, Synthesis</h1>
+    <div class="paper-meta-row">
+      <span>Matthew Long</span>
+      <span>&middot;</span>
+      <span>YonedaAI Research Collective</span>
+      <span>&middot;</span>
+      <span>Chicago, IL</span>
+      <span>&middot;</span>
+      <a href="../papers/dna-lang.pdf">PDF</a>
+    </div>
+  </div>
+<div class="center">
+<p><span><strong>DNA-Lang: A Typed Orchestration Language<br />
+for Biological Programming</strong></span><br />
+<span>Matthew Long</span><br />
+<span>The YonedaAI Collaboration</span><br />
+<span>Chicago, IL</span><br />
+<span><code>matt@yoneda.ai</code></span><br />
+<span>Paper VIII in the series: <em>DNA as a Programming Language</em></span><br />
+<span>March 31, 2026</span></p>
+</div>
+<div class="onecolabstract">
+<p>We present <span class="smallcaps">DNA-Lang</span>, a statically typed orchestration language that unifies seven biological data types—corresponding to the fundamental computational abstractions of the genome—with biotech workflow types for CRISPR editing, AI-driven protein engineering, experimental design, and regulatory compliance. The language provides a complete type system with refinement types for biological constraints, a four-layer compiler architecture producing design, AI, experiment, and compliance artifacts, and typed interfaces to AI models and CRISPR backends. We give the formal syntax, typing rules, and compilation semantics, prove type safety and compilation correctness, and provide a reference implementation in Haskell. The PCSK9 knockout therapy serves as a worked example demonstrating the full pipeline from program specification through type checking to artifact generation. <span class="smallcaps">DNA-Lang</span> is the first programming language that treats the complete arc of biological intent—from target identification through experimental validation—as a single, type-checked program.</p>
+</div>
+<p><strong>Keywords:</strong> biological programming language, type system, CRISPR, gene editing, compiler, formal verification, biological computation, AI integration, provenance</p>
+<h1 data-number="1" id="sec:intro"><span class="header-section-number">1</span> Introduction</h1>
+<p>Modern biotechnology operates with an abundance of powerful but disconnected tools. The Synthetic Biology Open Language (SBOL) <span class="citation" data-cites="galdzicki2014sbol"></span> provides a standard for biological design exchange. CRISPR-Cas systems <span class="citation" data-cites="doudna2014crispr"></span> enable precise genome editing. AI models such as AlphaFold <span class="citation" data-cites="jumper2021alphafold"></span> predict protein structures with near-experimental accuracy. Laboratory information management systems (LIMS) track experimental execution. Yet no unified, typed programming language spans the full arc from biological intent to experimental validation.</p>
+<p>This gap has concrete consequences. A researcher designing a gene knockout must manually coordinate between sequence databases, guide RNA design tools, off-target prediction models, construct assembly protocols, cell line selection, assay design, and regulatory documentation. Each transition is untyped—a string passed from one tool to the next, with no compile-time guarantee that the output of one stage is a valid input to another.</p>
+<p>In Papers I–VII of this series, we established that the genome itself is organized around seven distinct computational abstractions:</p>
+<ol>
+<li><p><strong>Coding sequences</strong> as executable functions (Paper I): the central dogma as compilation from source (DNA) through intermediate representation (mRNA) to executable (protein).</p></li>
+<li><p><strong>Regulatory sequences</strong> as control flow (Paper II): promoters, enhancers, silencers, and insulators implementing conditional execution, loops, and branching.</p></li>
+<li><p><strong>Non-coding RNA</strong> as signals and middleware (Paper III): miRNA, siRNA, and lncRNA providing inter-process communication, message passing, and coordination.</p></li>
+<li><p><strong>Structural DNA</strong> as memory layout (Paper IV): telomeres, centromeres, and topologically associating domains organizing the genome’s address space.</p></li>
+<li><p><strong>Repetitive elements</strong> as self-modifying code (Paper V): transposons, SINEs, and LINEs enabling runtime code rewriting and genomic plasticity.</p></li>
+<li><p><strong>Epigenetic marks</strong> as runtime state (Paper VI): DNA methylation and histone modifications implementing mutable state that persists across cell divisions.</p></li>
+<li><p><strong>Developmental programs</strong> as orchestration (Paper VII): Hox genes, morphogen gradients, and cell-fate networks composing the above into a coherent organism-level program.</p></li>
+</ol>
+<p><span class="smallcaps">DNA-Lang</span> synthesizes these seven biological types into a complete programming language, augmented with biotech workflow types that connect biological design to laboratory execution. The result is a language in which:</p>
+<ul>
+<li><p>Every biological entity has a precise type.</p></li>
+<li><p>Every CRISPR editing operation is type-checked against its target.</p></li>
+<li><p>Every AI model invocation declares its input/output types, confidence bounds, and provenance.</p></li>
+<li><p>Every experimental step is traced from intent through execution to compliance documentation.</p></li>
+<li><p>The compiler produces not one artifact but four: a design artifact (SBOL-compatible sequences and constructs), an AI artifact (model predictions with uncertainty), an experiment artifact (assay plans with controls), and a compliance artifact (provenance and regulatory documentation).</p></li>
+</ul>
+<p>The remainder of this paper is organized as follows. <a href="#sec:seven-types" data-reference-type="ref+Label" data-reference="sec:seven-types">2</a> summarizes the seven biological types. <a href="#sec:type-system" data-reference-type="ref+Label" data-reference="sec:type-system">3</a> presents the unified type system. <a href="#sec:syntax" data-reference-type="ref+Label" data-reference="sec:syntax">4</a> gives the complete syntax. <a href="#sec:type-checker" data-reference-type="ref+Label" data-reference="sec:type-checker">5</a> specifies the type checker. <a href="#sec:compiler" data-reference-type="ref+Label" data-reference="sec:compiler">6</a> describes the four-layer compiler architecture. <a href="#sec:artifacts" data-reference-type="ref+Label" data-reference="sec:artifacts">7</a> details the four compiler artifacts. <a href="#sec:ai-service" data-reference-type="ref+Label" data-reference="sec:ai-service">8</a> formalizes AI as a typed service. <a href="#sec:crispr-backend" data-reference-type="ref+Label" data-reference="sec:crispr-backend">9</a> specifies the CRISPR backend. <a href="#sec:integration" data-reference-type="ref+Label" data-reference="sec:integration">10</a> describes integration points. <a href="#sec:example" data-reference-type="ref+Label" data-reference="sec:example">11</a> presents the PCSK9 worked example. <a href="#sec:formal" data-reference-type="ref+Label" data-reference="sec:formal">12</a> states formal properties. <a href="#sec:implementation" data-reference-type="ref+Label" data-reference="sec:implementation">13</a> describes the Haskell implementation. <a href="#sec:discussion" data-reference-type="ref+Label" data-reference="sec:discussion">14</a> discusses implications and future work.</p>
+<h1 data-number="2" id="sec:seven-types"><span class="header-section-number">2</span> The Seven Biological Types</h1>
+<p>Each of the seven papers in this series identified a fundamental computational abstraction in the genome. <span class="smallcaps">DNA-Lang</span> elevates each to a first-class type.</p>
+<h2 data-number="2.1" id="proteincodet-executable-functions-paper-i"><span class="header-section-number">2.1</span> ProteinCodeT — Executable Functions (Paper I)</h2>
+<p>Coding sequences are the genome’s functions. The central dogma—DNA <span class="math inline">\to</span> mRNA <span class="math inline">\to</span> protein—is a compilation pipeline: source code (the gene) is transcribed into an intermediate representation (mRNA), which is translated into an executable (the folded protein). The type <code>ProteinCodeT</code> parameterizes over the protein’s functional class <span class="math inline">T</span> (enzyme, structural protein, transcription factor, etc.).</p>
+<div class="definition">
+<p><strong>Definition 1</strong> (ProteinCode).  <em>A value of type <span class="math inline"><code>ProteinCode</code>\langle T \rangle</span> is a coding sequence that, when expressed, produces a protein of functional class <span class="math inline">T</span>. The compilation pipeline is: <span class="math display"><code>ProteinCode</code>\langle T \rangle \xrightarrow{\text{transcription}} <code>mRNA</code>\langle T \rangle \xrightarrow{\text{translation}} T</span></em></p>
+</div>
+<h2 data-number="2.2" id="regulatorexpressionlevel-control-flow-paper-ii"><span class="header-section-number">2.2</span> RegulatorExpressionLevel — Control Flow (Paper II)</h2>
+<p>Regulatory sequences implement the genome’s control flow. Promoters are function entry points. Enhancers are conditional jumps that activate expression when bound by specific transcription factors. Silencers are conditional blocks. Insulators are scope delimiters that prevent regulatory crosstalk.</p>
+<div class="definition">
+<p><strong>Definition 2</strong> (Regulator).  <em>A value of type <span class="math inline"><code>Regulator</code>\langle \text{ExpressionLevel} \rangle</span> maps a set of transcription factor concentrations to an expression level: <span class="math display"><code>Regulator</code>\langle E \rangle : \text{TFContext} \to E</span> where <span class="math inline">E</span> is a quantitative expression level in <span class="math inline">[0, E_{\max}]</span>.</em></p>
+</div>
+<h2 data-number="2.3" id="rnacontrolprocess-signals-and-middleware-paper-iii"><span class="header-section-number">2.3</span> RNAControlProcess — Signals and Middleware (Paper III)</h2>
+<p>Non-coding RNAs serve as the genome’s signaling and middleware layer. MicroRNAs (miRNAs) act as message filters, silencing specific mRNAs post-transcriptionally. Small interfering RNAs (siRNAs) implement targeted message destruction. Long non-coding RNAs (lncRNAs) serve as scaffolds and coordinators, analogous to middleware buses.</p>
+<div class="definition">
+<p><strong>Definition 3</strong> (RNAControl).  <em>A value of type <span class="math inline"><code>RNAControl</code>\langle P \rangle</span> modulates process <span class="math inline">P</span> through RNA-mediated regulation: <span class="math display"><code>RNAControl</code>\langle P \rangle : P \to P&#39;</span> where <span class="math inline">P&#39;</span> is the post-regulation state of the process.</em></p>
+</div>
+<h2 data-number="2.4" id="structuregenomelayout-memory-layout-paper-iv"><span class="header-section-number">2.4</span> StructureGenomeLayout — Memory Layout (Paper IV)</h2>
+<p>Structural DNA elements organize the genome’s three-dimensional architecture. Telomeres protect chromosome ends (buffer overflow guards). Centromeres enable chromosome segregation (memory allocation). Topologically associating domains (TADs) partition the genome into regulatory neighborhoods (memory segments).</p>
+<div class="definition">
+<p><strong>Definition 4</strong> (Structure).  <em>A value of type <span class="math inline"><code>Structure</code>\langle \text{GenomeLayout} \rangle</span> defines a spatial organization of genomic regions: <span class="math display"><code>Structure</code>\langle G \rangle : \text{LinearGenome} \to \text{3DGenome}</span></em></p>
+</div>
+<h2 data-number="2.5" id="repeatselfmodifying-self-modifying-code-paper-v"><span class="header-section-number">2.5</span> RepeatSelfModifying — Self-Modifying Code (Paper V)</h2>
+<p>Repetitive elements—transposons, SINEs, LINEs—are the genome’s self-modifying code. Transposons copy or move themselves within the genome, rewriting the program at runtime. This enables genomic plasticity, immune system diversity (V(D)J recombination), and evolutionary innovation.</p>
+<div class="definition">
+<p><strong>Definition 5</strong> (Repeat).  <em>A value of type <span class="math inline"><code>Repeat</code>\langle \text{SelfModifying} \rangle</span> is a genomic element capable of altering the genome: <span class="math display"><code>Repeat</code>\langle S \rangle : \text{Genome} \to \text{Genome}&#39;</span> where <span class="math inline">\text{Genome}&#39;</span> differs from <span class="math inline">\text{Genome}</span> by the insertion, deletion, or rearrangement mediated by the element.</em></p>
+</div>
+<h2 data-number="2.6" id="stateaccessibility-runtime-state-paper-vi"><span class="header-section-number">2.6</span> StateAccessibility — Runtime State (Paper VI)</h2>
+<p>Epigenetic marks—DNA methylation, histone modifications—constitute the genome’s mutable runtime state. Unlike the DNA sequence itself (the program text), epigenetic marks can be written and erased during execution (cell life). They determine which regions of the genome are accessible (open chromatin) or silenced (heterochromatin).</p>
+<div class="definition">
+<p><strong>Definition 6</strong> (State).  <em>A value of type <span class="math inline"><code>State</code>\langle \text{Accessibility} \rangle</span> maps genomic loci to accessibility states: <span class="math display"><code>State</code>\langle A \rangle : \text{Locus} \to A</span> where <span class="math inline">A \in \{\text{Open}, \text{Poised}, \text{Repressed}, \text{Silent}\}</span>.</em></p>
+</div>
+<h2 data-number="2.7" id="programorganismdevelopment-orchestration-paper-vii"><span class="header-section-number">2.7</span> ProgramOrganismDevelopment — Orchestration (Paper VII)</h2>
+<p>Developmental programs—Hox gene cascades, morphogen gradients, cell-fate decision networks—orchestrate all previous types into a coherent organism-level computation. They are the genome’s “main function,” composing functions, control flow, signals, memory layout, self-modification, and state into the emergent phenomenon of development.</p>
+<div class="definition">
+<p><strong>Definition 7</strong> (Program).  <em>A value of type <span class="math inline"><code>Program</code>\langle \text{OrganismDevelopment} \rangle</span> is a composition of all six preceding types: <span class="math display"><code>Program</code>\langle O \rangle = (<code>ProteinCode</code>, <code>Regulator</code>, <code>RNAControl</code>, <code>Structure</code>, <code>Repeat</code>, <code>State</code>) \to O</span> where <span class="math inline">O</span> is the developmental outcome (cell type, tissue, organ, organism).</em></p>
+</div>
+<figure id="fig:seven-types" data-latex-placement="H">
+
+<figcaption>The seven biological types. <code>Program</code> composes all six preceding types into organism-level orchestration.</figcaption>
+</figure>
+<h1 data-number="3" id="sec:type-system"><span class="header-section-number">3</span> The Unified Type System</h1>
+<p>The <span class="smallcaps">DNA-Lang</span> type system extends the seven biological types with biotech workflow types, refinement types, and a composite genome type.</p>
+<h2 data-number="3.1" id="core-types"><span class="header-section-number">3.1</span> Core Types</h2>
+<div class="definition">
+<p><strong>Definition 8</strong> (Core Type Universe).  <em>The set of <span class="smallcaps">DNA-Lang</span> types <span class="math inline">\mathcal{T}</span> is defined by the grammar: <span class="math display">\begin{align*}
+\tau ::=\; &amp; <code>ProteinCode</code> \mid <code>Regulator</code> \mid <code>RNAControl</code> \mid <code>Structure</code> \mid <code>Repeat</code> \mid <code>State</code> \mid <code>Program</code> \\
+\mid\; &amp; <code>Target</code> \mid <code>Sequence</code>\langle \kappa \rangle \mid <code>GuideRNA</code> \mid <code>Edit</code>\langle \epsilon \rangle \mid <code>Vector</code> \mid <code>CellLine</code> \\
+\mid\; &amp; <code>Assay</code> \mid <code>Phenotype</code> \mid <code>Candidate</code> \mid <code>Risk</code>\langle \rho \rangle \mid <code>Evidence</code> \mid <code>Workflow</code> \\
+\mid\; &amp; \{\tau \mid \phi\} \mid <code>Genome</code> \mid [\tau] \mid (\tau_1, &hellip;, \tau_n) \to \tau \\[4pt]
+\kappa ::=\; &amp; <code>DNA</code> \mid <code>RNA</code> \mid <code>Protein</code> \\
+\epsilon ::=\; &amp; <code>Knockout</code> \mid <code>BaseEdit</code> \mid <code>PrimeEdit</code> \mid <code>Insertion</code> \\
+\rho ::=\; &amp; <code>OffTarget</code> \mid <code>Toxicity</code> \mid <code>Immunogenicity</code>
+\end{align*}</span></em></p>
+</div>
+<h2 data-number="3.2" id="biotech-workflow-types"><span class="header-section-number">3.2</span> Biotech Workflow Types</h2>
+<p>The workflow types model the stages of a biotech pipeline:</p>
+<div id="tab:workflow-types">
+<table>
+<caption>Biotech workflow types and their biological interpretation.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Type</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+<th style="text-align: left;"><strong>Analogy</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>Target</code></td>
+<td style="text-align: left;">Gene or locus to modify</td>
+<td style="text-align: left;">Function pointer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Sequence</code><span class="math inline">\langle\kappa\rangle</span></td>
+<td style="text-align: left;">DNA, RNA, or protein sequence</td>
+<td style="text-align: left;">Data buffer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>GuideRNA</code></td>
+<td style="text-align: left;">CRISPR guide RNA</td>
+<td style="text-align: left;">Instruction operand</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Edit</code><span class="math inline">\langle\epsilon\rangle</span></td>
+<td style="text-align: left;">Editing operation</td>
+<td style="text-align: left;">Write instruction</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Vector</code></td>
+<td style="text-align: left;">Delivery vehicle</td>
+<td style="text-align: left;">Network packet</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>CellLine</code></td>
+<td style="text-align: left;">Experimental cell system</td>
+<td style="text-align: left;">Execution environment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Assay</code></td>
+<td style="text-align: left;">Experimental measurement</td>
+<td style="text-align: left;">Test harness</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Phenotype</code></td>
+<td style="text-align: left;">Observed outcome</td>
+<td style="text-align: left;">Program output</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Candidate</code></td>
+<td style="text-align: left;">Therapeutic candidate</td>
+<td style="text-align: left;">Release artifact</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Risk</code><span class="math inline">\langle\rho\rangle</span></td>
+<td style="text-align: left;">Safety assessment</td>
+<td style="text-align: left;">Error report</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Evidence</code></td>
+<td style="text-align: left;">Supporting data</td>
+<td style="text-align: left;">Log entry</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Workflow</code></td>
+<td style="text-align: left;">Pipeline composition</td>
+<td style="text-align: left;">Build script</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 data-number="3.3" id="refinement-types"><span class="header-section-number">3.3</span> Refinement Types</h2>
+<p>Refinement types attach biological constraints to base types. A refinement type <span class="math inline">\{\tau \mid \phi\}</span> denotes values of type <span class="math inline">\tau</span> satisfying predicate <span class="math inline">\phi</span>.</p>
+<div class="definition">
+<p><strong>Definition 9</strong> (Biological Constraints).  <em>The constraint language <span class="math inline">\phi</span> is: <span class="math display">\begin{align*}
+\phi ::=\; &amp; <code>length</code> &ge; n \mid <code>length</code> &le; n \\
+\mid\; &amp; l &le; <code>GC</code> &le; h \mid <code>off\_targets</code> = 0 \\
+\mid\; &amp; <code>specificity</code> &ge; s \mid <code>efficiency</code> &ge; e \\
+\mid\; &amp; <code>risk</code>(\rho) &le; v \mid <code>PAM</code> = p \\
+\mid\; &amp; l &le; <code>expression</code> &le; h \\
+\mid\; &amp; \phi_1 \wedge \phi_2 \mid \phi_1 \vee \phi_2 \mid \neg \phi \mid \top
+\end{align*}</span></em></p>
+</div>
+<div class="example">
+<p><strong>Example 10</strong> (Refined GuideRNA).  <em>A guide RNA with specificity at least 0.9 and no off-targets: <span class="math display"><code>SafeGuide</code> = \{<code>GuideRNA</code> \mid <code>specificity</code> &ge; 0.9 \wedge <code>off\_targets</code> = 0\}</span></em></p>
+</div>
+<h2 data-number="3.4" id="the-genome-composite-type"><span class="header-section-number">3.4</span> The Genome Composite Type</h2>
+<p>The <code>Genome</code> type is the composite of all seven biological types:</p>
+<div class="definition">
+<p><strong>Definition 11</strong> (Genome).  <em><span class="math display"><code>Genome</code> = <code>ProteinCode</code> &times; <code>Regulator</code> &times; <code>RNAControl</code> &times; <code>Structure</code> &times; <code>Repeat</code> &times; <code>State</code> &times; <code>Program</code></span> Every biological type is a subtype of <code>Genome</code>: for each <span class="math inline">\tau \in \{<code>ProteinCode</code>, &hellip;, <code>Program</code>\}</span>, we have <span class="math inline">\tau &lt;: <code>Genome</code></span>.</em></p>
+</div>
+<h2 data-number="3.5" id="subtyping"><span class="header-section-number">3.5</span> Subtyping</h2>
+<div class="definition">
+<p><strong>Definition 12</strong> (Subtyping Rules).  <em>The subtyping relation <span class="math inline">&lt;:</span> is the smallest reflexive and transitive relation satisfying:</em></p>
+<ol>
+<li><p><em><span class="math inline">\tau &lt;: \tau</span> (reflexivity)</em></p></li>
+<li><p><em><span class="math inline">\{\tau \mid \phi\} &lt;: \tau</span> (refinement subsumption)</em></p></li>
+<li><p><em><span class="math inline">\tau_{\text{bio}} &lt;: <code>Genome</code></span> for each biological type <span class="math inline">\tau_{\text{bio}}</span></em></p></li>
+<li><p><em><span class="math inline"><code>GuideRNA</code> &lt;: <code>Sequence</code>\langle<code>DNA</code>\rangle</span> (a guide is a DNA sequence)</em></p></li>
+<li><p><em><span class="math inline"><code>Candidate</code> &lt;: <code>Evidence</code></span> (a candidate is evidence)</em></p></li>
+<li><p><em><span class="math inline">[\tau_1] &lt;: [\tau_2]</span> if <span class="math inline">\tau_1 &lt;: \tau_2</span> (list covariance)</em></p></li>
+</ol>
+</div>
+<h1 data-number="4" id="sec:syntax"><span class="header-section-number">4</span> DNA-Lang Syntax</h1>
+<h2 data-number="4.1" id="program-structure"><span class="header-section-number">4.1</span> Program Structure</h2>
+<p>A <span class="smallcaps">DNA-Lang</span> program consists of a named program block containing declarations and actions:</p>
+<pre id="lst:structure" style="dnalangstyle" data-caption="General program structure." data-label="lst:structure"><code>program &lt;Name&gt; {
+    &lt;declarations&gt;
+    &lt;actions&gt;
+}</code></pre>
+<p>Declarations introduce typed bindings. Actions perform side-effecting operations (running assays, collecting results, validating constraints).</p>
+<h2 data-number="4.2" id="declarations"><span class="header-section-number">4.2</span> Declarations</h2>
+<div class="definition">
+<p><strong>Definition 13</strong> (Declaration Forms).  <em><span class="smallcaps">DNA-Lang</span> supports the following declaration forms: <span class="math display">\begin{align*}
+d ::=\; &amp; <strong><code>target</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>sequence</code></strong>\; x : \kappa = e \\
+\mid\; &amp; <strong><code>guide</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>edit</code></strong>\; x : \epsilon = e \\
+\mid\; &amp; <strong><code>vector</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>cell\_line</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>assay</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>model\_result</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>construct</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>candidate</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>let</code></strong>\; x : \tau = e \\
+\mid\; &amp; <strong><code>require</code></strong>\; \phi
+\end{align*}</span></em></p>
+</div>
+<p>Each declaration introduces a binding <span class="math inline">x</span> of the appropriate type into the type environment, with the exception of <strong><code>require</code></strong>, which asserts a constraint <span class="math inline">\phi</span> that must hold at compile time.</p>
+<h2 data-number="4.3" id="expressions"><span class="header-section-number">4.3</span> Expressions</h2>
+<div class="definition">
+<p><strong>Definition 14</strong> (Expression Forms).  <em><span class="math display">\begin{align*}
+e ::=\; &amp; x \mid \text{``}s\text{&#39;&#39;} \mid n \mid f \mid <code>true</code> \mid <code>false</code> \\
+\mid\; &amp; [e_1, &hellip;, e_n] \mid \{k_1 = e_1, &hellip;, k_n = e_n\} \\
+\mid\; &amp; g(e_1, &hellip;, e_n) \mid e.k \mid e_1 \oplus e_2 \mid e : \tau
+\end{align*}</span> where <span class="math inline">x</span> is a variable, <span class="math inline">s</span> a string, <span class="math inline">n</span> an integer, <span class="math inline">f</span> a float, <span class="math inline">g</span> a function name, <span class="math inline">k</span> a field name, <span class="math inline">\oplus</span> a binary operator, and <span class="math inline">\tau</span> a type annotation.</em></p>
+</div>
+<h2 data-number="4.4" id="actions"><span class="header-section-number">4.4</span> Actions</h2>
+<div class="definition">
+<p><strong>Definition 15</strong> (Action Forms).  <em><span class="math display">\begin{align*}
+a ::=\; &amp; <strong><code>run</code></strong>\; g(e_1, &hellip;, e_n) \\
+\mid\; &amp; <strong><code>collect</code></strong>\; x = e \\
+\mid\; &amp; <strong><code>validate</code></strong>\; e \\
+\mid\; &amp; <strong><code>log</code></strong>\; e \\
+\mid\; &amp; <strong><code>return</code></strong>\; e
+\end{align*}</span></em></p>
+</div>
+<h2 data-number="4.5" id="full-grammar"><span class="header-section-number">4.5</span> Full Grammar</h2>
+<figure id="fig:grammar" data-latex-placement="H">
+<div class="minipage">
+<p><span class="math display">\begin{align*}
+<em>program</em> &amp;::= <strong><code>program</code></strong>\; <em>name</em>\; <code>\{</code>\; <em>item</em>^*\; <code>\</code>} \\
+<em>item</em> &amp;::= <em>decl</em> \mid <em>action</em> \\
+<em>decl</em> &amp;::= <strong><code>target</code></strong>\; <em>name</em>\; <code>=</code>\; <em>expr</em> \\
+    &amp;\mid\; <strong><code>sequence</code></strong>\; <em>name</em>\; <code>:</code>\; <em>seqkind</em>\; <code>=</code>\; <em>expr</em> \\
+    &amp;\mid\; <strong><code>guide</code></strong>\; <em>name</em>\; <code>=</code>\; <em>expr</em> \\
+    &amp;\mid\; <strong><code>edit</code></strong>\; <em>name</em>\; <code>:</code>\; <em>editkind</em>\; <code>=</code>\; <em>expr</em> \\
+    &amp;\mid\; <strong><code>require</code></strong>\; <em>constraint</em> \\
+    &amp;\mid\; &hellip; \\
+<em>expr</em> &amp;::= <em>name</em> \mid <em>literal</em> \mid <em>name</em><code>(</code><em>expr</em>^{*}<code>)</code> \mid <em>expr</em><code>.</code><em>name</em> \mid <code>[</code><em>expr</em>^{*}<code>]</code> \mid <code>\{</code><em>fields</em><code>\</code>} \\
+<em>action</em> &amp;::= <strong><code>run</code></strong>\; <em>name</em><code>(</code><em>expr</em>^{*}<code>)</code> \mid <strong><code>collect</code></strong>\; <em>name</em>\; <code>=</code>\; <em>expr</em> \mid &hellip; \\
+<em>seqkind</em> &amp;::= <code>DNA</code> \mid <code>RNA</code> \mid <code>Protein</code> \\
+<em>editkind</em> &amp;::= <code>Knockout</code> \mid <code>BaseEdit</code> \mid <code>PrimeEdit</code> \mid <code>Insertion</code> \\
+<em>constraint</em> &amp;::= <code>no\_off\_targets</code> \mid <code>specificity</code> &ge; f \mid <code>efficiency</code> &ge; f \mid &hellip;
+\end{align*}</span></p>
+</div>
+<figcaption>Abbreviated grammar for <span class="smallcaps">DNA-Lang</span>.</figcaption>
+</figure>
+<h1 data-number="5" id="sec:type-checker"><span class="header-section-number">5</span> The Type Checker</h1>
+<h2 data-number="5.1" id="typing-judgments"><span class="header-section-number">5.1</span> Typing Judgments</h2>
+<p>The type checker maintains a type environment <span class="math inline">\Gamma : \text{Name} \to \mathcal{T}</span> and checks each declaration and action in sequence.</p>
+<div class="definition">
+<p><strong>Definition 16</strong> (Typing Judgment).  <em>The judgment <span class="math inline">\Gamma \vdash e : \tau</span> means “in environment <span class="math inline">\Gamma</span>, expression <span class="math inline">e</span> has type <span class="math inline">\tau</span>.”</em></p>
+</div>
+<h2 data-number="5.2" id="typing-rules-for-expressions"><span class="header-section-number">5.2</span> Typing Rules for Expressions</h2>
+<p><span class="math display">\begin{gather}
+\frac{x : \tau \in \Gamma}{\Gamma \vdash x : \tau} \quad (Var)
+\qquad
+\frac{}{\Gamma \vdash \text{``}s\text{&#39;&#39;} : <code>String</code>} \quad (Str)
+\qquad
+\frac{}{\Gamma \vdash n : <code>Int</code>} \quad (Int)
+\\[8pt]
+\frac{g : (\tau_1, &hellip;, \tau_n) \to \tau_r \quad \Gamma \vdash e_i : \tau_i&#39; \quad \tau_i&#39; &lt;: \tau_i \;\forall i}{\Gamma \vdash g(e_1, &hellip;, e_n) : \tau_r} \quad (App)
+\\[8pt]
+\frac{\Gamma \vdash e_1 : \tau \quad &hellip; \quad \Gamma \vdash e_n : \tau}{\Gamma \vdash [e_1, &hellip;, e_n] : [\tau]} \quad (List)
+\qquad
+\frac{\Gamma \vdash e : \tau \quad \tau &lt;: \tau&#39;}{\Gamma \vdash e : \tau&#39;} \quad (Sub)
+\end{gather}</span></p>
+<h2 data-number="5.3" id="typing-rules-for-declarations"><span class="header-section-number">5.3</span> Typing Rules for Declarations</h2>
+<p><span class="math display">\begin{gather}
+\frac{\Gamma \vdash e : \tau}{\Gamma \vdash (<strong><code>target</code></strong>\; x = e) &rArr; \Gamma[x &#8614; <code>Target</code>]} \quad (Target)
+\\[8pt]
+\frac{\Gamma \vdash e : \tau \quad \tau &lt;: <code>Sequence</code>\langle\kappa\rangle}{\Gamma \vdash (<strong><code>sequence</code></strong>\; x : \kappa = e) &rArr; \Gamma[x &#8614; <code>Sequence</code>\langle\kappa\rangle]} \quad (Seq)
+\\[8pt]
+\frac{\Gamma \vdash e : \tau \quad \tau &lt;: <code>GuideRNA</code>}{\Gamma \vdash (<strong><code>guide</code></strong>\; x = e) &rArr; \Gamma[x &#8614; <code>GuideRNA</code>]} \quad (Guide)
+\\[8pt]
+\frac{\Gamma \vdash e : <code>Edit</code>\langle\epsilon&#39;\rangle \quad \epsilon&#39; &lt;: \epsilon}{\Gamma \vdash (<strong><code>edit</code></strong>\; x : \epsilon = e) &rArr; \Gamma[x &#8614; <code>Edit</code>\langle\epsilon\rangle]} \quad (Edit)
+\\[8pt]
+\frac{\Gamma \vdash \phi \;\text{valid}}{\Gamma \vdash (<strong><code>require</code></strong>\; \phi) &rArr; \Gamma} \quad (Require)
+\end{gather}</span></p>
+<h2 data-number="5.4" id="refinement-type-checking"><span class="header-section-number">5.4</span> Refinement Type Checking</h2>
+<p>When a <strong><code>require</code></strong> constraint is encountered, the type checker validates it against the constraint language. At compile time, this performs structural validation (non-negative lengths, valid GC ranges, etc.). At link time—when concrete sequences are available—refinement predicates are evaluated against the actual data.</p>
+<div class="definition">
+<p><strong>Definition 17</strong> (Constraint Validity).  <em>A constraint <span class="math inline">\phi</span> is <em>structurally valid</em> if:</em></p>
+<ul>
+<li><p><em><span class="math inline"><code>length</code> &ge; n</span> with <span class="math inline">n &ge; 0</span></em></p></li>
+<li><p><em><span class="math inline">l &le; <code>GC</code> &le; h</span> with <span class="math inline">0 &le; l &le; h &le; 1</span></em></p></li>
+<li><p><em><span class="math inline"><code>specificity</code> &ge; s</span> with <span class="math inline">0 &le; s &le; 1</span></em></p></li>
+<li><p><em><span class="math inline"><code>risk</code>(\rho) &le; v</span> with <span class="math inline">v &ge; 0</span></em></p></li>
+<li><p><em><span class="math inline">\phi_1 \wedge \phi_2</span> with both <span class="math inline">\phi_1</span> and <span class="math inline">\phi_2</span> valid</em></p></li>
+<li><p><em><span class="math inline">\top</span> is always valid</em></p></li>
+</ul>
+</div>
+<h2 data-number="5.5" id="type-inference"><span class="header-section-number">5.5</span> Type Inference</h2>
+<p><span class="smallcaps">DNA-Lang</span> uses bidirectional type checking. Declarations provide type annotations (the sequence kind <span class="math inline">\kappa</span>, the edit kind <span class="math inline">\epsilon</span>), and expressions are checked against these annotations. Function applications infer return types from the built-in function signature table.</p>
+<h1 data-number="6" id="sec:compiler"><span class="header-section-number">6</span> The Compiler Architecture — Four Layers</h1>
+<p>The <span class="smallcaps">DNA-Lang</span> compiler is organized into four layers, each transforming the program closer to executable artifacts.</p>
+<figure id="fig:compiler-layers" data-latex-placement="H">
+
+<figcaption>The four-layer compiler architecture.</figcaption>
+</figure>
+<h2 data-number="6.1" id="layer-1-irschema"><span class="header-section-number">6.1</span> Layer 1: IR/Schema</h2>
+<p>The first layer lowers the parsed <span class="smallcaps">DNA-Lang</span> AST into a typed intermediate representation (IR). Every node in the IR carries its type annotation, enabling downstream passes to perform type-directed transformations without re-running the type checker.</p>
+<p>The IR preserves the program’s declaration order, which matters because biological workflows are inherently sequential: a guide cannot be designed before its target is specified.</p>
+<h2 data-number="6.2" id="layer-2-dsl"><span class="header-section-number">6.2</span> Layer 2: DSL</h2>
+<p>The second layer interprets the IR as a declarative specification in four domains:</p>
+<ol>
+<li><p><strong>Design</strong>: target identification, sequence retrieval, guide design, construct assembly.</p></li>
+<li><p><strong>Edit</strong>: CRISPR operation specification (knockout, base edit, prime edit, insertion).</p></li>
+<li><p><strong>Screen</strong>: assay design, cell line selection, phenotype measurement.</p></li>
+<li><p><strong>Validate</strong>: safety checks, off-target analysis, risk assessment.</p></li>
+</ol>
+<h2 data-number="6.3" id="layer-3-compilers"><span class="header-section-number">6.3</span> Layer 3: Compilers</h2>
+<p>The third layer compiles the domain-specific representations to concrete external formats:</p>
+<ul>
+<li><p><strong>SBOL 3.0</strong>: biological design components, interactions, and modules.</p></li>
+<li><p><strong>Benchling API</strong>: sequence entries, annotations, and assembly protocols.</p></li>
+<li><p><strong>AlphaFold 3</strong>: structure prediction requests with input sequences and parameters.</p></li>
+<li><p><strong>LIMS/ELN</strong>: experimental protocols, sample tracking, and instrument configurations.</p></li>
+</ul>
+<h2 data-number="6.4" id="layer-4-verification"><span class="header-section-number">6.4</span> Layer 4: Verification</h2>
+<p>The fourth layer performs cross-cutting verification:</p>
+<ul>
+<li><p><strong>Off-target analysis</strong>: genome-wide search for guide RNA binding sites.</p></li>
+<li><p><strong>Payload verification</strong>: construct size, expression cassette integrity, codon optimization.</p></li>
+<li><p><strong>Manufacturability</strong>: synthesis constraints, restriction site avoidance, GC content bounds.</p></li>
+<li><p><strong>Provenance</strong>: complete trace from every output artifact back to its source declaration, through every model invocation and compilation step.</p></li>
+</ul>
+<h1 data-number="7" id="sec:artifacts"><span class="header-section-number">7</span> Four Compiler Artifacts</h1>
+<p>Compilation of a <span class="smallcaps">DNA-Lang</span> program produces not one but four artifacts, each serving a distinct stakeholder.</p>
+<h2 data-number="7.1" id="design-artifact"><span class="header-section-number">7.1</span> Design Artifact</h2>
+<p>The design artifact contains everything needed to physically realize the intended biological modification:</p>
+<ul>
+<li><p>Target gene annotation and genomic coordinates</p></li>
+<li><p>Reference and modified sequences in GenBank and SBOL XML formats</p></li>
+<li><p>Guide RNA sequences with PAM sites and scoring metrics</p></li>
+<li><p>Construct maps with assembly instructions (Gibson, Golden Gate, etc.)</p></li>
+<li><p>Edit plans specifying the mechanism (NHEJ, HDR, base editing, prime editing)</p></li>
+</ul>
+<h2 data-number="7.2" id="ai-artifact"><span class="header-section-number">7.2</span> AI Artifact</h2>
+<p>The AI artifact documents every AI model invocation and its outputs:</p>
+<ul>
+<li><p>Model identity and version (AlphaFold 3 release 2025-12, ESM-2 650M, etc.)</p></li>
+<li><p>Input hashes for reproducibility</p></li>
+<li><p>Predictions with calibrated confidence scores</p></li>
+<li><p>Uncertainty estimates (MC Dropout, Deep Ensemble)</p></li>
+<li><p>Ranking criteria and composite scores for guide selection</p></li>
+</ul>
+<h2 data-number="7.3" id="experiment-artifact"><span class="header-section-number">7.3</span> Experiment Artifact</h2>
+<p>The experiment artifact is a complete, executable experimental plan:</p>
+<ul>
+<li><p>Assay protocols with step-by-step instructions</p></li>
+<li><p>Cell line specifications with authentication and passage requirements</p></li>
+<li><p>Controls: positive (known-functional guide), negative (scrambled guide), untransfected</p></li>
+<li><p>Statistical plan: sample size, replicates, tests, significance thresholds</p></li>
+<li><p>Acceptance criteria: minimum editing efficiency, maximum off-target rate</p></li>
+<li><p>Timeline with milestones (transfection, harvest, analysis, reporting)</p></li>
+</ul>
+<h2 data-number="7.4" id="compliance-artifact"><span class="header-section-number">7.4</span> Compliance Artifact</h2>
+<p>The compliance artifact provides regulatory and audit documentation:</p>
+<ul>
+<li><p>Complete provenance chain from source code to every output</p></li>
+<li><p>Type environment snapshot at compilation</p></li>
+<li><p>All constraint verifications with pass/fail status</p></li>
+<li><p>Model version registry with checksums</p></li>
+<li><p>Decision log recording every automated choice with rationale</p></li>
+<li><p>Regulatory classification and biosafety level</p></li>
+<li><p>Audit trail with timestamps and compiler version</p></li>
+</ul>
+<h1 data-number="8" id="sec:ai-service"><span class="header-section-number">8</span> AI as Typed Service</h1>
+<p>In <span class="smallcaps">DNA-Lang</span>, AI models are not opaque black boxes but typed services with declared interfaces. Each AI function has:</p>
+<ol>
+<li><p>A <strong>type signature</strong>: input and output types.</p></li>
+<li><p>A <strong>confidence bound</strong>: calibrated probability that the prediction is correct within a specified tolerance.</p></li>
+<li><p>A <strong>provenance record</strong>: model identity, version, checkpoint hash, and input hash.</p></li>
+<li><p>A <strong>validation protocol</strong>: how to experimentally verify the prediction.</p></li>
+</ol>
+<div class="definition">
+<p><strong>Definition 18</strong> (AI Service Signatures).  <em>The built-in AI services are: <span class="math display">\begin{align*}
+<code>predict\_structure</code> &amp;: <code>Sequence</code>\langle<code>Protein</code>\rangle \to <code>Structure</code> \\
+<code>rank\_guides</code> &amp;: <code>Target</code> \to [<code>GuideRNA</code>] \\
+<code>predict\_off\_target</code> &amp;: <code>GuideRNA</code> \to <code>Risk</code>\langle<code>OffTarget</code>\rangle \\
+<code>propose\_variants</code> &amp;: <code>Sequence</code>\langle<code>Protein</code>\rangle \to [<code>Sequence</code>\langle<code>Protein</code>\rangle]
+\end{align*}</span></em></p>
+</div>
+<div class="example">
+<p><strong>Example 19</strong> (Typed AI Invocation).  <em>When the program calls <code>predict_structure(seq)</code>, the type checker verifies that <code>seq</code> has type <span class="math inline"><code>Sequence</code>\langle<code>Protein</code>\rangle</span>. The return type <span class="math inline"><code>Structure</code></span> is guaranteed. The AI artifact records the model version, input hash, pLDDT scores, and PAE matrix.</em></p>
+</div>
+<p>The key principle is that <em>AI uncertainty is a first-class citizen of the type system</em>. A structure prediction does not simply return a PDB file; it returns a <span class="math inline"><code>Structure</code></span> value annotated with confidence metrics that downstream consumers can inspect and branch on.</p>
+<div class="remark">
+<p><strong>Remark 20</strong>.  <em>The typed AI service approach addresses a critical gap in current biotech workflows: the tendency to treat AI predictions as ground truth. By requiring explicit confidence bounds and validation protocols, <span class="smallcaps">DNA-Lang</span> forces researchers to acknowledge and plan for prediction uncertainty.</em></p>
+</div>
+<h1 data-number="9" id="sec:crispr-backend"><span class="header-section-number">9</span> CRISPR as Backend</h1>
+<p>CRISPR-Cas systems serve as the primary execution backend for <span class="smallcaps">DNA-Lang</span> programs. Each editing modality is a typed operation that compiles to concrete molecular components.</p>
+<h2 data-number="9.1" id="editing-operations"><span class="header-section-number">9.1</span> Editing Operations</h2>
+<div class="definition">
+<p><strong>Definition 21</strong> (CRISPR Operations).  <em><span class="math display">\begin{align*}
+<code>knockout</code> &amp;: (<code>Target</code>, <code>GuideRNA</code>) \to <code>Edit</code>\langle<code>Knockout</code>\rangle \\
+<code>base\_edit</code> &amp;: (<code>Target</code>, <code>GuideRNA</code>, <code>Sequence</code>\langle<code>DNA</code>\rangle) \to <code>Edit</code>\langle<code>BaseEdit</code>\rangle \\
+<code>prime\_edit</code> &amp;: (<code>Target</code>, <code>GuideRNA</code>, <code>Sequence</code>\langle<code>DNA</code>\rangle) \to <code>Edit</code>\langle<code>PrimeEdit</code>\rangle \\
+<code>insert\_payload</code> &amp;: (<code>Target</code>, <code>GuideRNA</code>, <code>Sequence</code>\langle<code>DNA</code>\rangle) \to <code>Edit</code>\langle<code>Insertion</code>\rangle
+\end{align*}</span></em></p>
+</div>
+<h2 data-number="9.2" id="compilation-to-molecular-components"><span class="header-section-number">9.2</span> Compilation to Molecular Components</h2>
+<p>Each CRISPR operation compiles to a set of molecular components:</p>
+<div id="tab:crispr-compilation">
+<table>
+<caption>CRISPR operations and their compiled molecular components.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Operation</strong></th>
+<th style="text-align: left;"><strong>Compiled Components</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>knockout</code></td>
+<td style="text-align: left;">SpCas9 protein or mRNA, guide RNA with scaffold, delivery vehicle (RNP, LNP, or AAV)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>base_edit</code></td>
+<td style="text-align: left;">ABE8e or CBE4 fusion protein, guide RNA, no donor template required</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>prime_edit</code></td>
+<td style="text-align: left;">PE2 or PE3 nickase fusion, pegRNA with primer binding site and RT template, nicking guide</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>insert_payload</code></td>
+<td style="text-align: left;">SpCas9, guide RNA, HDR donor template with homology arms (typically 500–1000bp each), delivery vehicle</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 data-number="9.3" id="additional-crispr-modalities"><span class="header-section-number">9.3</span> Additional CRISPR Modalities</h2>
+<p>Beyond the four core editing operations, <span class="smallcaps">DNA-Lang</span> supports CRISPRa (activation) and CRISPRi (repression) as typed operations:</p>
+<p><span class="math display">\begin{align*}
+<code>activate</code> &amp;: (<code>Target</code>, <code>GuideRNA</code>) \to <code>Edit</code>\langle<code>Insertion</code>\rangle \\
+<code>repress</code> &amp;: (<code>Target</code>, <code>GuideRNA</code>) \to <code>Edit</code>\langle<code>Knockout</code>\rangle
+\end{align*}</span></p>
+<p>These compile to dCas9 fusion proteins (VP64, p65, Rta for activation; KRAB for repression) with the specified guide RNA.</p>
+<h1 data-number="10" id="sec:integration"><span class="header-section-number">10</span> Integration Points</h1>
+<p><span class="smallcaps">DNA-Lang</span> is designed to integrate with existing biotech infrastructure rather than replace it.</p>
+<h2 data-number="10.1" id="sbol-synthetic-biology-open-language"><span class="header-section-number">10.1</span> SBOL (Synthetic Biology Open Language)</h2>
+<p>The design artifact exports biological components, interactions, and modules in SBOL 3.0 format. Each <code>Sequence</code> declaration maps to an SBOL <code>Component</code>. Each <code>Edit</code> maps to an SBOL <code>Interaction</code>. The program’s declaration structure maps to an SBOL <code>Module</code> hierarchy.</p>
+<h2 data-number="10.2" id="benchling"><span class="header-section-number">10.2</span> Benchling</h2>
+<p>Benchling integration provides sequence management, annotation, and collaboration. The <span class="smallcaps">DNA-Lang</span> compiler generates Benchling API calls to:</p>
+<ul>
+<li><p>Create and annotate sequences</p></li>
+<li><p>Register constructs with assembly protocols</p></li>
+<li><p>Track guide RNA designs with scoring metrics</p></li>
+<li><p>Link experimental results to design specifications</p></li>
+</ul>
+<h2 data-number="10.3" id="alphafold-3"><span class="header-section-number">10.3</span> AlphaFold 3</h2>
+<p>Structure prediction requests are compiled into AlphaFold 3 API calls with:</p>
+<ul>
+<li><p>Input sequences in the required format</p></li>
+<li><p>Multimer specifications for protein complexes</p></li>
+<li><p>Post-processing to extract pLDDT, PAE, and contact maps</p></li>
+<li><p>Caching of results keyed by input sequence hash</p></li>
+</ul>
+<h2 data-number="10.4" id="limseln"><span class="header-section-number">10.4</span> LIMS/ELN</h2>
+<p>Laboratory execution is managed through LIMS integration:</p>
+<ul>
+<li><p>Experimental protocols generated from assay declarations</p></li>
+<li><p>Sample registration and tracking</p></li>
+<li><p>Instrument configuration and scheduling</p></li>
+<li><p>Result capture and automated quality control</p></li>
+<li><p>Notebook entries linked to program source and compilation artifacts</p></li>
+</ul>
+<h1 data-number="11" id="sec:example"><span class="header-section-number">11</span> Worked Example: PCSK9 Knockout Therapy</h1>
+<p>We now trace the complete <span class="smallcaps">DNA-Lang</span> pipeline for a PCSK9 knockout therapy program. PCSK9 (Proprotein Convertase Subtilisin/Kexin Type 9) is a validated target for lowering LDL cholesterol; Verve Therapeutics’ VERVE-101 demonstrated clinical proof-of-concept for in vivo base editing of PCSK9 in humans <span class="citation" data-cites="verve2023"></span>.</p>
+<h2 data-number="11.1" id="the-program"><span class="header-section-number">11.1</span> The Program</h2>
+<pre id="lst:pcsk9" style="dnalangstyle" data-caption="PCSK9 knockout therapy program in DNA-Lang{}." data-label="lst:pcsk9"><code>program PCSK9_KO {
+    -- Target identification
+    target pcsk9 = &quot;PCSK9&quot;
+    sequence ref_seq : DNA = lookup_sequence(pcsk9)
+
+    -- Guide RNA design
+    guide top_guide = design_guide(pcsk9, ref_seq)
+
+    -- Biological constraints
+    require no_off_targets
+    require specificity &gt;= 0.90
+    require efficiency &gt;= 0.70
+
+    -- CRISPR editing
+    edit ko_edit : Knockout = knockout(pcsk9, top_guide)
+
+    -- Experimental setup
+    cell_line hepg2 = select_cell_line(&quot;HepG2&quot;)
+    assay ngs_assay = design_assay(ko_edit, hepg2)
+
+    -- Execution
+    run validate_safety(ko_edit)
+    run run_assay(ngs_assay, hepg2)
+    collect results = generate_report(ngs_assay, ko_edit)
+}</code></pre>
+<h2 data-number="11.2" id="type-checking-trace"><span class="header-section-number">11.2</span> Type Checking Trace</h2>
+<p>The type checker processes each declaration in order, building the type environment:</p>
+<ol>
+<li><p><span class="math inline">\Gamma_0 = \emptyset</span></p></li>
+<li><p><strong><code>target</code></strong> <code>pcsk9 = "PCSK9"</code>: The string literal has type <code>String</code>. The <span class="smallcaps">Target</span> rule extends: <span class="math inline">\Gamma_1 = \Gamma_0[<code>pcsk9</code> &#8614; <code>Target</code>]</span>.</p></li>
+<li><p><strong><code>sequence</code></strong> <code>ref_seq : DNA = lookup_sequence(pcsk9)</code>: The function <code>lookup_sequence</code> has signature <span class="math inline"><code>Target</code> \to <code>Sequence</code>\langle<code>DNA</code>\rangle</span>. Since <span class="math inline"><code>pcsk9</code> : <code>Target</code> \in \Gamma_1</span>, the application type-checks. <span class="math inline">\Gamma_2 = \Gamma_1[<code>ref\_seq</code> &#8614; <code>Sequence</code>\langle<code>DNA</code>\rangle]</span>.</p></li>
+<li><p><strong><code>guide</code></strong> <code>top_guide = design_guide(pcsk9, ref_seq)</code>: The function <code>design_guide</code> has signature <span class="math inline">(<code>Target</code>, <code>Sequence</code>\langle<code>DNA</code>\rangle) \to <code>GuideRNA</code></span>. Both arguments match. <span class="math inline">\Gamma_3 = \Gamma_2[<code>top\_guide</code> &#8614; <code>GuideRNA</code>]</span>.</p></li>
+<li><p><strong><code>require</code></strong> <code>no_off_targets</code>: Structurally valid. <span class="math inline">\Gamma_4 = \Gamma_3</span>.</p></li>
+<li><p><strong><code>require</code></strong> <code>specificity &gt;= 0.90</code>: <span class="math inline">0 &le; 0.90 &le; 1</span>. Valid. <span class="math inline">\Gamma_5 = \Gamma_4</span>.</p></li>
+<li><p><strong><code>require</code></strong> <code>efficiency &gt;= 0.70</code>: <span class="math inline">0 &le; 0.70 &le; 1</span>. Valid. <span class="math inline">\Gamma_6 = \Gamma_5</span>.</p></li>
+<li><p><strong><code>edit</code></strong> <code>ko_edit : Knockout = knockout(pcsk9, top_guide)</code>: The function <code>knockout</code> has signature <span class="math inline">(<code>Target</code>, <code>GuideRNA</code>) \to <code>Edit</code>\langle<code>Knockout</code>\rangle</span>. Both arguments match. The declared kind <code>Knockout</code> matches the return kind. <span class="math inline">\Gamma_7 = \Gamma_6[<code>ko\_edit</code> &#8614; <code>Edit</code>\langle<code>Knockout</code>\rangle]</span>.</p></li>
+<li><p><strong><code>cell_line</code></strong> <code>hepg2 = select_cell_line("HepG2")</code>: <span class="math inline">\Gamma_8 = \Gamma_7[<code>hepg2</code> &#8614; <code>CellLine</code>]</span>.</p></li>
+<li><p><strong><code>assay</code></strong> <code>ngs_assay = design_assay(ko_edit, hepg2)</code>: <span class="math inline">\Gamma_9 = \Gamma_8[<code>ngs\_assay</code> &#8614; <code>Assay</code>]</span>.</p></li>
+</ol>
+<p>Actions are checked similarly, verifying that all referenced variables are in scope and have compatible types. The final type environment is:</p>
+<div class="center">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Binding</strong></th>
+<th style="text-align: left;"><strong>Type</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>pcsk9</code></td>
+<td style="text-align: left;"><code>Target</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ref_seq</code></td>
+<td style="text-align: left;"><code>Sequence</code><span class="math inline">\langle</span><code>DNA</code><span class="math inline">\rangle</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>top_guide</code></td>
+<td style="text-align: left;"><code>GuideRNA</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ko_edit</code></td>
+<td style="text-align: left;"><code>Edit</code><span class="math inline">\langle</span><code>Knockout</code><span class="math inline">\rangle</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>hepg2</code></td>
+<td style="text-align: left;"><code>CellLine</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ngs_assay</code></td>
+<td style="text-align: left;"><code>Assay</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>results</code></td>
+<td style="text-align: left;"><code>Evidence</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 data-number="11.3" id="compilation-output"><span class="header-section-number">11.3</span> Compilation Output</h2>
+<p>The compiler produces four artifacts:</p>
+<h4 data-number="11.3.0.1" id="design-artifact."><span class="header-section-number">11.3.0.1</span> Design Artifact.</h4>
+<p>Contains the PCSK9 genomic locus coordinates (chr1:55,505,221–55,530,525, GRCh38), the reference sequence retrieved from NCBI, the designed guide RNA with NGG PAM site and scoring metrics, and the construct map for SpCas9 + guide expression cassette delivery.</p>
+<h4 data-number="11.3.0.2" id="ai-artifact."><span class="header-section-number">11.3.0.2</span> AI Artifact.</h4>
+<p>Records the CRISPOR v4.99 invocation for guide scoring (specificity 0.93, efficiency 0.87), DeepCRISPR cross-validation, and the composite ranking that selected the top guide. Confidence is calibrated at 0.92 via Platt scaling.</p>
+<h4 data-number="11.3.0.3" id="experiment-artifact."><span class="header-section-number">11.3.0.3</span> Experiment Artifact.</h4>
+<p>Specifies HepG2 cells (ATCC HB-8065, passage <span class="math inline">&le; 20</span>, mycoplasma-free), Lonza 4D electroporation for delivery, NGS amplicon sequencing at 72h post-transfection with <span class="math inline">&ge; 10{,}000&times;</span> coverage, three biological replicates, positive control (safe harbor guide), negative control (scrambled guide), acceptance criteria (editing <span class="math inline">&ge; 70\%</span>, off-target <span class="math inline">&lt; 1\%</span>).</p>
+<h4 data-number="11.3.0.4" id="compliance-artifact."><span class="header-section-number">11.3.0.4</span> Compliance Artifact.</h4>
+<p>Records the <span class="smallcaps">DNA-Lang</span> compiler version, source code hash, type environment snapshot, all constraint verifications (all passed), model versions (CRISPOR v4.99, DeepCRISPR), BSL-2 classification, and the complete decision log.</p>
+<h1 data-number="12" id="sec:formal"><span class="header-section-number">12</span> Formal Properties</h1>
+<p>We state the key formal properties of <span class="smallcaps">DNA-Lang</span>. Full proofs are deferred to the appendix in a companion technical report.</p>
+<h2 data-number="12.1" id="type-safety"><span class="header-section-number">12.1</span> Type Safety</h2>
+<div id="thm:progress" class="theorem">
+<p><strong>Theorem 22</strong> (Type Safety — Progress).  <em>If <span class="math inline">\Gamma \vdash p : <code>Program</code></span> where <span class="math inline">p</span> is a well-typed <span class="smallcaps">DNA-Lang</span> program, then either <span class="math inline">p</span> has completed (all declarations processed and all actions executed) or there exists a step <span class="math inline">p \to p&#39;</span> such that <span class="math inline">p&#39;</span> is defined.</em></p>
+</div>
+<div id="thm:preservation" class="theorem">
+<p><strong>Theorem 23</strong> (Type Safety — Preservation).  <em>If <span class="math inline">\Gamma \vdash p : <code>Program</code></span> and <span class="math inline">p \to p&#39;</span>, then there exists <span class="math inline">\Gamma&#39;</span> extending <span class="math inline">\Gamma</span> such that <span class="math inline">\Gamma&#39; \vdash p&#39; : <code>Program</code></span>.</em></p>
+</div>
+<p>The combination of progress and preservation guarantees that a well-typed <span class="smallcaps">DNA-Lang</span> program never reaches an undefined state during execution. In biological terms: a type-checked program will never attempt to use a knockout edit where a base edit is required, pass a protein sequence to a function expecting DNA, or invoke an assay without a valid cell line.</p>
+<div class="proof">
+<p><em>Proof sketch.</em> Progress follows by case analysis on the next item to process. Each declaration form has a defined typing rule that produces an extended environment, and each action form has a defined execution semantics. Preservation follows by showing that each typing rule preserves the invariant that <span class="math inline">\Gamma&#39;</span> extends <span class="math inline">\Gamma</span> and that the remaining items are well-typed in <span class="math inline">\Gamma&#39;</span>. ◻</p>
+</div>
+<h2 data-number="12.2" id="compilation-correctness"><span class="header-section-number">12.2</span> Compilation Correctness</h2>
+<div id="thm:compilation" class="theorem">
+<p><strong>Theorem 24</strong> (Compilation Correctness).  <em>For a well-typed program <span class="math inline">p</span>, the compilation function <span class="math inline">\mathcal{C}</span> produces four artifacts <span class="math inline">(\mathcal{D}, \mathcal{A}, \mathcal{E}, \mathcal{P})</span> such that:</em></p>
+<ol>
+<li><p><em><span class="math inline">\mathcal{D}</span> (Design) contains a valid SBOL 3.0 document for every <code>Sequence</code>, <code>GuideRNA</code>, and <code>Edit</code> declaration in <span class="math inline">p</span>.</em></p></li>
+<li><p><em><span class="math inline">\mathcal{A}</span> (AI) contains a provenance record for every AI service invocation in <span class="math inline">p</span>.</em></p></li>
+<li><p><em><span class="math inline">\mathcal{E}</span> (Experiment) contains an assay protocol for every <code>Assay</code> declaration and <strong><code>run</code></strong> action in <span class="math inline">p</span>.</em></p></li>
+<li><p><em><span class="math inline">\mathcal{P}</span> (Compliance) contains a constraint verification for every <strong><code>require</code></strong> declaration in <span class="math inline">p</span>.</em></p></li>
+</ol>
+</div>
+<div class="proof">
+<p><em>Proof sketch.</em> By structural induction on the program’s declaration and action lists. Each declaration form has a corresponding compilation rule in each of the four artifact generators, and the compilation rules collectively cover all declaration forms. ◻</p>
+</div>
+<h2 data-number="12.3" id="provenance-completeness"><span class="header-section-number">12.3</span> Provenance Completeness</h2>
+<div id="thm:provenance" class="theorem">
+<p><strong>Theorem 25</strong> (Provenance Completeness).  <em>For every entry <span class="math inline">e</span> in any artifact produced by <span class="math inline">\mathcal{C}(p)</span>, there exists a finite chain <span class="math display">e = e_n \leftarrow e_{n-1} \leftarrow &middot;s \leftarrow e_1 \leftarrow e_0</span> where <span class="math inline">e_0</span> is a declaration or action in the source program <span class="math inline">p</span>, and each <span class="math inline">\leftarrow</span> represents a compilation or AI invocation step recorded in the compliance artifact.</em></p>
+</div>
+<p>This theorem guarantees that no artifact entry is “orphaned”—every output can be traced back to a specific line in the source program.</p>
+<h1 data-number="13" id="sec:implementation"><span class="header-section-number">13</span> Haskell Implementation</h1>
+<p>We provide a reference implementation of <span class="smallcaps">DNA-Lang</span> in Haskell, chosen for its strong type system, algebraic data types, and pattern matching—all of which mirror the structure of the language specification.</p>
+<h2 data-number="13.1" id="module-architecture"><span class="header-section-number">13.1</span> Module Architecture</h2>
+<p>The implementation consists of six modules:</p>
+<div id="tab:modules">
+<table>
+<caption>Haskell implementation modules.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Module</strong></th>
+<th style="text-align: left;"><strong>Lines</strong></th>
+<th style="text-align: left;"><strong>Responsibility</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>Types.hs</code></td>
+<td style="text-align: left;"><span class="math inline">\sim</span>200</td>
+<td style="text-align: left;">Core type definitions, subtyping, pretty printing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Parser.hs</code></td>
+<td style="text-align: left;"><span class="math inline">\sim</span>400</td>
+<td style="text-align: left;">Recursive descent parser for <span class="smallcaps">DNA-Lang</span> source</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>TypeChecker.hs</code></td>
+<td style="text-align: left;"><span class="math inline">\sim</span>180</td>
+<td style="text-align: left;">Type checking with biological constraint validation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Compiler.hs</code></td>
+<td style="text-align: left;"><span class="math inline">\sim</span>230</td>
+<td style="text-align: left;">Four-artifact compiler</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Runtime.hs</code></td>
+<td style="text-align: left;"><span class="math inline">\sim</span>240</td>
+<td style="text-align: left;">Simulation-mode execution environment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Examples.hs</code></td>
+<td style="text-align: left;"><span class="math inline">\sim</span>120</td>
+<td style="text-align: left;">Sample programs (PCSK9_KO, SCD_BaseEdit, FLDL_Activate)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Main.hs</code></td>
+<td style="text-align: left;"><span class="math inline">\sim</span>100</td>
+<td style="text-align: left;">Pipeline driver</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 data-number="13.2" id="core-type-representation"><span class="header-section-number">13.2</span> Core Type Representation</h2>
+<p>The type universe is encoded as an algebraic data type:</p>
+<pre id="lst:types" style="haskellstyle" data-caption="Core type representation in Haskell." data-label="lst:types"><code>data DNAType
+    -- Seven biological types (Papers I-VII)
+    = TProteinCode | TRegulator | TRNAControl
+    | TStructure   | TRepeat    | TState  | TProgram
+    -- Biotech workflow types
+    | TTarget | TSequence SeqKind | TGuideRNA
+    | TEdit EditKind | TVector | TCellLine | TAssay
+    | TPhenotype | TCandidate | TRisk RiskKind
+    | TEvidence | TWorkflow
+    -- Type constructors
+    | TRefinement DNAType Constraint
+    | TGenome | TFunction [DNAType] DNAType
+    | TList DNAType | TUnit
+    | TString | TInt | TFloat | TBool
+    deriving (Eq, Show)
+
+data SeqKind  = DNA | RNA | Protein  deriving (Eq, Show)
+data EditKind = Knockout | BaseEdit | PrimeEdit | Insertion
+    deriving (Eq, Show)
+data RiskKind = OffTarget | Toxicity | Immunogenicity
+    deriving (Eq, Show)</code></pre>
+<h2 data-number="13.3" id="the-parser"><span class="header-section-number">13.3</span> The Parser</h2>
+<p>The parser is a hand-written recursive descent parser using a simple state monad (no external dependencies). It parses program blocks, declarations, constraints, and actions:</p>
+<pre id="lst:parser" style="haskellstyle" data-caption="Parser monad and entry point." data-label="lst:parser"><code>newtype Parser a = Parser {
+    runParser :: String -&gt; Either ParseError (a, String)
+}
+
+parseProgram :: String -&gt; Either ParseError Program
+parseProgram input = case runParser parseProgramBlock input of
+    Left err     -&gt; Left err
+    Right (p, _) -&gt; Right p</code></pre>
+<p>The parser supports all declaration forms, the constraint language (with <code>AND</code>/<code>OR</code> connectives), function application, record literals, list literals, and field access.</p>
+<h2 data-number="13.4" id="type-checking"><span class="header-section-number">13.4</span> Type Checking</h2>
+<p>The type checker maintains a <code>TypeEnv</code> (a <code>Map String DNAType</code>) and processes declarations sequentially:</p>
+<pre id="lst:typechecker" style="haskellstyle" data-caption="Type checker entry point." data-label="lst:typechecker"><code>typeCheck :: Program -&gt; TypeResult TypeEnv
+typeCheck (Program _ decls actions) = do
+    env1 &lt;- foldDecls emptyEnv decls
+    env2 &lt;- foldActions env1 actions
+    Right env2</code></pre>
+<p>Built-in functions are registered with their type signatures, enabling the type checker to verify every function application. Constraints are validated structurally (non-negative lengths, valid probability ranges, etc.).</p>
+<h2 data-number="13.5" id="compilation"><span class="header-section-number">13.5</span> Compilation</h2>
+<p>The compiler maps each declaration to entries in four artifact structures:</p>
+<pre id="lst:compiler" style="haskellstyle" data-caption="Compiler producing four artifacts." data-label="lst:compiler"><code>compile :: Program -&gt; [Artifact]
+compile prog =
+    [ compileDesign prog
+    , compileAI prog
+    , compileExperiment prog
+    , compileCompliance prog
+    ]</code></pre>
+<p>Each artifact is a list of key-value pairs, formatted as structured text. In a production implementation, the design artifact would emit SBOL XML, the AI artifact would generate API requests, the experiment artifact would produce LIMS protocols, and the compliance artifact would write to an immutable audit log.</p>
+<h2 data-number="13.6" id="runtime-simulation"><span class="header-section-number">13.6</span> Runtime Simulation</h2>
+<p>The runtime executes <span class="smallcaps">DNA-Lang</span> programs in simulation mode, using simulated biological functions that return plausible mock data:</p>
+<pre id="lst:runtime" style="haskellstyle" data-caption="Simulated biological functions." data-label="lst:runtime"><code>simulateFunction &quot;predict_structure&quot; _ =
+    RVStructure &quot;AF-SIM-001&quot; 0.89
+
+simulateFunction &quot;rank_guides&quot; _ =
+    RVList [ RVGuide &quot;ACGT...&quot; 0.95 0.88
+           , RVGuide &quot;TGCA...&quot; 0.91 0.85
+           , RVGuide &quot;GCTA...&quot; 0.88 0.92 ]
+
+simulateFunction &quot;knockout&quot; _ =
+    RVEdit Knockout &quot;NHEJ-mediated disruption&quot;</code></pre>
+<h2 data-number="13.7" id="building-and-running"><span class="header-section-number">13.7</span> Building and Running</h2>
+<p>The implementation compiles with GHC using only base and containers:</p>
+<pre id="lst:build" class="bash" style="haskellstyle" data-caption="Build and run." data-label="lst:build" data-language="bash" data-morekeywords="ghc"><code>ghc -o main Main.hs
+./main</code></pre>
+<p>The output demonstrates all four phases: parsing the PCSK9_KO source text, type checking the AST, compiling to four artifacts, and executing in simulation mode.</p>
+<h1 data-number="14" id="sec:discussion"><span class="header-section-number">14</span> Discussion and Conclusion</h1>
+<h2 data-number="14.1" id="what-dna-lang-achieves"><span class="header-section-number">14.1</span> What DNA-Lang Achieves</h2>
+<p><span class="smallcaps">DNA-Lang</span> is, to our knowledge, the first programming language that:</p>
+<ol>
+<li><p><strong>Types the full biological arc.</strong> From target identification through guide design, editing, experimental validation, and compliance documentation—every stage is typed.</p></li>
+<li><p><strong>Treats AI models as typed services.</strong> Rather than opaque oracles, AI predictions carry declared types, confidence bounds, and provenance, enabling compile-time reasoning about prediction quality.</p></li>
+<li><p><strong>Compiles to four artifacts simultaneously.</strong> A single program produces design specifications, AI documentation, experimental protocols, and regulatory compliance records, eliminating the manual coordination that currently fragments biotech workflows.</p></li>
+<li><p><strong>Grounds biological computation in programming language theory.</strong> The seven biological types are not metaphors—they are formal types with subtyping relations, refinement predicates, and compilation semantics.</p></li>
+<li><p><strong>Connects the genome’s own type system to human engineering.</strong> The genome uses coding sequences as functions, regulatory sequences as control flow, and epigenetic marks as state. <span class="smallcaps">DNA-Lang</span> makes these biological types interoperate with engineering types (guides, edits, assays) in a single coherent system.</p></li>
+</ol>
+<h2 data-number="14.2" id="relationship-to-papers-ivii"><span class="header-section-number">14.2</span> Relationship to Papers I–VII</h2>
+<p>Each of the seven preceding papers established a single biological type as a computational abstraction. <span class="smallcaps">DNA-Lang</span> is their synthesis:</p>
+<ul>
+<li><p>Paper I (ProteinCode) provides the compilation model: DNA <span class="math inline">\to</span> mRNA <span class="math inline">\to</span> Protein mirrors source <span class="math inline">\to</span> IR <span class="math inline">\to</span> executable.</p></li>
+<li><p>Paper II (Regulator) provides the control flow model: promoters and enhancers become the conditional logic that determines when edits are expressed.</p></li>
+<li><p>Paper III (RNAControl) provides the signaling model: non-coding RNAs become the middleware that coordinates between components.</p></li>
+<li><p>Paper IV (Structure) provides the memory model: genomic organization determines which regions are accessible to editing tools.</p></li>
+<li><p>Paper V (Repeat) provides the self-modification model: transposons are nature’s CRISPR, and <span class="smallcaps">DNA-Lang</span>’s edit operations are their engineered counterpart.</p></li>
+<li><p>Paper VI (State) provides the state model: epigenetic marks determine the runtime accessibility that constrains where edits can be made.</p></li>
+<li><p>Paper VII (Program) provides the orchestration model: developmental programs show how to compose all previous types into coherent organism-level outcomes.</p></li>
+</ul>
+<h2 data-number="14.3" id="limitations-and-future-work"><span class="header-section-number">14.3</span> Limitations and Future Work</h2>
+<p>The current <span class="smallcaps">DNA-Lang</span> implementation is a reference prototype. Key directions for future work include:</p>
+<ol>
+<li><p><strong>Dependent types for biological constraints.</strong> The current refinement type system is first-order. Dependent types would enable constraints like “the guide targets a sequence within the coding region of the declared target gene”—constraints that refer to the values of other bindings.</p></li>
+<li><p><strong>Effect system for wet-lab operations.</strong> Assay execution, cell culture, and sequencing are side effects. An effect system would enable the compiler to reason about which operations are pure (design, type checking) and which require lab resources.</p></li>
+<li><p><strong>Multi-target programs.</strong> The current syntax supports single-target programs. Combinatorial libraries (saturating mutagenesis, multiplexed CRISPR) require array types and iteration constructs.</p></li>
+<li><p><strong>Temporal types for longitudinal experiments.</strong> Cell culture experiments unfold over time. Temporal types would enable the compiler to verify that measurements are taken at the correct time points relative to treatment.</p></li>
+<li><p><strong>Real backend integration.</strong> The current implementation uses simulated functions. Connecting to real SBOL generators, Benchling APIs, AlphaFold endpoints, and LIMS systems would make <span class="smallcaps">DNA-Lang</span> a practical tool.</p></li>
+<li><p><strong>Formal verification.</strong> The proofs sketched in <a href="#sec:formal" data-reference-type="ref+Label" data-reference="sec:formal">12</a> should be mechanized in a proof assistant (Coq, Lean, Agda) to provide machine-checked guarantees.</p></li>
+</ol>
+<h2 data-number="14.4" id="conclusion"><span class="header-section-number">14.4</span> Conclusion</h2>
+<p>Biology is computation. The genome computes using functions (proteins), control flow (regulatory sequences), signals (RNA), memory (chromatin structure), self-modification (transposons), state (epigenetics), and orchestration (developmental programs). For decades, we have manipulated these computational primitives with untyped tools—passing sequences as strings, predictions as files, and protocols as prose.</p>
+<p><span class="smallcaps">DNA-Lang</span> proposes that we can do better. By giving every biological entity a type, every editing operation a type signature, every AI prediction a confidence bound, and every experimental step a provenance record, we transform the biotech workflow from a fragile pipeline of string-passing into a robust, type-checked program.</p>
+<p>The vision is not that <span class="smallcaps">DNA-Lang</span> replaces wet-lab biology. The vision is that when a researcher writes <code>edit ko_edit : Knockout = knockout(pcsk9, top_guide)</code>, the type system guarantees that <code>pcsk9</code> is a valid target, <code>top_guide</code> is a compatible guide RNA, the resulting edit will be a knockout (not a base edit or insertion), and the compliance artifact will record every decision that led to this line of code.</p>
+<p>Type safety is not just a programming language property. In biological programming, type safety is patient safety.</p>
+<div class="thebibliography">
+<p><span>99</span></p>
+<p>M. Galdzicki <em>et al.</em>, “The Synthetic Biology Open Language (SBOL) provides a community standard for communicating designs in synthetic biology,” <em>Nature Biotechnology</em>, vol. 32, pp. 545–550, 2014.</p>
+<p>J. A. Doudna and E. Charpentier, “The new frontier of genome engineering with CRISPR-Cas9,” <em>Science</em>, vol. 346, no. 6213, p. 1258096, 2014.</p>
+<p>J. Jumper <em>et al.</em>, “Highly accurate protein structure prediction with AlphaFold,” <em>Nature</em>, vol. 596, pp. 583–589, 2021.</p>
+<p>A. M. Bellinger <em>et al.</em>, “In vivo base editing of PCSK9 as a therapeutic alternative to statins,” <em>Nature</em>, vol. 628, pp. 550–556, 2024.</p>
+<p>B. C. Pierce, <em>Types and Programming Languages</em>. MIT Press, 2002.</p>
+<p>P. Wadler, “Propositions as types,” <em>Communications of the ACM</em>, vol. 58, no. 12, pp. 75–84, 2015.</p>
+<p>L. Cong <em>et al.</em>, “Multiplex genome engineering using CRISPR/Cas systems,” <em>Science</em>, vol. 339, no. 6121, pp. 819–823, 2013.</p>
+<p>A. V. Anzalone <em>et al.</em>, “Search-and-replace genome editing without double-strand breaks or donor DNA,” <em>Nature</em>, vol. 576, pp. 149–157, 2019.</p>
+<p>N. M. Gaudelli <em>et al.</em>, “Programmable base editing of A<span class="math inline">&middot;</span>T to G<span class="math inline">&middot;</span>C in genomic DNA without DNA cleavage,” <em>Nature</em>, vol. 551, pp. 464–471, 2017.</p>
+<p>J. Abramson <em>et al.</em>, “Accurate structure prediction of biomolecular interactions with AlphaFold 3,” <em>Nature</em>, vol. 630, pp. 493–500, 2024.</p>
+<p>P. M. Rondon, M. Kawaguchi, and R. Jhala, “Liquid types,” <em>ACM SIGPLAN Notices</em>, vol. 43, no. 6, pp. 159–169, 2008.</p>
+<p>J. A. McLaughlin <em>et al.</em>, “The Synthetic Biology Open Language (SBOL) Version 3: Simplified data exchange for bioengineering,” <em>Frontiers in Bioengineering and Biotechnology</em>, vol. 8, p. 1009, 2020.</p>
+<p>M. Long, “Coding Sequences as Executable Functions: The Central Dogma as a Compilation Pipeline,” <em>GrokRxiv</em>, 2026.</p>
+<p>M. Long, “Regulatory Sequences as Control Flow: Promoters, Enhancers, and the Logic of Gene Expression,” <em>GrokRxiv</em>, 2026.</p>
+<p>M. Long, “Non-coding RNA as Signals and Middleware: miRNA, siRNA, and lncRNA as Biological Message Passing,” <em>GrokRxiv</em>, 2026.</p>
+<p>M. Long, “Structural DNA as Memory Layout: Telomeres, Centromeres, and Topological Domains,” <em>GrokRxiv</em>, 2026.</p>
+<p>M. Long, “Repetitive Elements as Self-Modifying Code: Transposons and Genomic Plasticity,” <em>GrokRxiv</em>, 2026.</p>
+<p>M. Long, “Epigenetic Marks as Runtime State: DNA Methylation and Histone Modifications,” <em>GrokRxiv</em>, 2026.</p>
+<p>M. Long, “Developmental Programs as Orchestration: Hox Genes, Morphogens, and Cell-Fate Networks,” <em>GrokRxiv</em>, 2026.</p>
+</div>
+
+</main>
+</div>
+<script>
+// Build sidebar TOC from h2/h3 in content
+(function(){
+  var nav=document.getElementById('toc-nav');
+  var headings=document.querySelectorAll('.main-content h2, .main-content h3');
+  if(!headings.length)return;
+  var items=[];
+  for(var i=0;i<headings.length;i++){
+    var h=headings[i];
+    if(!h.id){
+      h.id=h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+$/,'');
+    }
+    items.push({tag:h.tagName,id:h.id,text:h.textContent.trim()});
+  }
+  var ul=document.createElement('ul');
+  var currentLi=null;
+  var subUl=null;
+  for(var j=0;j<items.length;j++){
+    var item=items[j];
+    var li=document.createElement('li');
+    var a=document.createElement('a');
+    a.href='#'+item.id;
+    a.textContent=item.text;
+    if(item.tag==='H2'){
+      if(subUl&&currentLi){currentLi.appendChild(subUl);subUl=null;}
+      li.appendChild(a);
+      ul.appendChild(li);
+      currentLi=li;
+    } else {
+      if(!subUl)subUl=document.createElement('ul');
+      li.appendChild(a);
+      subUl.appendChild(li);
+    }
+  }
+  if(subUl&&currentLi)currentLi.appendChild(subUl);
+  nav.appendChild(ul);
+
+  // Active tracking on scroll
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var links=nav.querySelectorAll('a');
+        for(var k=0;k<links.length;k++)links[k].classList.remove('active');
+        var link=nav.querySelector('a[href="#'+e.target.id+'"]');
+        if(link)link.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  for(var m=0;m<headings.length;m++)observer.observe(headings[m]);
+})();
+</script>
+</body>
+</html>
+4:["$","iframe",null,{"srcDoc":"$f","title":"DNA-Lang: A Typed Orchestration Language","className":"w-full border-0","style":{"minHeight":"100vh","height":"100vh"}}]
+a:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+6:null
+8:{"metadata":[["$","title","0",{"children":"DNA-Lang: A Typed Orchestration Language | DNA-Lang"}],["$","meta","1",{"name":"description","content":"Read the full paper: DNA-Lang: A Typed Orchestration Language"}],["$","meta","2",{"property":"og:title","content":"DNA-Lang"}],["$","meta","3",{"property":"og:description","content":"A Typed Programming Language for Biological Systems. 8 papers, 207 pages, Haskell implementations."}],["$","meta","4",{"property":"og:url","content":"https://dna-lang.vercel.app"}],["$","meta","5",{"property":"og:site_name","content":"DNA-Lang"}],["$","meta","6",{"property":"og:type","content":"website"}],["$","meta","7",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","8",{"name":"twitter:title","content":"DNA-Lang"}],["$","meta","9",{"name":"twitter:description","content":"A Typed Programming Language for Biological Systems. 8 papers, 207 pages."}]],"error":null,"digest":"$undefined"}
+d:"$8:metadata"
