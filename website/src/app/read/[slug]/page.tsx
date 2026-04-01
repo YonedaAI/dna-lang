@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import fs from "fs";
 import path from "path";
+import KatexLoader from "./katex-loader";
 
 const slugs = [
   "coding-sequences",
@@ -42,6 +43,19 @@ export async function generateMetadata({
   };
 }
 
+function extractParts(html: string): { css: string; body: string; js: string } {
+  const styleMatch = html.match(/<style>([\s\S]*?)<\/style>/);
+  const css = styleMatch ? styleMatch[1] : "";
+
+  const bodyMatch = html.match(/<body>([\s\S]*?)<\/body>/);
+  const body = bodyMatch ? bodyMatch[1] : html;
+
+  const scriptMatch = html.match(/<\/main>[\s\S]*?<script>([\s\S]*?)<\/script>/);
+  const js = scriptMatch ? scriptMatch[1] : "";
+
+  return { css, body, js };
+}
+
 // HTML content is generated at build time from our own LaTeX papers via pandoc.
 // This is trusted, static content — not user input.
 export default async function ReadPage({
@@ -60,14 +74,24 @@ export default async function ReadPage({
     notFound();
   }
 
-  // Render the full standalone HTML page as an iframe-like embed
-  // since the HTML papers are complete documents with their own <html>, <head>, <style>
+  const { css, body, js } = extractParts(htmlContent);
+
   return (
-    <iframe
-      srcDoc={htmlContent}
-      title={titles[slug] || "Paper"}
-      className="w-full border-0"
-      style={{ minHeight: "100vh", height: "100vh" }}
-    />
+    <>
+      {/* KaTeX CSS */}
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      />
+
+      {/* Paper styles from the HTML template */}
+      <style dangerouslySetInnerHTML={{ __html: css }} />
+
+      {/* Paper body content rendered directly in the page */}
+      <div dangerouslySetInnerHTML={{ __html: body }} />
+
+      {/* KaTeX + TOC scripts (client component) */}
+      <KatexLoader tocScript={js} />
+    </>
   );
 }
