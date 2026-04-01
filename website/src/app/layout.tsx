@@ -13,12 +13,21 @@ export const metadata: Metadata = {
     url: "https://dna-lang.vercel.app",
     siteName: "DNA-Lang",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DNA-Lang: A Typed Programming Language for Biological Systems",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "DNA-Lang",
     description:
       "A Typed Programming Language for Biological Systems. 8 papers, 207 pages.",
+    images: ["/og-image.png"],
   },
 };
 

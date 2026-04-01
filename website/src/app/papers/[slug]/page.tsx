@@ -187,11 +187,20 @@ export async function generateMetadata({
       url: `https://dna-lang.vercel.app/papers/${slug}`,
       siteName: "DNA-Lang",
       authors: ["Matthew Long"],
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: `${paper.title} — DNA-Lang`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: paper.title,
       description,
+      images: ["/og-image.png"],
     },
   };
 }
