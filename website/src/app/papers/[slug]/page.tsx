@@ -184,7 +184,7 @@ export async function generateMetadata({
       title: paper.title,
       description,
       type: "article",
-      url: `https://dna-lang.vercel.app/papers/${slug}`,
+      url: `/papers/${slug}`,
       siteName: "DNA-Lang",
       authors: ["Matthew Long"],
       images: [

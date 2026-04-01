@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "https://dna-lang-01.vercel.app";
+
 export const metadata: Metadata = {
   title: "DNA-Lang | A Typed Programming Language for Biological Systems",
   description:
     "8 research papers (207 pages) + Haskell implementations mapping DNA sequence categories to programming language constructs. By the YonedaAI Research Collective.",
-  metadataBase: new URL("https://dna-lang.vercel.app"),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title: "DNA-Lang",
     description:
       "A Typed Programming Language for Biological Systems. 8 papers, 207 pages, Haskell implementations.",
-    url: "https://dna-lang.vercel.app",
+    url: siteUrl,
     siteName: "DNA-Lang",
     type: "website",
     images: [
