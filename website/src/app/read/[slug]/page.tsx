@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import fs from "fs";
 import path from "path";
-import KatexLoader from "./katex-loader";
 
 const slugs = [
   "coding-sequences",
@@ -50,14 +49,19 @@ function extractParts(html: string): { css: string; body: string; js: string } {
   const bodyMatch = html.match(/<body>([\s\S]*?)<\/body>/);
   const body = bodyMatch ? bodyMatch[1] : html;
 
+  // Extract the TOC builder script
   const scriptMatch = html.match(/<\/main>[\s\S]*?<script>([\s\S]*?)<\/script>/);
   const js = scriptMatch ? scriptMatch[1] : "";
 
-  return { css, body, js };
+  // Extract any <link> tags from <head> (e.g., KaTeX CSS)
+  const linkMatches = html.match(/<link[^>]*katex[^>]*>/g);
+  const links = linkMatches ? linkMatches.join("\n") : "";
+
+  return { css, body, js, links } as any;
 }
 
-// HTML content is generated at build time from our own LaTeX papers via pandoc.
-// This is trusted, static content — not user input.
+// HTML content is generated at build time from our own LaTeX papers via pandoc,
+// with math pre-rendered by KaTeX Node.js. Trusted, static content.
 export default async function ReadPage({
   params,
 }: {
@@ -76,22 +80,27 @@ export default async function ReadPage({
 
   const { css, body, js } = extractParts(htmlContent);
 
+  // Extract KaTeX CSS link from head
+  const katexCSSMatch = htmlContent.match(
+    /<link[^>]*href="([^"]*katex[^"]*\.css)"[^>]*>/
+  );
+  const katexCSS = katexCSSMatch ? katexCSSMatch[1] : "";
+
   return (
     <>
-      {/* KaTeX CSS */}
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
-      />
+      {/* KaTeX CSS for pre-rendered math styling */}
+      {katexCSS && <link rel="stylesheet" href={katexCSS} />}
 
       {/* Paper styles from the HTML template */}
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
-      {/* Paper body content rendered directly in the page */}
+      {/* Paper body with pre-rendered math */}
       <div dangerouslySetInnerHTML={{ __html: body }} />
 
-      {/* KaTeX + TOC scripts (client component) */}
-      <KatexLoader tocScript={js} />
+      {/* TOC builder runs client-side */}
+      {js && (
+        <script dangerouslySetInnerHTML={{ __html: js }} />
+      )}
     </>
   );
 }

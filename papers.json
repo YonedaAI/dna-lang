@@ -1,7 +1,7 @@
 {
   "project_title": "DNA-Lang",
   "latex_dir": "papers/latex",
-  "html_dir": "website/public/html",
+  "html_dir": "website/public/read",
   "template": "scripts/paper-template.html",
   "papers": [
     {"name": "coding-sequences", "title": "Coding Sequences as Executable Functions", "part": "Part I"},
