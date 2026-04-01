@@ -155,25 +155,25 @@ pre,.sourceCode{overflow-x:auto;max-width:100%}
 @media(max-width:900px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
-  .main-content{margin-left:0 !important;padding:1.5rem 1rem !important;max-width:100vw !important}
-  .paper-header h1{font-size:1.3rem !important}
-  pre,.sourceCode{font-size:.72rem !important;padding:.6rem !important}
-  .katex{font-size:0.88em !important}
-  table{font-size:.75rem;display:block;overflow-x:auto;max-width:100%}
-  .theorem,.definition,.proposition,.lemma,.corollary,.remark,.example{padding:.8rem 1rem !important}
-  blockquote{padding:.6rem .8rem !important;margin-left:0 !important;margin-right:0 !important}
-  h2{font-size:1.15rem !important}
-  h3{font-size:1rem !important}
-  body{font-size:15px !important;line-height:1.7 !important}
+  .main-content{margin-left:0 !important;padding:1.5rem 1.2rem !important;max-width:100vw !important}
+  .paper-header h1{font-size:1.5rem !important}
+  pre,.sourceCode{font-size:.8rem !important;padding:.8rem !important}
+  .katex{font-size:1em !important}
+  table{font-size:.85rem;display:block;overflow-x:auto;max-width:100%}
+  .theorem,.definition,.proposition,.lemma,.corollary,.remark,.example{padding:1rem 1.2rem !important;font-size:1.05rem !important}
+  blockquote{padding:.8rem 1rem !important;margin-left:0 !important;margin-right:0 !important}
+  h2{font-size:1.35rem !important}
+  h3{font-size:1.15rem !important}
+  body{font-size:18px !important;line-height:1.8 !important}
   .paper-meta-row{flex-direction:column;gap:.3rem}
   .menu-toggle{z-index:200}
 }
 @media(max-width:480px){
-  .main-content{padding:1rem .6rem !important}
-  .paper-header h1{font-size:1.1rem !important}
-  pre,.sourceCode{font-size:.62rem !important}
-  .katex{font-size:0.78em !important}
-  body{font-size:14px !important}
+  .main-content{padding:1.2rem 1rem !important}
+  .paper-header h1{font-size:1.3rem !important}
+  pre,.sourceCode{font-size:.75rem !important}
+  .katex{font-size:0.92em !important}
+  body{font-size:17px !important;line-height:1.75 !important}
 }
 `;
 
